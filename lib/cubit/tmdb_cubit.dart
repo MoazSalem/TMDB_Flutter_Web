@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:tmdb_web/core/models/movies.dart';
-import 'package:tmdb_web/core/models/tv.dart';
+import 'package:tmdb_web/core/models/movie.dart';
+import 'package:tmdb_web/core/models/show.dart';
 import 'package:tmdb_web/core/models/videos.dart';
 import 'package:tmdb_web/core/models/reviews.dart';
 import 'package:tmdb_web/core/models/cast.dart';
@@ -20,17 +20,17 @@ class TmdbCubit extends Cubit<TmdbState> {
   List<String> moviesGenres = Constants.categoriesNamesMovies;
   List<String> tvGenres = Constants.categoriesNamesTv;
   List<Movie> searchedMovies = [];
-  List<TvShows> searchedShows = [];
-  List<Results> popular = [];
+  List<Show> searchedShows = [];
+  List<PopularItem> popular = [];
   List<Movie> moviesList = [];
-  List<TvShows> tvShowsList = [];
+  List<Show> tvShowsList = [];
 
   // For Some Reason Flutter doesn't wait for the late initialization in web so just initialize it
   Movie movie = emptyMovie;
-  TvShows show = TvShows();
+  Show show = Show();
 
-  List<Results> suggestions = [];
-  List<Results> similar = [];
+  List<PopularItem> suggestions = [];
+  List<PopularItem> similar = [];
   List<Reviews> reviews = [];
   List<Cast> casts = [];
   Video trailer = emptyVideo;

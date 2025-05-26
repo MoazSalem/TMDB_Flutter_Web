@@ -8,6 +8,7 @@ import 'package:tmdb_web/cubit/tmdb_cubit.dart';
 import 'package:tmdb_web/core/shared_widgets/suggestion_widget.dart';
 import 'package:tmdb_web/core/shared_widgets/app_bar.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
+import 'package:tmdb_web/features/home/logic/home_cubit.dart';
 
 late TmdbCubit C;
 
@@ -42,110 +43,7 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    final List<Widget> imageSliders = C.popular
-        .map(
-          (item) => GestureDetector(
-            onTap: () {
-              item.name == null
-                  ? context.go('/movies/${item.id}')
-                  : context.go('/tv/${item.id}');
-            },
-            child: ClipRRect(
-              borderRadius: const BorderRadius.all(Radius.circular(5.0)),
-              child: Stack(
-                alignment: Alignment.bottomCenter,
-                children: <Widget>[
-                  ClipRRect(
-                    borderRadius: const BorderRadius.all(Radius.circular(5.0)),
-                    child: CachedNetworkImage(
-                      fit: BoxFit.cover,
-                      imageUrl:
-                          "https://image.tmdb.org/t/p/w1280/${item.backdropPath}",
-                      placeholder: (context, url) => SizedBox(
-                        height: 26.5.h,
-                        width: 80.w,
-                        child: const SizedBox(
-                          height: 60,
-                          width: 60,
-                          child: Center(
-                            child: CircularProgressIndicator(
-                              color: Color(0xff55c3bd),
-                            ),
-                          ),
-                        ),
-                      ),
-                      errorWidget: (context, url, error) =>
-                          const Icon(Icons.error),
-                    ),
-                  ),
-                  Positioned(
-                    bottom: 0.0,
-                    left: 0.0,
-                    right: 0.0,
-                    child: Container(
-                      decoration: const BoxDecoration(
-                        gradient: LinearGradient(
-                          colors: [
-                            Color.fromARGB(200, 0, 0, 0),
-                            Color.fromARGB(0, 0, 0, 0),
-                          ],
-                          begin: Alignment.bottomCenter,
-                          end: Alignment.topCenter,
-                        ),
-                      ),
-                      padding: const EdgeInsets.symmetric(
-                        vertical: 10.0,
-                        horizontal: 20.0,
-                      ),
-                      child: Text(
-                        '${item.name ?? item.title}',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 5.w > 20 ? 20 : 5.w,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-                  ),
-                  Positioned(
-                    bottom: 10.0,
-                    right: 10.0,
-                    child: SizedBox(
-                      width: 10.w > 70 ? 70 : 10.w,
-                      child: FittedBox(
-                        child: CircleAvatar(
-                          radius: 30,
-                          backgroundColor: Colors.black54,
-                          child: CircularPercentIndicator(
-                            animationDuration: 3000,
-                            curve: Curves.bounceOut,
-                            radius: 30.0,
-                            lineWidth: 5.0,
-                            percent: (item.voteAverage! / 10),
-                            animation: true,
-                            center: Text(
-                              (item.voteAverage! * 10).toStringAsFixed(0),
-                              style: const TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.w900,
-                              ),
-                            ),
-                            progressColor: progressColor(
-                              rating: (item.voteAverage! * 10),
-                            ),
-                            backgroundColor: Colors.white24,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-        )
-        .toList();
-    return BlocBuilder<TmdbCubit, TmdbState>(
+    return BlocBuilder<HomeCubit, HomeState>(
       builder: (context, state) {
         return Scaffold(
           backgroundColor: Colors.black,
@@ -155,18 +53,145 @@ class _HomePageState extends State<HomePage> {
             title: appBar(context: context, showSearch: false),
             backgroundColor: Theme.of(context).canvasColor,
           ),
-          body: C.popular.isEmpty
+          body: state is HomeLoading
               ? const Center(
                   child: CircularProgressIndicator(color: Color(0xff09b5e1)),
                 )
-              : ListView(
+              : state is HomeLoaded
+              ? ListView(
                   children: [
                     Column(
                       children: [
                         SizedBox(
                           height: 100.w > 800 ? 50.h : 30.h,
                           child: CarouselSlider(
-                            items: imageSliders,
+                            items: state.popular
+                                .map(
+                                  (item) => GestureDetector(
+                                    onTap: () {
+                                      item.name == null
+                                          ? context.go('/movies/${item.id}')
+                                          : context.go('/tv/${item.id}');
+                                    },
+                                    child: ClipRRect(
+                                      borderRadius: const BorderRadius.all(
+                                        Radius.circular(5.0),
+                                      ),
+                                      child: Stack(
+                                        alignment: Alignment.bottomCenter,
+                                        children: <Widget>[
+                                          ClipRRect(
+                                            borderRadius:
+                                                const BorderRadius.all(
+                                                  Radius.circular(5.0),
+                                                ),
+                                            child: CachedNetworkImage(
+                                              fit: BoxFit.cover,
+                                              imageUrl:
+                                                  "https://image.tmdb.org/t/p/w1280/${item.backdropPath}",
+                                              placeholder: (context, url) =>
+                                                  SizedBox(
+                                                    height: 26.5.h,
+                                                    width: 80.w,
+                                                    child: const SizedBox(
+                                                      height: 60,
+                                                      width: 60,
+                                                      child: Center(
+                                                        child:
+                                                            CircularProgressIndicator(
+                                                              color: Color(
+                                                                0xff55c3bd,
+                                                              ),
+                                                            ),
+                                                      ),
+                                                    ),
+                                                  ),
+                                              errorWidget:
+                                                  (context, url, error) =>
+                                                      const Icon(Icons.error),
+                                            ),
+                                          ),
+                                          Positioned(
+                                            bottom: 0.0,
+                                            left: 0.0,
+                                            right: 0.0,
+                                            child: Container(
+                                              decoration: const BoxDecoration(
+                                                gradient: LinearGradient(
+                                                  colors: [
+                                                    Color.fromARGB(
+                                                      200,
+                                                      0,
+                                                      0,
+                                                      0,
+                                                    ),
+                                                    Color.fromARGB(0, 0, 0, 0),
+                                                  ],
+                                                  begin: Alignment.bottomCenter,
+                                                  end: Alignment.topCenter,
+                                                ),
+                                              ),
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                    vertical: 10.0,
+                                                    horizontal: 20.0,
+                                                  ),
+                                              child: Text(
+                                                '${item.name ?? item.title}',
+                                                style: TextStyle(
+                                                  color: Colors.white,
+                                                  fontSize: 5.w > 20 ? 20 : 5.w,
+                                                  fontWeight: FontWeight.bold,
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                          Positioned(
+                                            bottom: 10.0,
+                                            right: 10.0,
+                                            child: SizedBox(
+                                              width: 10.w > 70 ? 70 : 10.w,
+                                              child: FittedBox(
+                                                child: CircleAvatar(
+                                                  radius: 30,
+                                                  backgroundColor:
+                                                      Colors.black54,
+                                                  child: CircularPercentIndicator(
+                                                    animationDuration: 3000,
+                                                    curve: Curves.bounceOut,
+                                                    radius: 30.0,
+                                                    lineWidth: 5.0,
+                                                    percent:
+                                                        (item.voteAverage! /
+                                                        10),
+                                                    animation: true,
+                                                    center: Text(
+                                                      (item.voteAverage! * 10)
+                                                          .toStringAsFixed(0),
+                                                      style: const TextStyle(
+                                                        fontSize: 20,
+                                                        fontWeight:
+                                                            FontWeight.w900,
+                                                      ),
+                                                    ),
+                                                    progressColor: progressColor(
+                                                      rating:
+                                                          (item.voteAverage! *
+                                                          10),
+                                                    ),
+                                                    backgroundColor:
+                                                        Colors.white24,
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                )
+                                .toList(),
                             carouselController: _controller,
                             options: CarouselOptions(
                               autoPlay: true,
@@ -193,7 +218,7 @@ class _HomePageState extends State<HomePage> {
                             child: FittedBox(
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
-                                children: C.popular.asMap().entries.map((
+                                children: state.popular.asMap().entries.map((
                                   entry,
                                 ) {
                                   return InkWell(
@@ -269,7 +294,7 @@ class _HomePageState extends State<HomePage> {
                               height: 70.w > 400 ? 400 : 70.w,
                               child: ListView.builder(
                                 scrollDirection: Axis.horizontal,
-                                itemCount: C.moviesList.length,
+                                itemCount: state.movies.length,
                                 itemBuilder:
                                     (BuildContext context, int index) =>
                                         InkWell(
@@ -277,12 +302,12 @@ class _HomePageState extends State<HomePage> {
                                             Radius.circular(30),
                                           ),
                                           onTap: () => context.go(
-                                            '/movies/${C.moviesList[index].id}',
+                                            '/movies/${state.movies[index].id}',
                                           ),
                                           child: FittedBox(
                                             child: suggestionWidget(
                                               index: index,
-                                              suggestions: C.moviesList,
+                                              suggestions: state.movies,
                                             ),
                                           ),
                                         ),
@@ -323,7 +348,7 @@ class _HomePageState extends State<HomePage> {
                               height: 70.w > 400 ? 400 : 70.w,
                               child: ListView.builder(
                                 scrollDirection: Axis.horizontal,
-                                itemCount: C.tvShowsList.length,
+                                itemCount: state.tvShows.length,
                                 itemBuilder:
                                     (BuildContext context, int index) =>
                                         InkWell(
@@ -331,12 +356,12 @@ class _HomePageState extends State<HomePage> {
                                             Radius.circular(30),
                                           ),
                                           onTap: () => context.go(
-                                            '/tv/${C.tvShowsList[index].id}',
+                                            '/tv/${state.tvShows[index].id}',
                                           ),
                                           child: FittedBox(
                                             child: suggestionWidget(
                                               index: index,
-                                              suggestions: C.tvShowsList,
+                                              suggestions: state.tvShows,
                                             ),
                                           ),
                                         ),
@@ -347,7 +372,8 @@ class _HomePageState extends State<HomePage> {
                       ),
                     ),
                   ],
-                ),
+                )
+              : const Center(child: CircularProgressIndicator()),
         );
       },
     );

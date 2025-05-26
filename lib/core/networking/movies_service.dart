@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
-import 'package:tmdb_web/core/models/movies.dart';
+import 'package:tmdb_web/core/models/movie.dart';
 import 'package:tmdb_web/core/models/videos.dart';
 import 'package:tmdb_web/core/models/reviews.dart';
 import 'package:tmdb_web/core/models/cast.dart';
@@ -65,17 +65,20 @@ class MoviesService {
     return casts;
   }
 
-  Future<List<Results>> getSuggestions({required int id, int type = 0}) async {
+  Future<List<PopularItem>> getSuggestions({
+    required int id,
+    int type = 0,
+  }) async {
     List<String> types = ["recommendations", "similar"];
     String endPoint =
         "https://api.themoviedb.org/3/movie/$id/${types[type]}?api_key=$apiKey&language=en-US";
-    List<Results> popular = [];
+    List<PopularItem> popular = [];
     Response response = await dio.get(endPoint);
     if (response.statusCode == 200) {
       var body = response.data;
       // movies are called results in the api
       body["results"].forEach((movieData) {
-        Results newSomething = Results.fromJson(movieData);
+        PopularItem newSomething = PopularItem.fromJson(movieData);
         popular.add(newSomething);
       });
     } else {

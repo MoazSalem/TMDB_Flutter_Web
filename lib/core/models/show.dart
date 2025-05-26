@@ -3,11 +3,7 @@ class TvShowsSpokenLanguages {
   String? iso_639_1;
   String? name;
 
-  TvShowsSpokenLanguages({
-    this.englishName,
-    this.iso_639_1,
-    this.name,
-  });
+  TvShowsSpokenLanguages({this.englishName, this.iso_639_1, this.name});
 
   TvShowsSpokenLanguages.fromJson(Map<String, dynamic> json) {
     englishName = json['english_name']?.toString();
@@ -70,10 +66,7 @@ class TvShowsProductionCountries {
   String? iso_3166_1;
   String? name;
 
-  TvShowsProductionCountries({
-    this.iso_3166_1,
-    this.name,
-  });
+  TvShowsProductionCountries({this.iso_3166_1, this.name});
 
   TvShowsProductionCountries.fromJson(Map<String, dynamic> json) {
     iso_3166_1 = json['iso_3166_1']?.toString();
@@ -124,12 +117,7 @@ class TvShowsNetworks {
   String? name;
   String? originCountry;
 
-  TvShowsNetworks({
-    this.id,
-    this.logoPath,
-    this.name,
-    this.originCountry,
-  });
+  TvShowsNetworks({this.id, this.logoPath, this.name, this.originCountry});
 
   TvShowsNetworks.fromJson(Map<String, dynamic> json) {
     id = json['id']?.toInt();
@@ -214,10 +202,7 @@ class TvShowsGenres {
   int? id;
   String? name;
 
-  TvShowsGenres({
-    this.id,
-    this.name,
-  });
+  TvShowsGenres({this.id, this.name});
 
   TvShowsGenres.fromJson(Map<String, dynamic> json) {
     id = json['id']?.toInt();
@@ -266,7 +251,7 @@ class TvShowsCreatedBy {
   }
 }
 
-class TvShows {
+class Show {
   bool? adult;
   String? backdropPath;
   List<TvShowsCreatedBy?>? createdBy;
@@ -302,7 +287,7 @@ class TvShows {
   double? voteAverage;
   int? voteCount;
 
-  TvShows({
+  Show({
     this.adult,
     this.backdropPath,
     this.createdBy,
@@ -339,7 +324,7 @@ class TvShows {
     this.voteCount,
   });
 
-  TvShows.fromJson(Map<String, dynamic> json) {
+  Show.fromJson(Map<String, dynamic> json) {
     adult = json['adult'];
     backdropPath = json['backdrop_path']?.toString();
     if (json['created_by'] != null) {

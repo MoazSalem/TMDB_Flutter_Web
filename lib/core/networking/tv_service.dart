@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
-import 'package:tmdb_web/core/models/tv.dart';
+import 'package:tmdb_web/core/models/show.dart';
 import 'package:tmdb_web/core/models/videos.dart';
 import 'package:tmdb_web/core/models/reviews.dart';
 import 'package:tmdb_web/core/models/cast.dart';
@@ -10,18 +10,18 @@ import 'package:tmdb_web/private.dart';
 // This is used to get the data from the rest api endpoint
 class TVService {
   Dio dio = GetIt.I.get<Dio>();
-  Future<List<TvShows>> getShows({
+  Future<List<Show>> getShows({
     required int page,
     required String endPoint,
   }) async {
     endPoint += "$page";
-    List<TvShows> tvShows = [];
+    List<Show> tvShows = [];
     Response response = await dio.get(endPoint);
     if (response.statusCode == 200) {
       var body = response.data;
       // movies are called results in the api
       body["results"].forEach((tvShowData) {
-        TvShows newTvShow = TvShows.fromJson(tvShowData);
+        Show newTvShow = Show.fromJson(tvShowData);
         tvShows.add(newTvShow);
       });
     } else {
@@ -31,15 +31,15 @@ class TVService {
     return tvShows;
   }
 
-  Future<List<TvShows>> getTrendingShows({required int page}) async {
+  Future<List<Show>> getTrendingShows({required int page}) async {
     String endPoint =
         "https://api.themoviedb.org/3/trending/tv/day?api_key=$apiKey&language=en-US&page=$page";
-    List<TvShows> tvShows = [];
+    List<Show> tvShows = [];
     Response response = await dio.get(endPoint);
     if (response.statusCode == 200) {
       var body = response.data;
       body["results"].forEach((tvShowData) {
-        TvShows newTvShow = TvShows.fromJson(tvShowData);
+        Show newTvShow = Show.fromJson(tvShowData);
         tvShows.add(newTvShow);
       });
     } else {
@@ -49,15 +49,15 @@ class TVService {
     return tvShows;
   }
 
-  Future<TvShows> getShow({required int id}) async {
+  Future<Show> getShow({required int id}) async {
     String endPoint =
         "https://api.themoviedb.org/3/tv/$id?api_key=$apiKey&language=en-US";
-    late TvShows show;
+    late Show show;
     Response response = await dio.get(endPoint);
     if (response.statusCode == 200) {
       var body = response.data;
       // movies are called results in the api
-      show = TvShows.fromJson(body);
+      show = Show.fromJson(body);
     } else {
       throw Exception();
     }
@@ -82,17 +82,20 @@ class TVService {
     return casts;
   }
 
-  Future<List<Results>> getSuggestions({required int id, int type = 0}) async {
+  Future<List<PopularItem>> getSuggestions({
+    required int id,
+    int type = 0,
+  }) async {
     List<String> types = ["recommendations", "similar"];
     String endPoint =
         "https://api.themoviedb.org/3/tv/$id/${types[type]}?api_key=$apiKey&language=en-US";
-    List<Results> popular = [];
+    List<PopularItem> popular = [];
     Response response = await dio.get(endPoint);
     if (response.statusCode == 200) {
       var body = response.data;
       // movies are called results in the api
       body["results"].forEach((movieData) {
-        Results newSomething = Results.fromJson(movieData);
+        PopularItem newSomething = PopularItem.fromJson(movieData);
         popular.add(newSomething);
       });
     } else {
@@ -145,16 +148,16 @@ class TVService {
     return trailer;
   }
 
-  Future<List<TvShows>> searchShows({required String query}) async {
+  Future<List<Show>> searchShows({required String query}) async {
     String endPoint =
         "https://api.themoviedb.org/3/search/tv?api_key=$apiKey&language=en-US&query=$query";
-    List<TvShows> tvShows = [];
+    List<Show> tvShows = [];
     Response response = await dio.get(endPoint);
     if (response.statusCode == 200) {
       var body = response.data;
       // movies are called results in the api
       body["results"].forEach((movieData) {
-        TvShows newShow = TvShows.fromJson(movieData);
+        Show newShow = Show.fromJson(movieData);
         tvShows.add(newShow);
       });
     } else {
@@ -164,18 +167,15 @@ class TVService {
     return tvShows;
   }
 
-  Future<List<TvShows>> getGenre({
-    required int page,
-    required int genre,
-  }) async {
+  Future<List<Show>> getGenre({required int page, required int genre}) async {
     String endPoint =
         "https://api.themoviedb.org/3/discover/tv?api_key=$apiKey&language=en-US&sort_by=popularity.desc&page=$page&with_genres=$genre";
-    List<TvShows> tvShows = [];
+    List<Show> tvShows = [];
     Response response = await dio.get(endPoint);
     if (response.statusCode == 200) {
       var body = response.data;
       body["results"].forEach((showData) {
-        TvShows newShow = TvShows.fromJson(showData);
+        Show newShow = Show.fromJson(showData);
         tvShows.add(newShow);
       });
     } else {

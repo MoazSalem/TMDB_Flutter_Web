@@ -7,13 +7,15 @@ class Popular {
   });
 
   late final int page;
-  late final List<Results> results;
+  late final List<PopularItem> results;
   late final int totalPages;
   late final int totalResults;
 
   Popular.fromJson(Map<String, dynamic> json) {
     page = json['page'];
-    results = List.from(json['results']).map((e) => Results.fromJson(e)).toList();
+    results = List.from(
+      json['results'],
+    ).map((e) => PopularItem.fromJson(e)).toList();
     totalPages = json['total_pages'];
     totalResults = json['total_results'];
   }
@@ -28,8 +30,8 @@ class Popular {
   }
 }
 
-class Results {
-  Results({
+class PopularItem {
+  PopularItem({
     required this.adult,
     required this.backdropPath,
     required this.firstAirDate,
@@ -71,7 +73,7 @@ class Results {
   late final double? voteAverage;
   late final int? voteCount;
 
-  Results.fromJson(Map<String, dynamic> json) {
+  PopularItem.fromJson(Map<String, dynamic> json) {
     adult = json['adult'];
     backdropPath = json['backdrop_path'];
     id = json['id'];

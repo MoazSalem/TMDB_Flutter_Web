@@ -6,7 +6,7 @@ import 'package:pointer_interceptor/pointer_interceptor.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:youtube_player_iframe/youtube_player_iframe.dart';
 import 'package:tmdb_web/cubit/tmdb_cubit.dart';
-import 'package:tmdb_web/core/models/tv.dart';
+import 'package:tmdb_web/core/models/show.dart';
 import 'package:tmdb_web/core/shared_widgets/suggestion_widget.dart';
 import 'package:tmdb_web/core/shared_widgets/actor_widget.dart';
 import 'package:tmdb_web/core/shared_widgets/categories_widget.dart';
@@ -36,7 +36,7 @@ class _TvInfoState extends State<TvInfo> {
   void initState() {
     super.initState();
     C.casts = [];
-    C.show = TvShows();
+    C.show = Show();
   }
 
   @override
@@ -56,7 +56,7 @@ class _TvInfoState extends State<TvInfo> {
               ),
             ),
             parsedId = int.parse(widget.id),
-            C.show = TvShows(),
+            C.show = Show(),
             C.getShow(id: parsedId),
           }
         : null;
