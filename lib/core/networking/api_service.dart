@@ -5,15 +5,15 @@ class ApiService {
   final Dio _dio;
 
   ApiService(this._dio);
-  Future<Response> get(String url, {bool useBaseUrl = true}) async =>
+  Future<Response> get({required String url, bool useBaseUrl = true}) async =>
       await _dio.get('${useBaseUrl ? Constants.baseUrl : ''}$url');
 
-  Future<List<T>> fetchList<T>(
-    String url,
-    T Function(Map<String, dynamic>) fromJson,
-  ) async {
+  Future<List<T>> fetchList<T>({
+    required String url,
+    required T Function(Map<String, dynamic>) fromJson,
+  }) async {
     try {
-      final response = await get(url, useBaseUrl: false);
+      final response = await get(url: url, useBaseUrl: false);
       if (response.statusCode == 200) {
         final List results = response.data["results"];
         return results.map<T>((item) => fromJson(item)).toList();
