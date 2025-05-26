@@ -6,7 +6,7 @@ import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:tmdb_web/cubit/tmdb_cubit.dart';
 import 'package:url_strategy/url_strategy.dart';
 
-import 'core/networking/router.dart';
+import 'core/routing/router.dart';
 
 void main() {
   setPathUrlStrategy();
@@ -53,7 +53,7 @@ class MyApp extends StatelessWidget {
           ),
         ),
         themeMode: ThemeMode.dark,
-        routerConfig: router,
+        routerConfig: AppRouter.router,
       ),
     );
   }
