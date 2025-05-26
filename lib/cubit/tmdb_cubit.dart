@@ -2,17 +2,17 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:tmdb_web/data/categories.dart';
-import 'package:tmdb_web/models/cast.dart';
-import 'package:tmdb_web/models/movies.dart';
-import 'package:tmdb_web/models/reviews.dart';
-import 'package:tmdb_web/models/tv.dart';
-import 'package:tmdb_web/models/popular.dart';
-import 'package:tmdb_web/data/end_points.dart';
-import 'package:tmdb_web/models/videos.dart';
-import 'package:tmdb_web/services/movies_service.dart';
-import 'package:tmdb_web/services/tv_service.dart';
-import 'package:tmdb_web/services/popular.dart';
+import 'package:tmdb_web/core/models/movies.dart';
+import 'package:tmdb_web/core/models/tv.dart';
+import 'package:tmdb_web/core/models/videos.dart';
+import 'package:tmdb_web/core/models/reviews.dart';
+import 'package:tmdb_web/core/models/cast.dart';
+import 'package:tmdb_web/core/models/popular.dart';
+import 'package:tmdb_web/core/networking//categories.dart';
+import 'package:tmdb_web/core/networking/end_points.dart';
+import 'package:tmdb_web/core/networking/movies_service.dart';
+import 'package:tmdb_web/core/networking/tv_service.dart';
+import 'package:tmdb_web/core/networking/popular.dart';
 import 'package:youtube_player_iframe/youtube_player_iframe.dart';
 
 part 'tmdb_state.dart';
@@ -49,8 +49,10 @@ class TmdbCubit extends Cubit<TmdbState> {
   }
 
   getMovies({required int page, required String category}) async {
-    moviesList = await MoviesService()
-        .getMovies(page: page, endPoint: getEndPoint(category: category, typeIndex: 0));
+    moviesList = await MoviesService().getMovies(
+      page: page,
+      endPoint: getEndPoint(category: category, typeIndex: 0),
+    );
     emit(GetMovies());
   }
 
@@ -78,8 +80,10 @@ class TmdbCubit extends Cubit<TmdbState> {
   getShows({required int page, required String category}) async {
     tvShowsList = category == "popular"
         ? await TVService().getTrendingShows(page: page)
-        : await TVService()
-        .getShows(page: page, endPoint: getEndPoint(category: category, typeIndex: 1));
+        : await TVService().getShows(
+            page: page,
+            endPoint: getEndPoint(category: category, typeIndex: 1),
+          );
     emit(GetMovies());
   }
 

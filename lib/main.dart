@@ -5,7 +5,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:tmdb_web/cubit/tmdb_cubit.dart';
 import 'package:url_strategy/url_strategy.dart';
-import 'data/router.dart';
+
+import 'core/networking/router.dart';
 
 void main() {
   setPathUrlStrategy();
@@ -20,32 +21,40 @@ class MyApp extends StatelessWidget {
     return BlocProvider(
       create: (context) => TmdbCubit(),
       child: MaterialApp.router(
-          builder: (context, child) => ResponsiveSizer(
-                builder: (context, orientation, screenType) {
-                  return child!;
-                },
-              ),
-          scrollBehavior: const MaterialScrollBehavior().copyWith(dragDevices: {
+        builder: (context, child) => ResponsiveSizer(
+          builder: (context, orientation, screenType) {
+            return child!;
+          },
+        ),
+        scrollBehavior: const MaterialScrollBehavior().copyWith(
+          dragDevices: {
             PointerDeviceKind.mouse,
             PointerDeviceKind.touch,
             PointerDeviceKind.stylus,
-            PointerDeviceKind.unknown
-          }),
-          debugShowCheckedModeBanner: false,
-          title: 'TMDB Web',
-          darkTheme: ThemeData(
-            useMaterial3: true,
-            primaryColor: const Color(0xff039ac3),
-            brightness: Brightness.dark,
-            indicatorColor: Colors.white,
-            canvasColor: Colors.black,
-            appBarTheme: const AppBarTheme(systemOverlayStyle: SystemUiOverlayStyle.light),
-            scrollbarTheme: const ScrollbarThemeData().copyWith(
-                thumbVisibility: MaterialStateProperty.all(true),
-                thumbColor: MaterialStateProperty.all(const Color(0xff039ac3).withOpacity(0.5))),
+            PointerDeviceKind.unknown,
+          },
+        ),
+        debugShowCheckedModeBanner: false,
+        title: 'TMDB Web',
+        darkTheme: ThemeData(
+          useMaterial3: true,
+          primaryColor: const Color(0xff039ac3),
+          brightness: Brightness.dark,
+          indicatorColor: Colors.white,
+          canvasColor: Colors.black,
+          appBarTheme: const AppBarTheme(
+            systemOverlayStyle: SystemUiOverlayStyle.light,
           ),
-          themeMode: ThemeMode.dark,
-          routerConfig: router),
+          scrollbarTheme: const ScrollbarThemeData().copyWith(
+            thumbVisibility: MaterialStateProperty.all(true),
+            thumbColor: MaterialStateProperty.all(
+              const Color(0xff039ac3).withOpacity(0.5),
+            ),
+          ),
+        ),
+        themeMode: ThemeMode.dark,
+        routerConfig: router,
+      ),
     );
   }
 }

@@ -1,24 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:tmdb_web/core/shared_widgets/list_widget.dart';
 import 'package:tmdb_web/cubit/tmdb_cubit.dart';
-import 'package:tmdb_web/widgets/list_widget.dart';
-import 'package:tmdb_web/widgets/app_bar.dart';
-import 'package:tmdb_web/data/categories.dart';
+import 'package:tmdb_web/core/shared_widgets/app_bar.dart';
+import 'package:tmdb_web/core/networking/categories.dart';
 import '../home_page.dart';
 
 // This is the main page
-class MoviesPage extends StatefulWidget {
+class TvPage extends StatefulWidget {
   final String page;
   final String category;
 
-  const MoviesPage({Key? key, required this.category, required this.page}) : super(key: key);
+  const TvPage({super.key, required this.category, required this.page});
 
   @override
-  State<MoviesPage> createState() => _MoviesPageState();
+  State<TvPage> createState() => _TvPageState();
 }
 
-class _MoviesPageState extends State<MoviesPage> {
+class _TvPageState extends State<TvPage> {
   late double currentWidth;
   late ThemeData theme;
   final ScrollController scrollController = ScrollController();
@@ -35,18 +35,26 @@ class _MoviesPageState extends State<MoviesPage> {
   changePage() {
     loadedPage != currentPage
         ? {
-            if ({"popular", "top_rated", "now_playing", "upcoming"}.contains(widget.category))
+            if ({
+              "popular",
+              "top_rated",
+              "airing_today",
+              "on_the_air",
+            }.contains(widget.category))
               {
                 loadedPage = int.parse(widget.page),
-                C.moviesList = [],
-                C.getMovies(page: currentPage, category: widget.category),
+                C.tvShowsList = [],
+                C.getShows(page: currentPage, category: widget.category),
               }
             else
               {
                 loadedPage = int.parse(widget.page),
-                C.moviesList = [],
-                C.getMoviesGenre(page: currentPage, genre: moviesCategories[widget.category]!),
-              }
+                C.tvShowsList = [],
+                C.getTvsGenre(
+                  page: currentPage,
+                  genre: tvCategories[widget.category]!,
+                ),
+              },
           }
         : null;
   }
@@ -63,85 +71,85 @@ class _MoviesPageState extends State<MoviesPage> {
             centerTitle: true,
             toolbarHeight: 90,
             automaticallyImplyLeading: false,
-            title: appBar(context: context),
+            title: appBar(context: context, movie: false),
             backgroundColor: theme.canvasColor,
           ),
-          body: C.moviesList.isEmpty
+          body: C.tvShowsList.isEmpty
               ? const Center(
-                  child: CircularProgressIndicator(
-                    color: Color(0xff8fcea2),
-                  ),
+                  child: CircularProgressIndicator(color: Color(0xff09b5e1)),
                 )
               : ListView(
                   physics: const BouncingScrollPhysics(),
                   cacheExtent: 3500,
                   children: [
                     listWidget(
-                      list: C.moviesList,
+                      list: C.tvShowsList,
                       scrollController: scrollController,
                     ),
                     Column(
                       children: [
                         Padding(
                           padding: const EdgeInsets.symmetric(vertical: 15.0),
-                          child: Center(
-                              child: Text(
-                            "Page $currentPage",
-                          )),
+                          child: Center(child: Text("Page $currentPage")),
                         ),
                         Padding(
-                          padding:
-                              const EdgeInsets.only(left: 8.0, right: 8.0, top: 8.0, bottom: 16.0),
+                          padding: const EdgeInsets.all(8.0),
                           child: Row(
                             mainAxisSize: MainAxisSize.max,
                             mainAxisAlignment: MainAxisAlignment.spaceAround,
                             children: [
                               OutlinedButton(
                                 style: OutlinedButton.styleFrom(
-                                  minimumSize: Size(currentWidth * 0.3, 60),
+                                  minimumSize: Size(currentWidth * 0.3, 50),
                                 ),
                                 onPressed: currentPage == 1
                                     ? null
-                                    : () {
+                                    : () async {
                                         currentPage = 1;
-                                        context.go("/movies/${widget.category}/${1}");
+                                        context.go(
+                                          "/tv/${widget.category}/${1}",
+                                        );
                                       },
-                                child: Center(
-                                  child: Icon(
-                                    Icons.home_filled,
-                                    color: currentPage == 1 ? Colors.grey : const Color(0xff8fcea2),
-                                  ),
+                                child: Icon(
+                                  Icons.home_filled,
+                                  color: currentPage == 1
+                                      ? Colors.grey
+                                      : const Color(0xff8fcea2),
                                 ),
                               ),
                               OutlinedButton(
                                 style: OutlinedButton.styleFrom(
-                                  minimumSize: Size(currentWidth * 0.3, 60),
+                                  minimumSize: Size(currentWidth * 0.3, 50),
                                 ),
                                 onPressed: currentPage == 1
                                     ? null
-                                    : () {
+                                    : () async {
                                         currentPage--;
-                                        context.go("/movies/${widget.category}/$currentPage");
+                                        context.go(
+                                          "/tv/${widget.category}/$currentPage",
+                                        );
                                       },
-                                child: Center(
-                                  child: Icon(
-                                    Icons.arrow_back,
-                                    color: currentPage == 1 ? Colors.grey : const Color(0xff8fcea2),
-                                  ),
+                                child: Icon(
+                                  Icons.arrow_back,
+                                  color: currentPage == 1
+                                      ? Colors.grey
+                                      : const Color(0xff8fcea2),
                                 ),
                               ),
                               ElevatedButton(
                                 style: ElevatedButton.styleFrom(
                                   foregroundColor: Colors.white,
                                   backgroundColor: theme.primaryColor,
-                                  minimumSize: Size(currentWidth * 0.3, 60),
+                                  minimumSize: Size(currentWidth * 0.3, 50),
                                 ),
-                                onPressed: () {
+                                onPressed: () async {
                                   currentPage++;
-                                  context.go("/movies/${widget.category}/$currentPage");
+                                  context.go(
+                                    "/tv/${widget.category}/$currentPage",
+                                  );
                                 },
-                                child: const Center(child: Icon(Icons.arrow_forward)),
-                              )
+                                child: const Icon(Icons.arrow_forward),
+                              ),
                             ],
                           ),
                         ),

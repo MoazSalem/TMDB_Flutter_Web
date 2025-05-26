@@ -5,14 +5,14 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:tmdb_web/cubit/tmdb_cubit.dart';
-import 'package:tmdb_web/widgets/suggestion_widget.dart';
-import 'package:tmdb_web/widgets/app_bar.dart';
+import 'package:tmdb_web/core/shared_widgets/suggestion_widget.dart';
+import 'package:tmdb_web/core/shared_widgets/app_bar.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
 late TmdbCubit C;
 
 class HomePage extends StatefulWidget {
-  const HomePage({Key? key}) : super(key: key);
+  const HomePage({super.key});
 
   @override
   State<HomePage> createState() => _HomePageState();

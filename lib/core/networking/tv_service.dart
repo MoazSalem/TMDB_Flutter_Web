@@ -1,16 +1,18 @@
 import 'dart:convert';
 import 'package:http/http.dart';
-import 'package:tmdb_web/models/tv.dart';
+import 'package:tmdb_web/core/models/tv.dart';
+import 'package:tmdb_web/core/models/videos.dart';
+import 'package:tmdb_web/core/models/reviews.dart';
+import 'package:tmdb_web/core/models/cast.dart';
+import 'package:tmdb_web/core/models/popular.dart';
 import 'package:tmdb_web/private.dart';
-
-import '../models/cast.dart';
-import '../models/popular.dart';
-import '../models/reviews.dart';
-import '../models/videos.dart';
 
 // This is used to get the data from the rest api endpoint
 class TVService {
-  Future<List<TvShows>> getShows({required int page, required String endPoint}) async {
+  Future<List<TvShows>> getShows({
+    required int page,
+    required String endPoint,
+  }) async {
     endPoint += "$page";
     List<TvShows> tvShows = [];
     Response response = await get(Uri.parse(endPoint));
@@ -29,7 +31,8 @@ class TVService {
   }
 
   Future<List<TvShows>> getTrendingShows({required int page}) async {
-    String endPoint = "https://api.themoviedb.org/3/trending/tv/day?api_key=$apiKey&language=en-US&page=$page";
+    String endPoint =
+        "https://api.themoviedb.org/3/trending/tv/day?api_key=$apiKey&language=en-US&page=$page";
     List<TvShows> tvShows = [];
     Response response = await get(Uri.parse(endPoint));
     if (response.statusCode == 200) {
@@ -46,7 +49,8 @@ class TVService {
   }
 
   Future<TvShows> getShow({required int id}) async {
-    String endPoint = "https://api.themoviedb.org/3/tv/$id?api_key=$apiKey&language=en-US";
+    String endPoint =
+        "https://api.themoviedb.org/3/tv/$id?api_key=$apiKey&language=en-US";
     late TvShows show;
     Response response = await get(Uri.parse(endPoint));
     if (response.statusCode == 200) {
@@ -60,7 +64,8 @@ class TVService {
   }
 
   Future<List<Cast>> getCast({required int id}) async {
-    String endPoint = "https://api.themoviedb.org/3/tv/$id/credits?api_key=$apiKey&language=en-US";
+    String endPoint =
+        "https://api.themoviedb.org/3/tv/$id/credits?api_key=$apiKey&language=en-US";
     List<Cast> casts = [];
     Response response = await get(Uri.parse(endPoint));
     if (response.statusCode == 200) {
@@ -96,7 +101,10 @@ class TVService {
     return popular;
   }
 
-  Future<List<Reviews>> getReviews({required int id, required int pageNum}) async {
+  Future<List<Reviews>> getReviews({
+    required int id,
+    required int pageNum,
+  }) async {
     String endPoint =
         "https://api.themoviedb.org/3/tv/$id/reviews?api_key=$apiKey&language=en-US&page=$pageNum";
     List<Reviews> reviews = [];
@@ -116,7 +124,8 @@ class TVService {
   }
 
   Future<Video> getVideos({required int id}) async {
-    String endPoint = "https://api.themoviedb.org/3/tv/$id/videos?api_key=$apiKey&language=en-US";
+    String endPoint =
+        "https://api.themoviedb.org/3/tv/$id/videos?api_key=$apiKey&language=en-US";
     List<Video> videos = [];
     Response response = await get(Uri.parse(endPoint));
     if (response.statusCode == 200) {
@@ -128,8 +137,10 @@ class TVService {
     } else {
       throw Exception();
     }
-    Video trailer =
-        videos.firstWhere((element) => element.type == "Trailer", orElse: () => emptyVideo);
+    Video trailer = videos.firstWhere(
+      (element) => element.type == "Trailer",
+      orElse: () => emptyVideo,
+    );
     return trailer;
   }
 
@@ -152,7 +163,10 @@ class TVService {
     return tvShows;
   }
 
-  Future<List<TvShows>> getGenre({required int page, required int genre}) async {
+  Future<List<TvShows>> getGenre({
+    required int page,
+    required int genre,
+  }) async {
     String endPoint =
         "https://api.themoviedb.org/3/discover/tv?api_key=$apiKey&language=en-US&sort_by=popularity.desc&page=$page&with_genres=$genre";
     List<TvShows> tvShows = [];

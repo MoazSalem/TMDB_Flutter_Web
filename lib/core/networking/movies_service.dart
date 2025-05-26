@@ -1,15 +1,18 @@
 import 'dart:convert';
 import 'package:http/http.dart';
-import 'package:tmdb_web/models/cast.dart';
-import 'package:tmdb_web/models/movies.dart';
-import 'package:tmdb_web/models/popular.dart';
-import 'package:tmdb_web/models/reviews.dart';
-import 'package:tmdb_web/models/videos.dart';
+import 'package:tmdb_web/core/models/movies.dart';
+import 'package:tmdb_web/core/models/videos.dart';
+import 'package:tmdb_web/core/models/reviews.dart';
+import 'package:tmdb_web/core/models/cast.dart';
+import 'package:tmdb_web/core/models/popular.dart';
 import 'package:tmdb_web/private.dart';
 
 // This is used to get the data from the rest api endpoint
 class MoviesService {
-  Future<List<Movie>> getMovies({required int page, required String endPoint}) async {
+  Future<List<Movie>> getMovies({
+    required int page,
+    required String endPoint,
+  }) async {
     endPoint += "$page";
     List<Movie> movies = [];
     Response response = await get(Uri.parse(endPoint));
@@ -28,7 +31,8 @@ class MoviesService {
   }
 
   Future<Movie> getMovie({required int id}) async {
-    String endPoint = "https://api.themoviedb.org/3/movie/$id?api_key=$apiKey&language=en-US";
+    String endPoint =
+        "https://api.themoviedb.org/3/movie/$id?api_key=$apiKey&language=en-US";
     late Movie movie;
     Response response = await get(Uri.parse(endPoint));
     if (response.statusCode == 200) {
@@ -79,7 +83,10 @@ class MoviesService {
     return popular;
   }
 
-  Future<List<Reviews>> getReviews({required int id, required int pageNum}) async {
+  Future<List<Reviews>> getReviews({
+    required int id,
+    required int pageNum,
+  }) async {
     String endPoint =
         "https://api.themoviedb.org/3/movie/$id/reviews?api_key=$apiKey&language=en-US&page=$pageNum";
     List<Reviews> reviews = [];
@@ -112,8 +119,10 @@ class MoviesService {
     } else {
       throw Exception();
     }
-    Video trailer =
-        videos.firstWhere((element) => element.type == "Trailer", orElse: () => emptyVideo);
+    Video trailer = videos.firstWhere(
+      (element) => element.type == "Trailer",
+      orElse: () => emptyVideo,
+    );
     return trailer;
   }
 
