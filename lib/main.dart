@@ -7,8 +7,12 @@ import 'package:tmdb_web/core/routing/router.dart';
 import 'package:tmdb_web/cubit/tmdb_cubit.dart';
 import 'package:url_strategy/url_strategy.dart';
 
-void main() {
+import 'core/di/dependency_injection.dart';
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   setPathUrlStrategy();
+  await setupGetIt();
   runApp(const MyApp());
 }
 

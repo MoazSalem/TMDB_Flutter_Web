@@ -1,5 +1,6 @@
 import 'dart:convert';
-import 'package:http/http.dart';
+import 'package:dio/dio.dart';
+import 'package:get_it/get_it.dart';
 import 'package:tmdb_web/core/models/movies.dart';
 import 'package:tmdb_web/core/models/videos.dart';
 import 'package:tmdb_web/core/models/reviews.dart';
@@ -9,15 +10,16 @@ import 'package:tmdb_web/private.dart';
 
 // This is used to get the data from the rest api endpoint
 class MoviesService {
+  Dio dio = GetIt.I.get<Dio>();
   Future<List<Movie>> getMovies({
     required int page,
     required String endPoint,
   }) async {
     endPoint += "$page";
     List<Movie> movies = [];
-    Response response = await get(Uri.parse(endPoint));
+    Response response = await dio.get(endPoint);
     if (response.statusCode == 200) {
-      var body = jsonDecode(response.body);
+      var body = response.data;
       // movies are called results in the api
       body["results"].forEach((movieData) {
         Movie newMovie = Movie.fromJson(movieData);
@@ -34,9 +36,9 @@ class MoviesService {
     String endPoint =
         "https://api.themoviedb.org/3/movie/$id?api_key=$apiKey&language=en-US";
     late Movie movie;
-    Response response = await get(Uri.parse(endPoint));
+    Response response = await dio.get(endPoint);
     if (response.statusCode == 200) {
-      var body = jsonDecode(response.body);
+      var body = response.data;
       // movies are called results in the api
       movie = Movie.fromJson(body);
     } else {
@@ -49,9 +51,9 @@ class MoviesService {
     String endPoint =
         "https://api.themoviedb.org/3/movie/$id/credits?api_key=$apiKey&language=en-US";
     List<Cast> casts = [];
-    Response response = await get(Uri.parse(endPoint));
+    Response response = await dio.get(endPoint);
     if (response.statusCode == 200) {
-      var body = jsonDecode(response.body);
+      var body = response.data;
       body["cast"].forEach((castData) {
         Cast newCast = Cast.fromJson(castData);
         casts.add(newCast);
@@ -68,9 +70,9 @@ class MoviesService {
     String endPoint =
         "https://api.themoviedb.org/3/movie/$id/${types[type]}?api_key=$apiKey&language=en-US";
     List<Results> popular = [];
-    Response response = await get(Uri.parse(endPoint));
+    Response response = await dio.get(endPoint);
     if (response.statusCode == 200) {
-      var body = jsonDecode(response.body);
+      var body = response.data;
       // movies are called results in the api
       body["results"].forEach((movieData) {
         Results newSomething = Results.fromJson(movieData);
@@ -90,9 +92,9 @@ class MoviesService {
     String endPoint =
         "https://api.themoviedb.org/3/movie/$id/reviews?api_key=$apiKey&language=en-US&page=$pageNum";
     List<Reviews> reviews = [];
-    Response response = await get(Uri.parse(endPoint));
+    Response response = await dio.get(endPoint);
     if (response.statusCode == 200) {
-      var body = jsonDecode(response.body);
+      var body = response.data;
       // reviews are called results in the api
       body["results"].forEach((reviewData) {
         Reviews review = Reviews.fromJson(reviewData);
@@ -109,9 +111,9 @@ class MoviesService {
     String endPoint =
         "https://api.themoviedb.org/3/movie/$id/videos?api_key=$apiKey&language=en-US";
     List<Video> videos = [];
-    Response response = await get(Uri.parse(endPoint));
+    Response response = await dio.get(endPoint);
     if (response.statusCode == 200) {
-      var body = jsonDecode(response.body);
+      var body = response.data;
       body["results"].forEach((videoData) {
         Video aVideo = Video.fromJson(videoData);
         videos.add(aVideo);
@@ -130,9 +132,9 @@ class MoviesService {
     String endPoint =
         "https://api.themoviedb.org/3/search/movie?api_key=$apiKey&language=en-US&query=$query";
     List<Movie> movies = [];
-    Response response = await get(Uri.parse(endPoint));
+    Response response = await dio.get(endPoint);
     if (response.statusCode == 200) {
-      var body = jsonDecode(response.body);
+      var body = response.data;
       // movies are called results in the api
       body["results"].forEach((movieData) {
         Movie newMovie = Movie.fromJson(movieData);
@@ -149,9 +151,9 @@ class MoviesService {
     String endPoint =
         "https://api.themoviedb.org/3/discover/movie?api_key=$apiKey&language=en-US&sort_by=popularity.desc&page=$page&with_genres=$genre";
     List<Movie> movies = [];
-    Response response = await get(Uri.parse(endPoint));
+    Response response = await dio.get(endPoint);
     if (response.statusCode == 200) {
-      var body = jsonDecode(response.body);
+      var body = response.data;
       // movies are called results in the api
       body["results"].forEach((movieData) {
         Movie newMovie = Movie.fromJson(movieData);
