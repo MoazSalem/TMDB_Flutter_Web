@@ -29,9 +29,6 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     super.initState();
     C = TmdbCubit.get(context);
-    C.getPopular();
-    C.getMovies(page: 1, category: "popular");
-    C.getShows(page: 1, category: "popular");
   }
 
   // This is left to update the ui when the size changes
