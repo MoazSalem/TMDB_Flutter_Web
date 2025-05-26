@@ -2,5 +2,4 @@ package com.moazsalem.tmdb_web
 
 import io.flutter.embedding.android.FlutterActivity
 
-class MainActivity: FlutterActivity() {
-}
+class MainActivity : FlutterActivity()
