@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:tmdb_web/core/networking/constants.dart';
 import 'package:tmdb_web/cubit/tmdb_cubit.dart';
 import 'package:tmdb_web/core/shared_widgets/list_widget.dart';
 import 'package:tmdb_web/core/shared_widgets/app_bar.dart';
-import 'package:tmdb_web/core/networking/categories.dart';
-import '../home_page.dart';
+import 'package:tmdb_web/features/home/home_page.dart';
 
-// This is the main page
 class MoviesPage extends StatefulWidget {
   final String page;
   final String category;
@@ -52,7 +51,7 @@ class _MoviesPageState extends State<MoviesPage> {
                 C.moviesList = [],
                 C.getMoviesGenre(
                   page: currentPage,
-                  genre: moviesCategories[widget.category]!,
+                  genre: Constants.categoriesMovies[widget.category]!,
                 ),
               },
           }

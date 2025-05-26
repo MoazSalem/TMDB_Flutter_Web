@@ -4,7 +4,7 @@ import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:tmdb_web/cubit/tmdb_cubit.dart';
 import 'package:tmdb_web/core/shared_widgets/app_bar.dart';
 import 'package:tmdb_web/core/shared_widgets/list_widget.dart';
-import 'home_page.dart';
+import 'package:tmdb_web/features/home/home_page.dart';
 
 class SearchPage extends StatefulWidget {
   final bool movie;

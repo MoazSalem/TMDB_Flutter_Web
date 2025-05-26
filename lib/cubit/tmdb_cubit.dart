@@ -1,5 +1,3 @@
-// ignore_for_file: invalid_use_of_visible_for_testing_member
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tmdb_web/core/models/movies.dart';
@@ -8,8 +6,7 @@ import 'package:tmdb_web/core/models/videos.dart';
 import 'package:tmdb_web/core/models/reviews.dart';
 import 'package:tmdb_web/core/models/cast.dart';
 import 'package:tmdb_web/core/models/popular.dart';
-import 'package:tmdb_web/core/networking//categories.dart';
-import 'package:tmdb_web/core/networking/end_points.dart';
+import 'package:tmdb_web/core/networking/constants.dart';
 import 'package:tmdb_web/core/networking/movies_service.dart';
 import 'package:tmdb_web/core/networking/tv_service.dart';
 import 'package:tmdb_web/core/networking/popular.dart';
@@ -20,8 +17,8 @@ part 'tmdb_state.dart';
 class TmdbCubit extends Cubit<TmdbState> {
   static TmdbCubit get(context) => BlocProvider.of(context);
   TmdbCubit() : super(TmdbInitial());
-  List<String> moviesGenres = moviesCategoriesN;
-  List<String> tvGenres = tvCategoriesN;
+  List<String> moviesGenres = Constants.categoriesNamesMovies;
+  List<String> tvGenres = Constants.categoriesNamesTv;
   List<Movie> searchedMovies = [];
   List<TvShows> searchedShows = [];
   List<Results> popular = [];
@@ -51,7 +48,7 @@ class TmdbCubit extends Cubit<TmdbState> {
   getMovies({required int page, required String category}) async {
     moviesList = await MoviesService().getMovies(
       page: page,
-      endPoint: getEndPoint(category: category, typeIndex: 0),
+      endPoint: Constants.getEndPoint(category: category, typeIndex: 0),
     );
     emit(GetMovies());
   }
@@ -82,7 +79,7 @@ class TmdbCubit extends Cubit<TmdbState> {
         ? await TVService().getTrendingShows(page: page)
         : await TVService().getShows(
             page: page,
-            endPoint: getEndPoint(category: category, typeIndex: 1),
+            endPoint: Constants.getEndPoint(category: category, typeIndex: 1),
           );
     emit(GetMovies());
   }

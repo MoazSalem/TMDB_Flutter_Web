@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:tmdb_web/features/home_page.dart';
+import 'package:tmdb_web/features/home/home_page.dart';
 import 'package:tmdb_web/features/movies/movies_page.dart';
 import 'package:tmdb_web/features/movies/movie_info.dart';
 import 'package:tmdb_web/features/search_page.dart';

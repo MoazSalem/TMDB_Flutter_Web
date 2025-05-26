@@ -3,10 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
+import 'package:tmdb_web/core/routing/router.dart';
 import 'package:tmdb_web/cubit/tmdb_cubit.dart';
 import 'package:url_strategy/url_strategy.dart';
-
-import 'core/routing/router.dart';
 
 void main() {
   setPathUrlStrategy();

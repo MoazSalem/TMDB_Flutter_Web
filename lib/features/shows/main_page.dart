@@ -4,7 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:tmdb_web/cubit/tmdb_cubit.dart';
 import 'package:tmdb_web/core/shared_widgets/app_bar.dart';
-import 'package:tmdb_web/features/home_page.dart';
+import 'package:tmdb_web/features/home/home_page.dart';
 
 class MainTv extends StatefulWidget {
   const MainTv({super.key});

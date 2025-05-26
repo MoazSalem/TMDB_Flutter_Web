@@ -11,7 +11,7 @@ import 'package:tmdb_web/core/shared_widgets/suggestion_widget.dart';
 import 'package:tmdb_web/core/shared_widgets/actor_widget.dart';
 import 'package:tmdb_web/core/shared_widgets/categories_widget.dart';
 import 'package:tmdb_web/core/shared_widgets/review_widget.dart';
-import 'package:tmdb_web/features/home_page.dart';
+import 'package:tmdb_web/features/home/home_page.dart';
 
 // This page is opened when you press on a tv show
 class TvInfo extends StatefulWidget {
