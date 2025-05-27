@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
-import 'package:tmdb_web/cubit/tmdb_cubit.dart';
 import 'package:tmdb_web/core/shared_widgets/app_bar.dart';
 import 'package:tmdb_web/core/shared_widgets/list_widget.dart';
-import 'package:tmdb_web/features/home/home_page.dart';
+import 'package:tmdb_web/features/search/logic/search_cubit.dart';
 
 class SearchPage extends StatefulWidget {
   final bool movie;
@@ -29,7 +28,7 @@ class _SearchPageState extends State<SearchPage> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<TmdbCubit, TmdbState>(
+    return BlocBuilder<SearchCubit, SearchState>(
       builder: (context, state) {
         return Scaffold(
           backgroundColor: Colors.black,
@@ -51,9 +50,10 @@ class _SearchPageState extends State<SearchPage> {
                   child: TextFormField(
                     controller: widget.movie ? moviesSearch : tvSearch,
                     onChanged: (query) {
-                      widget.movie
-                          ? C.searchMovies(query: query)
-                          : C.searchShows(query: query);
+                      context.read<SearchCubit>().search(
+                        query: query,
+                        type: widget.movie ? 0 : 1,
+                      );
                     },
                     autofocus: true,
                     maxLines: 1,
@@ -80,17 +80,22 @@ class _SearchPageState extends State<SearchPage> {
                   ),
                 ),
               ),
-              (widget.movie
-                      ? C.searchedMovies.isEmpty
-                      : C.searchedShows.isEmpty)
-                  ? const SizedBox(
+              state is SearchLoading
+                  ? SizedBox(
                       height: 400,
-                      child: Center(child: Text("No Results")),
+                      child: const Center(child: CircularProgressIndicator()),
                     )
-                  : listWidget(
-                      list: widget.movie ? C.searchedMovies : C.searchedShows,
-                      scrollController: scrollController,
-                    ),
+                  : state is SearchLoaded
+                  ? state.searchResult.isEmpty
+                        ? const SizedBox(
+                            height: 400,
+                            child: Center(child: Text("No Results")),
+                          )
+                        : listWidget(
+                            list: state.searchResult,
+                            scrollController: scrollController,
+                          )
+                  : const Center(child: CircularProgressIndicator()),
             ],
           ),
         );

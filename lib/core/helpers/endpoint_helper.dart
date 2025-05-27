@@ -6,7 +6,8 @@ class EndpointHelper {
     int? typeIndex,
     required String category,
     int? page,
+    String? query,
   }) {
-    return "${Constants.baseUrl}${typeIndex != null ? Constants.types[typeIndex] : ''}$category?api_key=$apiKey&language=en-US${page != null ? '&page=$page' : ''}";
+    return "${Constants.baseUrl}${typeIndex != null ? Constants.types[typeIndex] : ''}$category?api_key=$apiKey&language=en-US${query != null ? '&query=$query' : ''}${page != null ? '&page=$page' : ''}";
   }
 }

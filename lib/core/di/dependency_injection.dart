@@ -4,8 +4,10 @@ import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 import 'package:tmdb_web/core/networking/api_service.dart';
 import 'package:tmdb_web/features/home/data/repo/home_repo.dart';
 import 'package:tmdb_web/features/home/logic/home_cubit.dart';
-import 'package:tmdb_web/features/movies/movies_categories_list/data/repo/movies_list_repo.dart';
-import 'package:tmdb_web/features/movies/movies_categories_list/logic/movies_list_cubit.dart';
+import 'package:tmdb_web/features/movies/movies_list/data/repo/movies_list_repo.dart';
+import 'package:tmdb_web/features/movies/movies_list/logic/movies_list_cubit.dart';
+import 'package:tmdb_web/features/search/data/repo/search_repo.dart';
+import 'package:tmdb_web/features/search/logic/search_cubit.dart';
 import 'package:tmdb_web/features/shows/shows_list/data/repo/shows_list_repo.dart';
 import 'package:tmdb_web/features/shows/shows_list/logic/shows_list_cubit.dart';
 
@@ -41,4 +43,8 @@ Future<void> setupGetIt() async {
   );
 
   getIt.registerFactory<ShowsListCubit>(() => ShowsListCubit());
+
+  getIt.registerFactory<SearchRepo>(() => SearchRepo(getIt.get<ApiService>()));
+
+  getIt.registerFactory<SearchCubit>(() => SearchCubit());
 }

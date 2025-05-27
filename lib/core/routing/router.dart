@@ -4,9 +4,10 @@ import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
 import 'package:tmdb_web/features/home/home_page.dart';
 import 'package:tmdb_web/features/home/logic/home_cubit.dart';
-import 'package:tmdb_web/features/movies/movies_categories_list/logic/movies_list_cubit.dart';
-import 'package:tmdb_web/features/movies/movies_categories_list/movies_list.dart';
+import 'package:tmdb_web/features/movies/movies_list/logic/movies_list_cubit.dart';
+import 'package:tmdb_web/features/movies/movies_list/movies_list.dart';
 import 'package:tmdb_web/features/movies/movie_detail/movie_details.dart';
+import 'package:tmdb_web/features/search/logic/search_cubit.dart';
 import 'package:tmdb_web/features/search/search_page.dart';
 import 'package:tmdb_web/features/shows/shows_categories/shows_categories.dart';
 import 'package:tmdb_web/features/shows/show_detail/show_detail.dart';
@@ -33,7 +34,10 @@ class AppRouter {
               GoRoute(
                 path: "search",
                 builder: (BuildContext context, GoRouterState state) =>
-                    const SearchPage(movie: true),
+                    BlocProvider(
+                      create: (context) => SearchCubit(),
+                      child: SearchPage(movie: true),
+                    ),
               ),
               GoRoute(
                 path: ":genre/:page",
@@ -63,7 +67,10 @@ class AppRouter {
               GoRoute(
                 path: "search",
                 builder: (BuildContext context, GoRouterState state) =>
-                    const SearchPage(movie: false),
+                    BlocProvider(
+                      create: (context) => SearchCubit(),
+                      child: SearchPage(movie: false),
+                    ),
               ),
               GoRoute(
                 path: ":genre/:page",

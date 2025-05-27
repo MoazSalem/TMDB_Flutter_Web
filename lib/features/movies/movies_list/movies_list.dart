@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:tmdb_web/core/shared_widgets/list_widget.dart';
 import 'package:tmdb_web/core/shared_widgets/app_bar.dart';
-import 'package:tmdb_web/features/movies/movies_categories_list/logic/movies_list_cubit.dart';
+import 'package:tmdb_web/features/movies/movies_list/logic/movies_list_cubit.dart';
 
 class MoviesListPage extends StatefulWidget {
   const MoviesListPage({super.key});
