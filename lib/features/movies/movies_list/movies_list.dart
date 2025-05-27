@@ -96,7 +96,7 @@ class _MoviesListPageState extends State<MoviesListPage> {
                                 onPressed: state.currentPage == 1
                                     ? null
                                     : () {
-                                        context.push(
+                                        context.go(
                                           "/movies/${state.category}/${state.currentPage - 1}",
                                         );
                                       },
@@ -116,7 +116,7 @@ class _MoviesListPageState extends State<MoviesListPage> {
                                   minimumSize: Size(currentWidth * 0.3, 60),
                                 ),
                                 onPressed: () {
-                                  context.push(
+                                  context.go(
                                     "/movies/${state.category}/${state.currentPage + 1}",
                                   );
                                 },
