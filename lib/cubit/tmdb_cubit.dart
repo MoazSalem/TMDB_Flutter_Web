@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:tmdb_web/core/helpers/endpoint_helper.dart';
 import 'package:tmdb_web/core/models/movie.dart';
 import 'package:tmdb_web/core/models/show.dart';
 import 'package:tmdb_web/core/models/videos.dart';
@@ -48,7 +49,7 @@ class TmdbCubit extends Cubit<TmdbState> {
   getMovies({required int page, required String category}) async {
     moviesList = await MoviesService().getMovies(
       page: page,
-      endPoint: Constants.getEndPoint(category: category, typeIndex: 0),
+      endPoint: EndpointHelper.getEndPoint(category: category, typeIndex: 0),
     );
     emit(GetMovies());
   }
@@ -79,7 +80,10 @@ class TmdbCubit extends Cubit<TmdbState> {
         ? await TVService().getTrendingShows(page: page)
         : await TVService().getShows(
             page: page,
-            endPoint: Constants.getEndPoint(category: category, typeIndex: 1),
+            endPoint: EndpointHelper.getEndPoint(
+              category: category,
+              typeIndex: 1,
+            ),
           );
     emit(GetMovies());
   }

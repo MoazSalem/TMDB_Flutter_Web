@@ -3,14 +3,7 @@ import 'package:tmdb_web/private.dart';
 class Constants {
   static const String baseUrl = "https://api.themoviedb.org/3/";
 
-  static List<String> types = ["movie", "tv"];
-
-  static String getEndPoint({
-    required int typeIndex,
-    required String category,
-  }) {
-    return "$baseUrl${types[typeIndex]}/$category?api_key=$apiKey&language=en-US&page=";
-  }
+  static List<String> types = ["movie/", "tv/"];
 
   static Map<String, int> categoriesMovies = {
     "action": 28,
