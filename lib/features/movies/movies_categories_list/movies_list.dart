@@ -3,16 +3,16 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:tmdb_web/core/shared_widgets/list_widget.dart';
 import 'package:tmdb_web/core/shared_widgets/app_bar.dart';
-import 'package:tmdb_web/features/movies/movies_categories_list/logic/movies_categories_cubit.dart';
+import 'package:tmdb_web/features/movies/movies_categories_list/logic/movies_list_cubit.dart';
 
-class MoviesPage extends StatefulWidget {
-  const MoviesPage({super.key});
+class MoviesListPage extends StatefulWidget {
+  const MoviesListPage({super.key});
 
   @override
-  State<MoviesPage> createState() => _MoviesPageState();
+  State<MoviesListPage> createState() => _MoviesListPageState();
 }
 
-class _MoviesPageState extends State<MoviesPage> {
+class _MoviesListPageState extends State<MoviesListPage> {
   late double currentWidth;
   late ThemeData theme;
   final ScrollController scrollController = ScrollController();
@@ -26,7 +26,7 @@ class _MoviesPageState extends State<MoviesPage> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<MoviesCategoriesCubit, MoviesCategoriesState>(
+    return BlocBuilder<MoviesListCubit, MoviesListState>(
       builder: (context, state) {
         return Scaffold(
           backgroundColor: theme.canvasColor,
@@ -37,11 +37,11 @@ class _MoviesPageState extends State<MoviesPage> {
             title: appBar(context: context),
             backgroundColor: theme.canvasColor,
           ),
-          body: state is MoviesCategoriesLoading
+          body: state is MoviesListLoading
               ? const Center(
                   child: CircularProgressIndicator(color: Color(0xff8fcea2)),
                 )
-              : state is MoviesCategoriesLoaded
+              : state is MoviesListLoaded
               ? ListView(
                   physics: const BouncingScrollPhysics(),
                   cacheExtent: 3500,
@@ -77,7 +77,7 @@ class _MoviesPageState extends State<MoviesPage> {
                                     ? null
                                     : () {
                                         context.go(
-                                          "/movies/${state.category}/${1}",
+                                          "/movies/${state.category}/1",
                                         );
                                       },
                                 child: Center(

@@ -4,8 +4,10 @@ import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 import 'package:tmdb_web/core/networking/api_service.dart';
 import 'package:tmdb_web/features/home/data/repo/home_repo.dart';
 import 'package:tmdb_web/features/home/logic/home_cubit.dart';
-import 'package:tmdb_web/features/movies/movies_categories_list/data/repo/movies_categories_repo.dart';
-import 'package:tmdb_web/features/movies/movies_categories_list/logic/movies_categories_cubit.dart';
+import 'package:tmdb_web/features/movies/movies_categories_list/data/repo/movies_list_repo.dart';
+import 'package:tmdb_web/features/movies/movies_categories_list/logic/movies_list_cubit.dart';
+import 'package:tmdb_web/features/shows/shows_list/data/repo/shows_list_repo.dart';
+import 'package:tmdb_web/features/shows/shows_list/logic/shows_list_cubit.dart';
 
 final getIt = GetIt.instance;
 
@@ -28,9 +30,15 @@ Future<void> setupGetIt() async {
 
   getIt.registerLazySingleton<HomeCubit>(() => HomeCubit());
 
-  getIt.registerFactory<MoviesCategoriesRepo>(
-    () => MoviesCategoriesRepo(getIt.get<ApiService>()),
+  getIt.registerFactory<MoviesListRepo>(
+    () => MoviesListRepo(getIt.get<ApiService>()),
   );
 
-  getIt.registerFactory<MoviesCategoriesCubit>(() => MoviesCategoriesCubit());
+  getIt.registerFactory<MoviesListCubit>(() => MoviesListCubit());
+
+  getIt.registerFactory<ShowsListRepo>(
+    () => ShowsListRepo(getIt.get<ApiService>()),
+  );
+
+  getIt.registerFactory<ShowsListCubit>(() => ShowsListCubit());
 }

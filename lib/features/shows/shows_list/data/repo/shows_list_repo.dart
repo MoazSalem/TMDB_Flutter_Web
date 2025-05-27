@@ -1,21 +1,21 @@
 import 'package:tmdb_web/core/helpers/endpoint_helper.dart';
-import 'package:tmdb_web/core/models/movie.dart';
+import 'package:tmdb_web/core/models/show.dart';
 import 'package:tmdb_web/core/networking/api_service.dart';
 
-class MoviesCategoriesRepo {
+class ShowsListRepo {
   final ApiService _apiService;
 
-  MoviesCategoriesRepo(this._apiService);
+  ShowsListRepo(this._apiService);
 
-  Future<List<Movie>> getMovies({
+  Future<List<Show>> getShows({
     required String category,
     required int currentPage,
   }) => _apiService.fetchList(
     url: EndpointHelper.getEndPoint(
       category: category,
-      typeIndex: 0,
+      typeIndex: 1,
       page: currentPage,
     ),
-    fromJson: (json) => Movie.fromJson(json),
+    fromJson: (json) => Show.fromJson(json),
   );
 }

@@ -1,17 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:tmdb_web/core/networking/constants.dart';
 import 'package:tmdb_web/core/shared_widgets/list_widget.dart';
-import 'package:tmdb_web/cubit/tmdb_cubit.dart';
 import 'package:tmdb_web/core/shared_widgets/app_bar.dart';
-import 'package:tmdb_web/features/home/home_page.dart';
+import 'package:tmdb_web/features/shows/shows_list/logic/shows_list_cubit.dart';
 
 class TvPage extends StatefulWidget {
-  final String page;
-  final String category;
-
-  const TvPage({super.key, required this.category, required this.page});
+  const TvPage({super.key});
 
   @override
   State<TvPage> createState() => _TvPageState();
@@ -21,8 +16,6 @@ class _TvPageState extends State<TvPage> {
   late double currentWidth;
   late ThemeData theme;
   final ScrollController scrollController = ScrollController();
-  int currentPage = 1;
-  int loadedPage = 0;
 
   @override
   void didChangeDependencies() {
@@ -31,39 +24,10 @@ class _TvPageState extends State<TvPage> {
     theme = Theme.of(context);
   }
 
-  changePage() {
-    loadedPage != currentPage
-        ? {
-            if ({
-              "popular",
-              "top_rated",
-              "airing_today",
-              "on_the_air",
-            }.contains(widget.category))
-              {
-                loadedPage = int.parse(widget.page),
-                C.tvShowsList = [],
-                C.getShows(page: currentPage, category: widget.category),
-              }
-            else
-              {
-                loadedPage = int.parse(widget.page),
-                C.tvShowsList = [],
-                C.getTvsGenre(
-                  page: currentPage,
-                  genre: Constants.categoriesTv[widget.category]!,
-                ),
-              },
-          }
-        : null;
-  }
-
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<TmdbCubit, TmdbState>(
+    return BlocBuilder<ShowsListCubit, ShowsListState>(
       builder: (context, state) {
-        currentPage = int.parse(widget.page);
-        changePage();
         return Scaffold(
           backgroundColor: theme.canvasColor,
           appBar: AppBar(
@@ -73,23 +37,26 @@ class _TvPageState extends State<TvPage> {
             title: appBar(context: context, movie: false),
             backgroundColor: theme.canvasColor,
           ),
-          body: C.tvShowsList.isEmpty
+          body: state is ShowsListLoading
               ? const Center(
                   child: CircularProgressIndicator(color: Color(0xff09b5e1)),
                 )
-              : ListView(
+              : state is ShowsListLoaded
+              ? ListView(
                   physics: const BouncingScrollPhysics(),
                   cacheExtent: 3500,
                   children: [
                     listWidget(
-                      list: C.tvShowsList,
+                      list: state.shows,
                       scrollController: scrollController,
                     ),
                     Column(
                       children: [
                         Padding(
                           padding: const EdgeInsets.symmetric(vertical: 15.0),
-                          child: Center(child: Text("Page $currentPage")),
+                          child: Center(
+                            child: Text("Page ${state.currentPage}"),
+                          ),
                         ),
                         Padding(
                           padding: const EdgeInsets.all(8.0),
@@ -101,17 +68,14 @@ class _TvPageState extends State<TvPage> {
                                 style: OutlinedButton.styleFrom(
                                   minimumSize: Size(currentWidth * 0.3, 50),
                                 ),
-                                onPressed: currentPage == 1
+                                onPressed: state.currentPage == 1
                                     ? null
                                     : () async {
-                                        currentPage = 1;
-                                        context.go(
-                                          "/tv/${widget.category}/${1}",
-                                        );
+                                        context.go("/tv/${state.category}/1");
                                       },
                                 child: Icon(
                                   Icons.home_filled,
-                                  color: currentPage == 1
+                                  color: state.currentPage == 1
                                       ? Colors.grey
                                       : const Color(0xff8fcea2),
                                 ),
@@ -120,17 +84,16 @@ class _TvPageState extends State<TvPage> {
                                 style: OutlinedButton.styleFrom(
                                   minimumSize: Size(currentWidth * 0.3, 50),
                                 ),
-                                onPressed: currentPage == 1
+                                onPressed: state.currentPage == 1
                                     ? null
                                     : () async {
-                                        currentPage--;
                                         context.go(
-                                          "/tv/${widget.category}/$currentPage",
+                                          "/tv/${state.category}/${state.currentPage - 1}",
                                         );
                                       },
                                 child: Icon(
                                   Icons.arrow_back,
-                                  color: currentPage == 1
+                                  color: state.currentPage == 1
                                       ? Colors.grey
                                       : const Color(0xff8fcea2),
                                 ),
@@ -142,9 +105,8 @@ class _TvPageState extends State<TvPage> {
                                   minimumSize: Size(currentWidth * 0.3, 50),
                                 ),
                                 onPressed: () async {
-                                  currentPage++;
                                   context.go(
-                                    "/tv/${widget.category}/$currentPage",
+                                    "/tv/${state.category}/${state.currentPage + 1}",
                                   );
                                 },
                                 child: const Icon(Icons.arrow_forward),
@@ -155,7 +117,8 @@ class _TvPageState extends State<TvPage> {
                       ],
                     ),
                   ],
-                ),
+                )
+              : const Center(child: CircularProgressIndicator()),
         );
       },
     );

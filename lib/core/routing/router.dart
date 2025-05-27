@@ -4,14 +4,15 @@ import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
 import 'package:tmdb_web/features/home/home_page.dart';
 import 'package:tmdb_web/features/home/logic/home_cubit.dart';
-import 'package:tmdb_web/features/movies/movies_categories_list/logic/movies_categories_cubit.dart';
-import 'package:tmdb_web/features/movies/movies_categories_list/movies_categories_list.dart';
+import 'package:tmdb_web/features/movies/movies_categories_list/logic/movies_list_cubit.dart';
+import 'package:tmdb_web/features/movies/movies_categories_list/movies_list.dart';
 import 'package:tmdb_web/features/movies/movie_detail/movie_details.dart';
 import 'package:tmdb_web/features/search/search_page.dart';
 import 'package:tmdb_web/features/shows/shows_categories/shows_categories.dart';
-import 'package:tmdb_web/features/shows/shows_categories_list/shows_categories_list.dart';
 import 'package:tmdb_web/features/shows/show_detail/show_detail.dart';
 import 'package:tmdb_web/features/movies/movies_categories/movies_categories.dart';
+import 'package:tmdb_web/features/shows/shows_list/logic/shows_list_cubit.dart';
+import 'package:tmdb_web/features/shows/shows_list/shows_list.dart';
 
 class AppRouter {
   static final GoRouter _router = GoRouter(
@@ -38,13 +39,13 @@ class AppRouter {
                 path: ":genre/:page",
                 builder: (BuildContext context, GoRouterState state) =>
                     BlocProvider(
-                      create: (context) => GetIt.I.get<MoviesCategoriesCubit>()
+                      create: (context) => GetIt.I.get<MoviesListCubit>()
                         ..getMovies(
                           category: state.pathParameters['genre']!,
                           currentPage: int.parse(state.pathParameters['page']!),
                         ),
                       key: ValueKey(state.pathParameters['page']!),
-                      child: MoviesPage(),
+                      child: MoviesListPage(),
                     ),
               ),
               GoRoute(
@@ -66,10 +67,16 @@ class AppRouter {
               ),
               GoRoute(
                 path: ":genre/:page",
-                builder: (BuildContext context, GoRouterState state) => TvPage(
-                  page: state.pathParameters['page']!,
-                  category: state.pathParameters['genre']!,
-                ),
+                builder: (BuildContext context, GoRouterState state) =>
+                    BlocProvider(
+                      create: (context) => ShowsListCubit()
+                        ..getShows(
+                          category: state.pathParameters['genre']!,
+                          currentPage: int.parse(state.pathParameters['page']!),
+                        ),
+                      key: ValueKey(state.pathParameters['page']!),
+                      child: TvPage(),
+                    ),
               ),
               GoRoute(
                 path: ":id",
