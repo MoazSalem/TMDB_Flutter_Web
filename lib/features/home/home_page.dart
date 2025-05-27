@@ -4,13 +4,10 @@ import 'package:go_router/go_router.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:tmdb_web/cubit/tmdb_cubit.dart';
 import 'package:tmdb_web/core/shared_widgets/suggestion_widget.dart';
 import 'package:tmdb_web/core/shared_widgets/app_bar.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:tmdb_web/features/home/logic/home_cubit.dart';
-
-late TmdbCubit C;
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -24,12 +21,6 @@ class _HomePageState extends State<HomePage> {
   int _current = 0;
   final TextEditingController searchC = TextEditingController();
   final CarouselSliderController _controller = CarouselSliderController();
-
-  @override
-  void initState() {
-    super.initState();
-    C = TmdbCubit.get(context);
-  }
 
   // This is left to update the ui when the size changes
   @override

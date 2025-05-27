@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
+import 'package:tmdb_web/core/networking/constants.dart';
 import 'package:tmdb_web/cubit/tmdb_cubit.dart';
 import 'package:tmdb_web/core/shared_widgets/app_bar.dart';
 import 'package:tmdb_web/features/home/home_page.dart';
@@ -139,7 +140,7 @@ class _MainMoviesState extends State<MainMovies> {
                   padding: EdgeInsets.symmetric(horizontal: 5.w),
                   physics: const NeverScrollableScrollPhysics(),
                   shrinkWrap: true,
-                  itemCount: C.moviesGenres.length,
+                  itemCount: Constants.categoriesNamesMovies.length,
                   cacheExtent: 20,
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                     childAspectRatio: 2,
@@ -150,7 +151,7 @@ class _MainMoviesState extends State<MainMovies> {
                   itemBuilder: (BuildContext context, index) => InkWell(
                     onTap: () {
                       context.go(
-                        '/movies/${C.moviesGenres[index].toLowerCase()}/1',
+                        '/movies/${Constants.categoriesNamesMovies[index].toLowerCase()}/1',
                       );
                     },
                     borderRadius: BorderRadius.circular(10),
@@ -165,7 +166,7 @@ class _MainMoviesState extends State<MainMovies> {
                           padding: const EdgeInsets.all(8.0),
                           child: FittedBox(
                             child: Text(
-                              C.moviesGenres[index],
+                              Constants.categoriesNamesMovies[index],
                               style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                 fontSize: 3.w > 25 ? 25 : 3.w,

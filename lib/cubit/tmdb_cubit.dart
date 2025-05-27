@@ -32,7 +32,7 @@ class TmdbCubit extends Cubit<TmdbState> {
 
   List<PopularItem> suggestions = [];
   List<PopularItem> similar = [];
-  List<Reviews> reviews = [];
+  List<Review> reviews = [];
   List<Cast> casts = [];
   Video trailer = emptyVideo;
   late YoutubePlayerController videoController;

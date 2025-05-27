@@ -11,11 +11,12 @@ class ApiService {
   Future<List<T>> fetchList<T>({
     required String url,
     required T Function(Map<String, dynamic>) fromJson,
+    String dataKey = 'results',
   }) async {
     try {
       final response = await get(url: url, useBaseUrl: false);
       if (response.statusCode == 200) {
-        final List results = response.data["results"];
+        final List results = response.data[dataKey];
         return results.map<T>((item) => fromJson(item)).toList();
       } else {
         throw Exception('Failed with status: ${response.statusCode}');

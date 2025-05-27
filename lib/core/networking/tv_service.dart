@@ -105,19 +105,19 @@ class TVService {
     return popular;
   }
 
-  Future<List<Reviews>> getReviews({
+  Future<List<Review>> getReviews({
     required int id,
     required int pageNum,
   }) async {
     String endPoint =
         "https://api.themoviedb.org/3/tv/$id/reviews?api_key=$apiKey&language=en-US&page=$pageNum";
-    List<Reviews> reviews = [];
+    List<Review> reviews = [];
     Response response = await dio.get(endPoint);
     if (response.statusCode == 200) {
       var body = response.data;
       // reviews are called results in the api
       body["results"].forEach((reviewData) {
-        Reviews review = Reviews.fromJson(reviewData);
+        Review review = Review.fromJson(reviewData);
         reviews.add(review);
       });
     } else {

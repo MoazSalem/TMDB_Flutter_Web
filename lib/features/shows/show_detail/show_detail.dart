@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:auto_animated/auto_animated.dart';
 import 'package:pointer_interceptor/pointer_interceptor.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
+import 'package:tmdb_web/core/helpers/widgets_helper.dart';
 import 'package:youtube_player_iframe/youtube_player_iframe.dart';
 import 'package:tmdb_web/cubit/tmdb_cubit.dart';
 import 'package:tmdb_web/core/models/show.dart';
@@ -11,7 +12,6 @@ import 'package:tmdb_web/core/shared_widgets/suggestion_widget.dart';
 import 'package:tmdb_web/core/shared_widgets/actor_widget.dart';
 import 'package:tmdb_web/core/shared_widgets/categories_widget.dart';
 import 'package:tmdb_web/core/shared_widgets/review_widget.dart';
-import 'package:tmdb_web/features/home/home_page.dart';
 
 // This page is opened when you press on a tv show
 class TvInfo extends StatefulWidget {
@@ -31,9 +31,11 @@ class _TvInfoState extends State<TvInfo> {
   bool loading = true;
   bool seeMore = false;
   int parsedId = 0;
+  late TmdbCubit C;
 
   @override
   void initState() {
+    C = context.read<TmdbCubit>();
     super.initState();
     C.casts = [];
     C.show = Show();
@@ -164,7 +166,9 @@ class _TvInfoState extends State<TvInfo> {
                                       child: Text("-"),
                                     ),
                                     Text(
-                                      runtimeToHours(C.show.episodeRunTime!),
+                                      WidgetsHelper.runtimeToHours(
+                                        C.show.episodeRunTime!,
+                                      ),
                                       style: TextStyle(
                                         fontSize: 4.w > 18 ? 18 : 4.w,
                                         color: grey,
@@ -356,8 +360,7 @@ class _TvInfoState extends State<TvInfo> {
                                                 BuildContext context,
                                                 int index,
                                               ) => actorWidget(
-                                                index: index,
-                                                B: C,
+                                                member: C.casts[index],
                                               ),
                                         ),
                                       ),
@@ -502,8 +505,7 @@ class _TvInfoState extends State<TvInfo> {
                                               child: GestureDetector(
                                                 onTap: () {},
                                                 child: reviewWidget(
-                                                  B: C,
-                                                  index: index,
+                                                  review: C.reviews[index],
                                                 ),
                                               ),
                                             ),
@@ -566,13 +568,4 @@ class _TvInfoState extends State<TvInfo> {
       },
     );
   }
-}
-
-String runtimeToHours(int minutes) {
-  var d = Duration(minutes: minutes);
-  List<String> parts = d.toString().split(':');
-  var firstPart = parts[0] != "0" ? "${parts[0]}h " : "";
-  return '$firstPart${parts[1].padLeft(2, '0')}m' == "00m"
-      ? "Unknown"
-      : '$firstPart${parts[1].padLeft(2, '0')}m';
 }

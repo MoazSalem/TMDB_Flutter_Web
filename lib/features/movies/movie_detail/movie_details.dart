@@ -4,20 +4,17 @@ import 'package:go_router/go_router.dart';
 import 'package:auto_animated/auto_animated.dart';
 import 'package:pointer_interceptor/pointer_interceptor.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
+import 'package:tmdb_web/core/helpers/widgets_helper.dart';
+import 'package:tmdb_web/features/movies/movie_detail/logic/movie_details_cubit.dart';
 import 'package:youtube_player_iframe/youtube_player_iframe.dart';
-import 'package:tmdb_web/cubit/tmdb_cubit.dart';
-import 'package:tmdb_web/core/models/movie.dart';
 import 'package:tmdb_web/core/shared_widgets/suggestion_widget.dart';
 import 'package:tmdb_web/core/shared_widgets/actor_widget.dart';
 import 'package:tmdb_web/core/shared_widgets/categories_widget.dart';
 import 'package:tmdb_web/core/shared_widgets/review_widget.dart';
-import 'package:tmdb_web/features/home/home_page.dart';
 
 // This page is opened when you press on a movie
 class MovieInfo extends StatefulWidget {
-  final String id;
-
-  const MovieInfo({super.key, required this.id});
+  const MovieInfo({super.key});
 
   @override
   State<MovieInfo> createState() => _MovieInfoState();
@@ -33,55 +30,31 @@ class _MovieInfoState extends State<MovieInfo> {
   int parsedId = 0;
 
   @override
-  void initState() {
-    super.initState();
-    C.casts = [];
-    C.movie = emptyMovie;
-  }
-
-  @override
   void didChangeDependencies() {
     super.didChangeDependencies();
     width = MediaQuery.of(context).size.width;
   }
 
-  changeMovie() {
-    parsedId != int.parse(widget.id)
-        ? {
-            C.videoController = YoutubePlayerController(
-              params: const YoutubePlayerParams(
-                mute: false,
-                showControls: true,
-                showFullscreenButton: true,
-              ),
-            ),
-            parsedId = int.parse(widget.id),
-            C.movie = emptyMovie,
-            C.getMovie(id: parsedId),
-          }
-        : null;
-  }
-
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<TmdbCubit, TmdbState>(
+    return BlocBuilder<MovieDetailsCubit, MovieDetailsState>(
       builder: (context, state) {
-        changeMovie();
         return Scaffold(
           backgroundColor: Theme.of(context).canvasColor,
-          body: C.movie == emptyMovie
+          body: state is MovieDetailsLoading
               ? const Center(
                   child: CircularProgressIndicator(color: Color(0xff8fcea2)),
                 )
-              : ListView(
+              : state is MovieDetailsLoaded
+              ? ListView(
                   children: [
                     SizedBox(
                       width: double.infinity,
                       height: 50.h,
-                      child: C.movie.posterPath != ""
+                      child: state.movie.posterPath != ""
                           ? Image.network(
                               fit: BoxFit.cover,
-                              "https://image.tmdb.org/t/p/original${C.movie.backdropPath ?? C.movie.posterPath}",
+                              "https://image.tmdb.org/t/p/original${state.movie.backdropPath ?? state.movie.posterPath}",
                               errorBuilder: (context, error, stackTrace) {
                                 return const SizedBox(
                                   width: 300,
@@ -109,7 +82,7 @@ class _MovieInfoState extends State<MovieInfo> {
                                 top: 20,
                               ),
                               child: Text(
-                                C.movie.title,
+                                state.movie.title,
                                 style: TextStyle(
                                   fontSize: 6.w > 30 ? 30 : 6.w,
                                   fontWeight: FontWeight.bold,
@@ -123,9 +96,9 @@ class _MovieInfoState extends State<MovieInfo> {
                               child: Row(
                                 children: [
                                   Text(
-                                    C.movie.status!,
+                                    state.movie.status!,
                                     style: TextStyle(
-                                      color: C.movie.status == "Released"
+                                      color: state.movie.status == "Released"
                                           ? const Color(0xff8fcea2)
                                           : Colors.red,
                                       fontWeight: FontWeight.bold,
@@ -139,7 +112,9 @@ class _MovieInfoState extends State<MovieInfo> {
                                     child: Text("-"),
                                   ),
                                   Text(
-                                    runtimeToHours(C.movie.runtime!),
+                                    WidgetsHelper.runtimeToHours(
+                                      state.movie.runtime!,
+                                    ),
                                     style: TextStyle(
                                       fontSize: 4.w > 18 ? 18 : 4.w,
                                       color: grey,
@@ -152,7 +127,7 @@ class _MovieInfoState extends State<MovieInfo> {
                                     child: Text("-"),
                                   ),
                                   Text(
-                                    C.movie.releaseDate.split('-')[0],
+                                    state.movie.releaseDate.split('-')[0],
                                     style: TextStyle(
                                       fontSize: 4.w > 18 ? 18 : 4.w,
                                       color: grey,
@@ -161,10 +136,11 @@ class _MovieInfoState extends State<MovieInfo> {
                                 ],
                               ),
                             ),
-                            C.movie.genres!.isNotEmpty
+                            state.movie.genres!.isNotEmpty
                                 ? SizedBox(
-                                    width: 90.w > 120 * C.movie.genres!.length
-                                        ? (120 * C.movie.genres!.length)
+                                    width:
+                                        90.w > 120 * state.movie.genres!.length
+                                        ? (120 * state.movie.genres!.length)
                                               .toDouble()
                                         : 90.w,
                                     child: FittedBox(
@@ -176,7 +152,8 @@ class _MovieInfoState extends State<MovieInfo> {
                                         child: SizedBox(
                                           height: 44,
                                           child: ListView.builder(
-                                            itemCount: C.movie.genres!.length,
+                                            itemCount:
+                                                state.movie.genres!.length,
                                             shrinkWrap: true,
                                             scrollDirection: Axis.horizontal,
                                             itemBuilder:
@@ -185,7 +162,7 @@ class _MovieInfoState extends State<MovieInfo> {
                                                   int index,
                                                 ) => categoriesWidget(
                                                   index: index,
-                                                  movie: C.movie,
+                                                  movie: state.movie,
                                                   context: context,
                                                 ),
                                           ),
@@ -198,7 +175,7 @@ class _MovieInfoState extends State<MovieInfo> {
                             Padding(
                               padding: const EdgeInsets.all(10.0),
                               child: Text(
-                                C.movie.overview,
+                                state.movie.overview,
                                 style: TextStyle(
                                   fontSize: 4.w > 18
                                       ? 100.w > 1200
@@ -224,7 +201,7 @@ class _MovieInfoState extends State<MovieInfo> {
                                   ),
                                   const SizedBox(width: 10),
                                   Text(
-                                    C.movie.voteAverage
+                                    state.movie.voteAverage
                                         .toStringAsFixed(1)
                                         .replaceFirst(RegExp(r'\.?'), ''),
                                     style: TextStyle(
@@ -234,9 +211,9 @@ class _MovieInfoState extends State<MovieInfo> {
                                     ),
                                   ),
                                   Text(
-                                    C.movie.voteCount > 1000
-                                        ? "/10 (${(C.movie.voteCount / 1000).toStringAsFixed(2)}K)"
-                                        : "/10 (${C.movie.voteCount})",
+                                    state.movie.voteCount > 1000
+                                        ? "/10 (${(state.movie.voteCount / 1000).toStringAsFixed(2)}K)"
+                                        : "/10 (${state.movie.voteCount})",
                                     style: TextStyle(
                                       fontSize: 4.w > 18 ? 18 : 4.w,
                                       color: grey,
@@ -246,7 +223,7 @@ class _MovieInfoState extends State<MovieInfo> {
                               ),
                             ),
                             const SizedBox(height: 10),
-                            C.trailer.key != ""
+                            state.trailer.key != ""
                                 ? Column(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
@@ -275,16 +252,19 @@ class _MovieInfoState extends State<MovieInfo> {
                                             child: Stack(
                                               children: [
                                                 YoutubePlayer(
-                                                  controller: C.videoController,
+                                                  controller:
+                                                      state.videoController,
                                                   aspectRatio: 16 / 9,
                                                 ),
                                                 PointerInterceptor(
                                                   child: InkWell(
                                                     onTap: () {
                                                       videoPressed
-                                                          ? C.videoController
+                                                          ? state
+                                                                .videoController
                                                                 .pauseVideo()
-                                                          : C.videoController
+                                                          : state
+                                                                .videoController
                                                                 .playVideo();
                                                       videoPressed =
                                                           !videoPressed;
@@ -302,7 +282,7 @@ class _MovieInfoState extends State<MovieInfo> {
                                     ],
                                   )
                                 : Container(),
-                            C.casts.isNotEmpty
+                            state.cast.isNotEmpty
                                 ? Column(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
@@ -327,14 +307,13 @@ class _MovieInfoState extends State<MovieInfo> {
                                           height: 30.w > 185 ? 185 : 30.w,
                                           child: ListView.builder(
                                             scrollDirection: Axis.horizontal,
-                                            itemCount: C.casts.length,
+                                            itemCount: state.cast.length,
                                             itemBuilder:
                                                 (
                                                   BuildContext context,
                                                   int index,
                                                 ) => actorWidget(
-                                                  index: index,
-                                                  B: C,
+                                                  member: state.cast[index],
                                                 ),
                                           ),
                                         ),
@@ -342,7 +321,7 @@ class _MovieInfoState extends State<MovieInfo> {
                                     ],
                                   )
                                 : Container(),
-                            C.suggestions.isNotEmpty
+                            state.suggestions.isNotEmpty
                                 ? Column(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
@@ -366,20 +345,20 @@ class _MovieInfoState extends State<MovieInfo> {
                                           height: 70.w > 400 ? 400 : 70.w,
                                           child: ListView.builder(
                                             scrollDirection: Axis.horizontal,
-                                            itemCount: C.suggestions.length,
+                                            itemCount: state.suggestions.length,
                                             itemBuilder:
                                                 (
                                                   BuildContext context,
                                                   int index,
                                                 ) => GestureDetector(
                                                   onTap: () => context.go(
-                                                    '/movies/${C.suggestions[index].id}',
+                                                    '/movies/${state.suggestions[index].id}',
                                                   ),
                                                   child: FittedBox(
                                                     child: suggestionWidget(
                                                       index: index,
                                                       suggestions:
-                                                          C.suggestions,
+                                                          state.suggestions,
                                                     ),
                                                   ),
                                                 ),
@@ -389,7 +368,7 @@ class _MovieInfoState extends State<MovieInfo> {
                                     ],
                                   )
                                 : Container(),
-                            C.similar.isNotEmpty
+                            state.similar.isNotEmpty
                                 ? Column(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
@@ -413,19 +392,20 @@ class _MovieInfoState extends State<MovieInfo> {
                                           height: 70.w > 400 ? 400 : 70.w,
                                           child: ListView.builder(
                                             scrollDirection: Axis.horizontal,
-                                            itemCount: C.similar.length,
+                                            itemCount: state.similar.length,
                                             itemBuilder:
                                                 (
                                                   BuildContext context,
                                                   int index,
                                                 ) => GestureDetector(
                                                   onTap: () => context.go(
-                                                    '/movies/${C.similar[index].id}',
+                                                    '/movies/${state.similar[index].id}',
                                                   ),
                                                   child: FittedBox(
                                                     child: suggestionWidget(
                                                       index: index,
-                                                      suggestions: C.similar,
+                                                      suggestions:
+                                                          state.similar,
                                                     ),
                                                   ),
                                                 ),
@@ -435,7 +415,7 @@ class _MovieInfoState extends State<MovieInfo> {
                                     ],
                                   )
                                 : Container(),
-                            C.reviews.isNotEmpty
+                            state.reviews.isNotEmpty
                                 ? Column(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
@@ -481,19 +461,19 @@ class _MovieInfoState extends State<MovieInfo> {
                                                 child: GestureDetector(
                                                   onTap: () {},
                                                   child: reviewWidget(
-                                                    B: C,
-                                                    index: index,
+                                                    review:
+                                                        state.reviews[index],
                                                   ),
                                                 ),
                                               ),
                                             ),
                                         itemCount: seeMore
-                                            ? C.reviews.length
-                                            : C.reviews.length > 1
+                                            ? state.reviews.length
+                                            : state.reviews.length > 1
                                             ? 2
                                             : 1,
                                       ),
-                                      C.reviews.length > 2
+                                      state.reviews.length > 2
                                           ? Row(
                                               mainAxisSize: MainAxisSize.max,
                                               mainAxisAlignment:
@@ -504,7 +484,8 @@ class _MovieInfoState extends State<MovieInfo> {
                                                       BorderRadius.circular(20),
                                                   onTap: () {
                                                     seeMore = !seeMore;
-                                                    C.onChanges();
+                                                    // todo: fix this
+                                                    setState(() {});
                                                   },
                                                   child: SizedBox(
                                                     height: 50,
@@ -542,18 +523,10 @@ class _MovieInfoState extends State<MovieInfo> {
                       ),
                     ),
                   ],
-                ),
+                )
+              : Center(child: CircularProgressIndicator()),
         );
       },
     );
   }
-}
-
-String runtimeToHours(int minutes) {
-  var d = Duration(minutes: minutes);
-  List<String> parts = d.toString().split(':');
-  var firstPart = parts[0] != "0" ? "${parts[0]}h " : "";
-  return '$firstPart${parts[1].padLeft(2, '0')}m' == "00m"
-      ? "Unknown"
-      : '$firstPart${parts[1].padLeft(2, '0')}m';
 }
