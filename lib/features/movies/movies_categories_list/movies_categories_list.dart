@@ -1,17 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:tmdb_web/core/networking/constants.dart';
-import 'package:tmdb_web/cubit/tmdb_cubit.dart';
 import 'package:tmdb_web/core/shared_widgets/list_widget.dart';
 import 'package:tmdb_web/core/shared_widgets/app_bar.dart';
-import 'package:tmdb_web/features/home/home_page.dart';
+import 'package:tmdb_web/features/movies/movies_categories_list/logic/movies_categories_cubit.dart';
 
 class MoviesPage extends StatefulWidget {
-  final String page;
-  final String category;
-
-  const MoviesPage({super.key, required this.category, required this.page});
+  const MoviesPage({super.key});
 
   @override
   State<MoviesPage> createState() => _MoviesPageState();
@@ -21,8 +16,6 @@ class _MoviesPageState extends State<MoviesPage> {
   late double currentWidth;
   late ThemeData theme;
   final ScrollController scrollController = ScrollController();
-  int currentPage = 1;
-  int loadedPage = 0;
 
   @override
   void didChangeDependencies() {
@@ -31,39 +24,10 @@ class _MoviesPageState extends State<MoviesPage> {
     theme = Theme.of(context);
   }
 
-  changePage() {
-    loadedPage != currentPage
-        ? {
-            if ({
-              "popular",
-              "top_rated",
-              "now_playing",
-              "upcoming",
-            }.contains(widget.category))
-              {
-                loadedPage = int.parse(widget.page),
-                C.moviesList = [],
-                C.getMovies(page: currentPage, category: widget.category),
-              }
-            else
-              {
-                loadedPage = int.parse(widget.page),
-                C.moviesList = [],
-                C.getMoviesGenre(
-                  page: currentPage,
-                  genre: Constants.categoriesMovies[widget.category]!,
-                ),
-              },
-          }
-        : null;
-  }
-
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<TmdbCubit, TmdbState>(
+    return BlocBuilder<MoviesCategoriesCubit, MoviesCategoriesState>(
       builder: (context, state) {
-        currentPage = int.parse(widget.page);
-        changePage();
         return Scaffold(
           backgroundColor: theme.canvasColor,
           appBar: AppBar(
@@ -73,23 +37,26 @@ class _MoviesPageState extends State<MoviesPage> {
             title: appBar(context: context),
             backgroundColor: theme.canvasColor,
           ),
-          body: C.moviesList.isEmpty
+          body: state is MoviesCategoriesLoading
               ? const Center(
                   child: CircularProgressIndicator(color: Color(0xff8fcea2)),
                 )
-              : ListView(
+              : state is MoviesCategoriesLoaded
+              ? ListView(
                   physics: const BouncingScrollPhysics(),
                   cacheExtent: 3500,
                   children: [
                     listWidget(
-                      list: C.moviesList,
+                      list: state.movies,
                       scrollController: scrollController,
                     ),
                     Column(
                       children: [
                         Padding(
                           padding: const EdgeInsets.symmetric(vertical: 15.0),
-                          child: Center(child: Text("Page $currentPage")),
+                          child: Center(
+                            child: Text("Page ${state.currentPage}"),
+                          ),
                         ),
                         Padding(
                           padding: const EdgeInsets.only(
@@ -106,18 +73,17 @@ class _MoviesPageState extends State<MoviesPage> {
                                 style: OutlinedButton.styleFrom(
                                   minimumSize: Size(currentWidth * 0.3, 60),
                                 ),
-                                onPressed: currentPage == 1
+                                onPressed: state.currentPage == 1
                                     ? null
                                     : () {
-                                        currentPage = 1;
                                         context.go(
-                                          "/movies/${widget.category}/${1}",
+                                          "/movies/${state.category}/${1}",
                                         );
                                       },
                                 child: Center(
                                   child: Icon(
                                     Icons.home_filled,
-                                    color: currentPage == 1
+                                    color: state.currentPage == 1
                                         ? Colors.grey
                                         : const Color(0xff8fcea2),
                                   ),
@@ -127,18 +93,17 @@ class _MoviesPageState extends State<MoviesPage> {
                                 style: OutlinedButton.styleFrom(
                                   minimumSize: Size(currentWidth * 0.3, 60),
                                 ),
-                                onPressed: currentPage == 1
+                                onPressed: state.currentPage == 1
                                     ? null
                                     : () {
-                                        currentPage--;
-                                        context.go(
-                                          "/movies/${widget.category}/$currentPage",
+                                        context.push(
+                                          "/movies/${state.category}/${state.currentPage - 1}",
                                         );
                                       },
                                 child: Center(
                                   child: Icon(
                                     Icons.arrow_back,
-                                    color: currentPage == 1
+                                    color: state.currentPage == 1
                                         ? Colors.grey
                                         : const Color(0xff8fcea2),
                                   ),
@@ -151,9 +116,8 @@ class _MoviesPageState extends State<MoviesPage> {
                                   minimumSize: Size(currentWidth * 0.3, 60),
                                 ),
                                 onPressed: () {
-                                  currentPage++;
-                                  context.go(
-                                    "/movies/${widget.category}/$currentPage",
+                                  context.push(
+                                    "/movies/${state.category}/${state.currentPage + 1}",
                                   );
                                 },
                                 child: const Center(
@@ -166,7 +130,8 @@ class _MoviesPageState extends State<MoviesPage> {
                       ],
                     ),
                   ],
-                ),
+                )
+              : const Center(child: CircularProgressIndicator()),
         );
       },
     );

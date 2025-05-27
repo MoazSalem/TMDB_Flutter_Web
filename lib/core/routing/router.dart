@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
 import 'package:tmdb_web/features/home/home_page.dart';
 import 'package:tmdb_web/features/home/logic/home_cubit.dart';
+import 'package:tmdb_web/features/movies/movies_categories_list/logic/movies_categories_cubit.dart';
 import 'package:tmdb_web/features/movies/movies_categories_list/movies_categories_list.dart';
 import 'package:tmdb_web/features/movies/movie_detail/movie_details.dart';
 import 'package:tmdb_web/features/search/search_page.dart';
@@ -18,7 +20,7 @@ class AppRouter {
       GoRoute(
         path: "/",
         builder: (BuildContext context, GoRouterState state) => BlocProvider(
-          create: (context) => HomeCubit()..load(),
+          create: (context) => GetIt.I.get<HomeCubit>()..load(),
           child: const HomePage(),
         ),
         routes: <RouteBase>[
@@ -35,9 +37,14 @@ class AppRouter {
               GoRoute(
                 path: ":genre/:page",
                 builder: (BuildContext context, GoRouterState state) =>
-                    MoviesPage(
-                      page: state.pathParameters['page']!,
-                      category: state.pathParameters['genre']!,
+                    BlocProvider(
+                      create: (context) => GetIt.I.get<MoviesCategoriesCubit>()
+                        ..getMovies(
+                          category: state.pathParameters['genre']!,
+                          currentPage: int.parse(state.pathParameters['page']!),
+                        ),
+                      key: ValueKey(state.pathParameters['page']!),
+                      child: MoviesPage(),
                     ),
               ),
               GoRoute(
