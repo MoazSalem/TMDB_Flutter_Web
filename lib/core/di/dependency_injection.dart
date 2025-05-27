@@ -25,35 +25,35 @@ Future<void> setupGetIt() async {
     () => HomeRepo(getIt.get<ApiService>()),
   );
 
-  getIt.registerLazySingleton<HomeCubit>(() => HomeCubit());
+  getIt.registerFactory<HomeCubit>(() => HomeCubit());
 
   getIt.registerLazySingleton<MoviesListRepo>(
     () => MoviesListRepo(getIt.get<ApiService>()),
   );
 
-  getIt.registerLazySingleton<MoviesListCubit>(() => MoviesListCubit());
+  getIt.registerFactory<MoviesListCubit>(() => MoviesListCubit());
 
   getIt.registerLazySingleton<ShowsListRepo>(
     () => ShowsListRepo(getIt.get<ApiService>()),
   );
 
-  getIt.registerLazySingleton<ShowsListCubit>(() => ShowsListCubit());
+  getIt.registerFactory<ShowsListCubit>(() => ShowsListCubit());
 
   getIt.registerLazySingleton<SearchRepo>(
     () => SearchRepo(getIt.get<ApiService>()),
   );
 
-  getIt.registerLazySingleton<SearchCubit>(() => SearchCubit());
+  getIt.registerFactory<SearchCubit>(() => SearchCubit());
 
   getIt.registerLazySingleton<MovieDetailsRepo>(
     () => MovieDetailsRepo(getIt.get<ApiService>()),
   );
 
-  getIt.registerLazySingleton<MovieDetailsCubit>(() => MovieDetailsCubit());
+  getIt.registerFactory<MovieDetailsCubit>(() => MovieDetailsCubit());
 
   getIt.registerLazySingleton<ShowDetailsRepo>(
     () => ShowDetailsRepo(getIt.get<ApiService>()),
   );
 
-  getIt.registerLazySingleton<ShowDetailsCubit>(() => ShowDetailsCubit());
+  getIt.registerFactory<ShowDetailsCubit>(() => ShowDetailsCubit());
 }
