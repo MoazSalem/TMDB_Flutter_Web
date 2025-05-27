@@ -10,6 +10,7 @@ import 'package:tmdb_web/features/movies/movies_list/movies_list.dart';
 import 'package:tmdb_web/features/movies/movie_detail/movie_details.dart';
 import 'package:tmdb_web/features/search/logic/search_cubit.dart';
 import 'package:tmdb_web/features/search/search_page.dart';
+import 'package:tmdb_web/features/shows/show_detail/logic/show_details_cubit.dart';
 import 'package:tmdb_web/features/shows/shows_categories/shows_categories.dart';
 import 'package:tmdb_web/features/shows/show_detail/show_detail.dart';
 import 'package:tmdb_web/features/movies/movies_categories/movies_categories.dart';
@@ -94,7 +95,12 @@ class AppRouter {
               GoRoute(
                 path: ":id",
                 builder: (BuildContext context, GoRouterState state) =>
-                    TvInfo(id: state.pathParameters['id']!),
+                    BlocProvider(
+                      create: (context) => ShowDetailsCubit()
+                        ..getShow(id: int.parse(state.pathParameters['id']!)),
+                      key: ValueKey(state.pathParameters['id']!),
+                      child: ShowDetails(),
+                    ),
               ),
             ],
           ),

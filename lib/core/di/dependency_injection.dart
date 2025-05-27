@@ -9,6 +9,8 @@ import 'package:tmdb_web/features/movies/movies_list/data/repo/movies_list_repo.
 import 'package:tmdb_web/features/movies/movies_list/logic/movies_list_cubit.dart';
 import 'package:tmdb_web/features/search/data/repo/search_repo.dart';
 import 'package:tmdb_web/features/search/logic/search_cubit.dart';
+import 'package:tmdb_web/features/shows/show_detail/data/repo/show_details_repo.dart';
+import 'package:tmdb_web/features/shows/show_detail/logic/show_details_cubit.dart';
 import 'package:tmdb_web/features/shows/shows_list/data/repo/shows_list_repo.dart';
 import 'package:tmdb_web/features/shows/shows_list/logic/shows_list_cubit.dart';
 
@@ -48,4 +50,10 @@ Future<void> setupGetIt() async {
   );
 
   getIt.registerLazySingleton<MovieDetailsCubit>(() => MovieDetailsCubit());
+
+  getIt.registerLazySingleton<ShowDetailsRepo>(
+    () => ShowDetailsRepo(getIt.get<ApiService>()),
+  );
+
+  getIt.registerLazySingleton<ShowDetailsCubit>(() => ShowDetailsCubit());
 }
