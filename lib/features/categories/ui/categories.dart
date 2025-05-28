@@ -41,7 +41,7 @@ class _CategoriesState extends State<Categories> {
         centerTitle: true,
         toolbarHeight: 90,
         automaticallyImplyLeading: false,
-        title: appBar(context: context),
+        title: CustomAppBar(),
         backgroundColor: Theme.of(context).canvasColor,
       ),
       backgroundColor: Colors.black,

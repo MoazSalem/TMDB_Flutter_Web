@@ -41,7 +41,7 @@ class _HomePageState extends State<HomePage> {
           appBar: AppBar(
             centerTitle: true,
             toolbarHeight: 90,
-            title: appBar(context: context, showSearch: false),
+            title: CustomAppBar(showSearch: false),
             backgroundColor: Theme.of(context).canvasColor,
           ),
           body: state is HomeLoading
@@ -110,7 +110,7 @@ class _HomePageState extends State<HomePage> {
                                             '/movies/${state.movies[index].id}',
                                           ),
                                           child: FittedBox(
-                                            child: suggestionWidget(
+                                            child: SuggestionWidget(
                                               index: index,
                                               suggestions: state.movies,
                                             ),
@@ -164,7 +164,7 @@ class _HomePageState extends State<HomePage> {
                                             '/tv/${state.tvShows[index].id}',
                                           ),
                                           child: FittedBox(
-                                            child: suggestionWidget(
+                                            child: SuggestionWidget(
                                               index: index,
                                               suggestions: state.tvShows,
                                             ),

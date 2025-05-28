@@ -44,7 +44,7 @@ class _SearchPageState extends State<SearchPage> {
             centerTitle: true,
             toolbarHeight: 90,
             automaticallyImplyLeading: false,
-            title: appBar(context: context, search: false),
+            title: CustomAppBar(search: false),
             backgroundColor: Theme.of(context).canvasColor,
           ),
           body: ListView(
@@ -99,11 +99,11 @@ class _SearchPageState extends State<SearchPage> {
                             height: 400,
                             child: Center(child: Text("No Results")),
                           )
-                        : listWidget(
+                        : ListWidget(
                             list: state.searchResult,
                             scrollController: scrollController,
                           )
-                  : const Center(child: CircularProgressIndicator()),
+                  : const SizedBox(),
             ],
           ),
         );

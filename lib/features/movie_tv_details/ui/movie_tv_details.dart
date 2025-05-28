@@ -9,7 +9,7 @@ import 'package:tmdb_web/features/movie_tv_details/logic/movie_tv_details_cubit.
 import 'package:youtube_player_iframe/youtube_player_iframe.dart';
 import 'package:tmdb_web/core/shared_widgets/suggestion_widget.dart';
 import 'package:tmdb_web/core/shared_widgets/actor_widget.dart';
-import 'package:tmdb_web/core/shared_widgets/categories_widget.dart';
+import 'package:tmdb_web/features/movie_tv_details/ui/widgets/categories_widget.dart';
 import 'package:tmdb_web/core/shared_widgets/review_widget.dart';
 
 // This page is opened when you press on a item
@@ -225,10 +225,9 @@ class _MovieTvDetailsState extends State<MovieTvDetails> {
                                                 (
                                                   BuildContext context,
                                                   int index,
-                                                ) => categoriesWidget(
+                                                ) => CategoriesWidget(
                                                   index: index,
                                                   item: state.item,
-                                                  context: context,
                                                 ),
                                           ),
                                         ),
@@ -377,7 +376,7 @@ class _MovieTvDetailsState extends State<MovieTvDetails> {
                                                 (
                                                   BuildContext context,
                                                   int index,
-                                                ) => actorWidget(
+                                                ) => ActorWidget(
                                                   member: state.cast[index],
                                                 ),
                                           ),
@@ -420,7 +419,7 @@ class _MovieTvDetailsState extends State<MovieTvDetails> {
                                                     '/${widget.pageType}/${state.suggestions[index].id}',
                                                   ),
                                                   child: FittedBox(
-                                                    child: suggestionWidget(
+                                                    child: SuggestionWidget(
                                                       index: index,
                                                       suggestions:
                                                           state.suggestions,
@@ -467,7 +466,7 @@ class _MovieTvDetailsState extends State<MovieTvDetails> {
                                                     '/${widget.pageType}/${state.similar[index].id}',
                                                   ),
                                                   child: FittedBox(
-                                                    child: suggestionWidget(
+                                                    child: SuggestionWidget(
                                                       index: index,
                                                       suggestions:
                                                           state.similar,
@@ -525,7 +524,7 @@ class _MovieTvDetailsState extends State<MovieTvDetails> {
                                                 ).animate(animation),
                                                 child: GestureDetector(
                                                   onTap: () {},
-                                                  child: reviewWidget(
+                                                  child: ReviewWidget(
                                                     review:
                                                         state.reviews[index],
                                                   ),

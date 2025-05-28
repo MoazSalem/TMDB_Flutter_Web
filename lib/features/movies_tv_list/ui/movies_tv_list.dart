@@ -40,7 +40,7 @@ class _MoviesTvListPageState extends State<MoviesTvListPage> {
             centerTitle: true,
             toolbarHeight: 90,
             automaticallyImplyLeading: false,
-            title: appBar(context: context),
+            title: CustomAppBar(),
             backgroundColor: Theme.of(context).canvasColor,
           ),
           body: state is MoviesTvListLoading
@@ -52,7 +52,7 @@ class _MoviesTvListPageState extends State<MoviesTvListPage> {
                   physics: const BouncingScrollPhysics(),
                   cacheExtent: 3500,
                   children: [
-                    listWidget(
+                    ListWidget(
                       list: state.list,
                       scrollController: scrollController,
                     ),

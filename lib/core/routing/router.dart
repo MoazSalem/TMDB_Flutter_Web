@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
-import 'package:tmdb_web/features/categories/ui/movies_categories.dart';
+import 'package:tmdb_web/features/categories/ui/categories.dart';
 import 'package:tmdb_web/features/home/ui/home_page.dart';
 import 'package:tmdb_web/features/home/logic/home_cubit.dart';
 import 'package:tmdb_web/features/movie_tv_details/logic/movie_tv_details_cubit.dart';
