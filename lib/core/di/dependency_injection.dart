@@ -5,14 +5,12 @@ import 'package:tmdb_web/features/home/data/repo/home_repo.dart';
 import 'package:tmdb_web/features/home/logic/home_cubit.dart';
 import 'package:tmdb_web/features/movies/movie_detail/data/repo/movie_details_repo.dart';
 import 'package:tmdb_web/features/movies/movie_detail/logic/movie_details_cubit.dart';
-import 'package:tmdb_web/features/movies/movies_list/data/repo/movies_list_repo.dart';
-import 'package:tmdb_web/features/movies/movies_list/logic/movies_list_cubit.dart';
+import 'package:tmdb_web/features/movies_tv_list/data/repo/movies_tv_list_repo.dart';
+import 'package:tmdb_web/features/movies_tv_list/logic/movies_tv_list_cubit.dart';
 import 'package:tmdb_web/features/search/data/repo/search_repo.dart';
 import 'package:tmdb_web/features/search/logic/search_cubit.dart';
 import 'package:tmdb_web/features/shows/show_detail/data/repo/show_details_repo.dart';
 import 'package:tmdb_web/features/shows/show_detail/logic/show_details_cubit.dart';
-import 'package:tmdb_web/features/shows/shows_list/data/repo/shows_list_repo.dart';
-import 'package:tmdb_web/features/shows/shows_list/logic/shows_list_cubit.dart';
 
 final getIt = GetIt.instance;
 
@@ -27,17 +25,11 @@ Future<void> setupGetIt() async {
 
   getIt.registerFactory<HomeCubit>(() => HomeCubit());
 
-  getIt.registerLazySingleton<MoviesListRepo>(
-    () => MoviesListRepo(getIt.get<ApiService>()),
+  getIt.registerLazySingleton<MoviesTvListRepo>(
+    () => MoviesTvListRepo(getIt.get<ApiService>()),
   );
 
-  getIt.registerFactory<MoviesListCubit>(() => MoviesListCubit());
-
-  getIt.registerLazySingleton<ShowsListRepo>(
-    () => ShowsListRepo(getIt.get<ApiService>()),
-  );
-
-  getIt.registerFactory<ShowsListCubit>(() => ShowsListCubit());
+  getIt.registerFactory<MoviesTvListCubit>(() => MoviesTvListCubit());
 
   getIt.registerLazySingleton<SearchRepo>(
     () => SearchRepo(getIt.get<ApiService>()),

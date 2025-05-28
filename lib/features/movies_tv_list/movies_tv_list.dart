@@ -3,51 +3,57 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:tmdb_web/core/shared_widgets/list_widget.dart';
 import 'package:tmdb_web/core/shared_widgets/app_bar.dart';
-import 'package:tmdb_web/features/shows/shows_list/logic/shows_list_cubit.dart';
+import 'package:tmdb_web/features/movies_tv_list/logic/movies_tv_list_cubit.dart';
 
-class TvPage extends StatefulWidget {
-  const TvPage({super.key});
+class MoviesTvListPage extends StatefulWidget {
+  const MoviesTvListPage({super.key, required this.pageType});
+
+  final String pageType;
 
   @override
-  State<TvPage> createState() => _TvPageState();
+  State<MoviesTvListPage> createState() => _MoviesTvListPageState();
 }
 
-class _TvPageState extends State<TvPage> {
+class _MoviesTvListPageState extends State<MoviesTvListPage> {
   late double currentWidth;
-  late ThemeData theme;
   final ScrollController scrollController = ScrollController();
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
     currentWidth = MediaQuery.of(context).size.width;
-    theme = Theme.of(context);
+  }
+
+  @override
+  void dispose() {
+    scrollController.dispose();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<ShowsListCubit, ShowsListState>(
+    return BlocBuilder<MoviesTvListCubit, MoviesTvListState>(
       builder: (context, state) {
         return Scaffold(
-          backgroundColor: theme.canvasColor,
+          backgroundColor: Theme.of(context).canvasColor,
           appBar: AppBar(
             centerTitle: true,
             toolbarHeight: 90,
             automaticallyImplyLeading: false,
-            title: appBar(context: context, movie: false),
-            backgroundColor: theme.canvasColor,
+            title: appBar(context: context),
+            backgroundColor: Theme.of(context).canvasColor,
           ),
-          body: state is ShowsListLoading
+          body: state is MoviesTvListLoading
               ? const Center(
-                  child: CircularProgressIndicator(color: Color(0xff09b5e1)),
+                  child: CircularProgressIndicator(color: Color(0xff8fcea2)),
                 )
-              : state is ShowsListLoaded
+              : state is MoviesTvListLoaded
               ? ListView(
                   physics: const BouncingScrollPhysics(),
                   cacheExtent: 3500,
                   children: [
                     listWidget(
-                      list: state.shows,
+                      list: state.list,
                       scrollController: scrollController,
                     ),
                     Column(
@@ -59,57 +65,69 @@ class _TvPageState extends State<TvPage> {
                           ),
                         ),
                         Padding(
-                          padding: const EdgeInsets.all(8.0),
+                          padding: const EdgeInsets.only(
+                            left: 8.0,
+                            right: 8.0,
+                            top: 8.0,
+                            bottom: 16.0,
+                          ),
                           child: Row(
                             mainAxisSize: MainAxisSize.max,
                             mainAxisAlignment: MainAxisAlignment.spaceAround,
                             children: [
                               OutlinedButton(
                                 style: OutlinedButton.styleFrom(
-                                  minimumSize: Size(currentWidth * 0.3, 50),
+                                  minimumSize: Size(currentWidth * 0.3, 60),
                                 ),
                                 onPressed: state.currentPage == 1
                                     ? null
-                                    : () async {
-                                        context.go("/tv/${state.category}/1");
+                                    : () {
+                                        context.go(
+                                          "/${widget.pageType}/${state.category}/1",
+                                        );
                                       },
-                                child: Icon(
-                                  Icons.home_filled,
-                                  color: state.currentPage == 1
-                                      ? Colors.grey
-                                      : const Color(0xff8fcea2),
+                                child: Center(
+                                  child: Icon(
+                                    Icons.home_filled,
+                                    color: state.currentPage == 1
+                                        ? Colors.grey
+                                        : const Color(0xff8fcea2),
+                                  ),
                                 ),
                               ),
                               OutlinedButton(
                                 style: OutlinedButton.styleFrom(
-                                  minimumSize: Size(currentWidth * 0.3, 50),
+                                  minimumSize: Size(currentWidth * 0.3, 60),
                                 ),
                                 onPressed: state.currentPage == 1
                                     ? null
-                                    : () async {
+                                    : () {
                                         context.go(
-                                          "/tv/${state.category}/${state.currentPage - 1}",
+                                          "/${widget.pageType}/${state.category}/${state.currentPage - 1}",
                                         );
                                       },
-                                child: Icon(
-                                  Icons.arrow_back,
-                                  color: state.currentPage == 1
-                                      ? Colors.grey
-                                      : const Color(0xff8fcea2),
+                                child: Center(
+                                  child: Icon(
+                                    Icons.arrow_back,
+                                    color: state.currentPage == 1
+                                        ? Colors.grey
+                                        : const Color(0xff8fcea2),
+                                  ),
                                 ),
                               ),
                               ElevatedButton(
                                 style: ElevatedButton.styleFrom(
                                   foregroundColor: Colors.white,
-                                  backgroundColor: theme.primaryColor,
-                                  minimumSize: Size(currentWidth * 0.3, 50),
+                                  minimumSize: Size(currentWidth * 0.3, 60),
                                 ),
-                                onPressed: () async {
+                                onPressed: () {
                                   context.go(
-                                    "/tv/${state.category}/${state.currentPage + 1}",
+                                    "/${widget.pageType}/${state.category}/${state.currentPage + 1}",
                                   );
                                 },
-                                child: const Icon(Icons.arrow_forward),
+                                child: const Center(
+                                  child: Icon(Icons.arrow_forward),
+                                ),
                               ),
                             ],
                           ),
