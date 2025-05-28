@@ -27,7 +27,6 @@ class _MovieTvDetailsState extends State<MovieTvDetails> {
   final Color grey = Colors.grey.shade400;
   bool videoPressed = false;
   bool loading = true;
-  bool seeMore = false;
   int parsedId = 0;
 
   @override
@@ -531,54 +530,8 @@ class _MovieTvDetailsState extends State<MovieTvDetails> {
                                                 ),
                                               ),
                                             ),
-                                        itemCount: seeMore
-                                            ? state.reviews.length
-                                            : state.reviews.length > 1
-                                            ? 2
-                                            : 1,
+                                        itemCount: state.reviews.length,
                                       ),
-                                      state.reviews.length > 2
-                                          ? Row(
-                                              mainAxisSize: MainAxisSize.max,
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.center,
-                                              children: [
-                                                InkWell(
-                                                  borderRadius:
-                                                      BorderRadius.circular(20),
-                                                  onTap: () {
-                                                    seeMore = !seeMore;
-                                                    // todo: fix this
-                                                    setState(() {});
-                                                  },
-                                                  child: SizedBox(
-                                                    height: 50,
-                                                    width: 200,
-                                                    child: Column(
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .center,
-                                                      children: [
-                                                        Text(
-                                                          seeMore
-                                                              ? "Show Less "
-                                                              : " See More ",
-                                                        ),
-                                                        Icon(
-                                                          seeMore
-                                                              ? Icons
-                                                                    .arrow_upward
-                                                              : Icons
-                                                                    .arrow_downward,
-                                                          size: 14,
-                                                        ),
-                                                      ],
-                                                    ),
-                                                  ),
-                                                ),
-                                              ],
-                                            )
-                                          : Container(),
                                     ],
                                   )
                                 : Container(),
