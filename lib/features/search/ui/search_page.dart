@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:tmdb_web/core/shared_widgets/app_bar.dart';
-import 'package:tmdb_web/core/shared_widgets/list_widget.dart';
+import 'package:tmdb_web/core/shared_widgets/poster_list_widget.dart';
 import 'package:tmdb_web/features/search/logic/search_cubit.dart';
 
 class SearchPage extends StatefulWidget {
@@ -99,7 +99,7 @@ class _SearchPageState extends State<SearchPage> {
                             height: 400,
                             child: Center(child: Text("No Results")),
                           )
-                        : ListWidget(
+                        : PosterListWidget(
                             list: state.searchResult,
                             scrollController: scrollController,
                           )

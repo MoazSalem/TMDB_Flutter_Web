@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:tmdb_web/core/shared_widgets/list_widget.dart';
+import 'package:tmdb_web/core/shared_widgets/poster_list_widget.dart';
 import 'package:tmdb_web/core/shared_widgets/app_bar.dart';
 import 'package:tmdb_web/features/movies_tv_list/logic/movies_tv_list_cubit.dart';
 
@@ -52,7 +52,7 @@ class _MoviesTvListPageState extends State<MoviesTvListPage> {
                   physics: const BouncingScrollPhysics(),
                   cacheExtent: 3500,
                   children: [
-                    ListWidget(
+                    PosterListWidget(
                       list: state.list,
                       scrollController: scrollController,
                     ),
