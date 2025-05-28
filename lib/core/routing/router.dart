@@ -72,55 +72,6 @@ class AppRouter {
               ),
             ],
           ),
-          GoRoute(
-            path: ":type",
-            builder: (BuildContext context, GoRouterState state) => Categories(
-              key: ValueKey(state.pathParameters['type']!),
-              pageType: state.pathParameters['type']!,
-            ),
-            routes: <RouteBase>[
-              GoRoute(
-                path: "search",
-                builder: (BuildContext context, GoRouterState state) =>
-                    BlocProvider(
-                      create: (context) => SearchCubit(),
-                      child: SearchPage(movie: false),
-                    ),
-              ),
-              GoRoute(
-                path: ":genre/:page",
-                builder: (BuildContext context, GoRouterState state) =>
-                    BlocProvider(
-                      create: (context) => GetIt.I.get<MoviesTvListCubit>()
-                        ..getMoviesOrTv(
-                          type: state.pathParameters['type']!,
-                          category: state.pathParameters['genre']!,
-                          currentPage: int.parse(state.pathParameters['page']!),
-                        ),
-                      child: MoviesTvListPage(
-                        key: ValueKey(state.pathParameters['page']!),
-                        pageType: state.pathParameters['page']!,
-                      ),
-                    ),
-              ),
-              GoRoute(
-                path: ":id",
-                builder: (BuildContext context, GoRouterState state) =>
-                    BlocProvider(
-                      create: (context) => MovieTvDetailsCubit()
-                        ..getItem(
-                          id: int.parse(state.pathParameters['id']!),
-                          type: state.pathParameters['type']!,
-                        ),
-                      key: ValueKey(state.pathParameters['id']!),
-                      child: MovieTvDetails(
-                        key: ValueKey(state.pathParameters['id']!),
-                        pageType: state.pathParameters['type']!,
-                      ),
-                    ),
-              ),
-            ],
-          ),
         ],
       ),
     ],
