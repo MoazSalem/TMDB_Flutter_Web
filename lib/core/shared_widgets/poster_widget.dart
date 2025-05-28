@@ -1,7 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:tmdb_web/core/helpers/widgets_helper.dart';
 
 class PosterWidget extends StatelessWidget {
@@ -10,12 +9,13 @@ class PosterWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final color = WidgetsHelper.progressColor(rating: (item.voteAverage * 10));
     return InkWell(
       onTap: () => item.title != null
           ? context.go('/movies/${item.id}')
           : context.go('/tv/${item.id}'),
       child: Stack(
-        alignment: Alignment.topRight,
+        alignment: Alignment.topLeft,
         children: [
           SizedBox(
             child: CachedNetworkImage(
@@ -42,33 +42,46 @@ class PosterWidget extends StatelessWidget {
               ),
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.all(12.0),
-            child: CircleAvatar(
-              radius: 30,
-              backgroundColor: Colors.black54,
-              child: CircularPercentIndicator(
-                animationDuration: 3000,
-                curve: Curves.bounceOut,
-                radius: 30.0,
-                lineWidth: 5.0,
-                percent: (item.voteAverage / 10),
-                animation: true,
-                center: Text(
-                  (item.voteAverage * 10).toStringAsFixed(0),
-                  style: const TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.w900,
-                  ),
-                ),
-                progressColor: WidgetsHelper.progressColor(
-                  rating: (item.voteAverage * 10),
-                ),
-                backgroundColor: Colors.white24,
-              ),
-            ),
-          ),
+          RatingWidget(item: item, color: color),
         ],
+      ),
+    );
+  }
+}
+
+class RatingWidget extends StatelessWidget {
+  const RatingWidget({
+    super.key,
+    required this.item,
+    this.color = Colors.white,
+  });
+  final dynamic item;
+  final Color color;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(12.0),
+      child: Container(
+        alignment: Alignment.center,
+        width: 56,
+        height: 56,
+        decoration: BoxDecoration(
+          color: Colors.black38,
+          border: Border.all(color: color, width: 2),
+          borderRadius: BorderRadius.circular(200),
+        ),
+        // backgroundColor: WidgetsHelper.progressColor(
+        //   rating: (item.voteAverage * 10),
+        // ).withAlpha(100),
+        child: Text(
+          (item.voteAverage).toStringAsFixed(1),
+          style: TextStyle(
+            fontSize: 20,
+            fontWeight: FontWeight.w900,
+            color: color,
+          ),
+        ),
       ),
     );
   }
