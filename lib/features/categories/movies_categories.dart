@@ -4,15 +4,29 @@ import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:tmdb_web/core/networking/constants.dart';
 import 'package:tmdb_web/core/shared_widgets/app_bar.dart';
 
-class MainTv extends StatefulWidget {
-  const MainTv({super.key});
+class Categories extends StatefulWidget {
+  const Categories({super.key, required this.pageType});
+  final String pageType;
 
   @override
-  State<MainTv> createState() => _MainTvState();
+  State<Categories> createState() => _CategoriesState();
 }
 
-class _MainTvState extends State<MainTv> {
+class _CategoriesState extends State<Categories> {
   late double width;
+  late final List<Category> categories;
+  late final List<Genre> genres;
+
+  @override
+  void initState() {
+    super.initState();
+    categories = widget.pageType == 'movies'
+        ? Constants.movieCategories
+        : Constants.tvCategories;
+    genres = widget.pageType == 'movies'
+        ? Constants.moviesGenres
+        : Constants.tvGenres;
+  }
 
   @override
   void didChangeDependencies() {
@@ -27,7 +41,7 @@ class _MainTvState extends State<MainTv> {
         centerTitle: true,
         toolbarHeight: 90,
         automaticallyImplyLeading: false,
-        title: appBar(context: context, movie: false),
+        title: appBar(context: context),
         backgroundColor: Theme.of(context).canvasColor,
       ),
       backgroundColor: Colors.black,
@@ -41,7 +55,7 @@ class _MainTvState extends State<MainTv> {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Text(
-                    "Tv Categories ",
+                    "Categories ",
                     style: TextStyle(
                       fontSize: 5.w > 26 ? 26 : 5.w,
                       fontWeight: FontWeight.bold,
@@ -61,7 +75,7 @@ class _MainTvState extends State<MainTv> {
                 padding: EdgeInsets.symmetric(horizontal: 5.w),
                 physics: const NeverScrollableScrollPhysics(),
                 shrinkWrap: true,
-                itemCount: Constants.tvCategories.length,
+                itemCount: categories.length,
                 cacheExtent: 20,
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                   childAspectRatio: 2,
@@ -70,10 +84,12 @@ class _MainTvState extends State<MainTv> {
                   crossAxisCount: width <= 700 ? 2 : 4,
                 ),
                 itemBuilder: (BuildContext context, index) => InkWell(
-                  borderRadius: BorderRadius.circular(10),
                   onTap: () {
-                    context.go('/tv/${Constants.tvCategories[index].apiKey}/1');
+                    context.go(
+                      '/${widget.pageType.toLowerCase()}/${categories[index].apiKey}/1',
+                    );
                   },
+                  borderRadius: BorderRadius.circular(10),
                   child: Container(
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10),
@@ -85,7 +101,7 @@ class _MainTvState extends State<MainTv> {
                         padding: const EdgeInsets.all(8.0),
                         child: FittedBox(
                           child: Text(
-                            Constants.tvCategories[index].label,
+                            categories[index].label,
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 4.w > 30
@@ -110,7 +126,7 @@ class _MainTvState extends State<MainTv> {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Text(
-                    "Tv Genres  ",
+                    "Genres ",
                     style: TextStyle(
                       fontSize: 5.w > 26 ? 26 : 5.w,
                       fontWeight: FontWeight.bold,
@@ -128,7 +144,7 @@ class _MainTvState extends State<MainTv> {
               padding: EdgeInsets.symmetric(horizontal: 5.w),
               physics: const NeverScrollableScrollPhysics(),
               shrinkWrap: true,
-              itemCount: Constants.tvGenres.length,
+              itemCount: genres.length,
               cacheExtent: 20,
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                 childAspectRatio: 2,
@@ -136,25 +152,25 @@ class _MainTvState extends State<MainTv> {
                 crossAxisSpacing: 20,
                 crossAxisCount: width <= 700 ? 3 : 4,
               ),
-              itemBuilder: (BuildContext context, index) => Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  color: Colors.blue.withOpacity(0.1),
-                ),
-                width: 60,
-                child: InkWell(
-                  borderRadius: BorderRadius.circular(10),
-                  onTap: () {
-                    context.go(
-                      '/tv/${Constants.tvGenres[index].name.toLowerCase()}/1',
-                    );
-                  },
+              itemBuilder: (BuildContext context, index) => InkWell(
+                onTap: () {
+                  context.go(
+                    '/${widget.pageType.toLowerCase()}/${genres[index].name.toLowerCase()}/1',
+                  );
+                },
+                borderRadius: BorderRadius.circular(10),
+                child: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    color: Colors.blue.withOpacity(0.1),
+                  ),
+                  width: 60,
                   child: Center(
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: FittedBox(
                         child: Text(
-                          Constants.tvGenres[index].name,
+                          genres[index].name,
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 3.w > 25 ? 25 : 3.w,

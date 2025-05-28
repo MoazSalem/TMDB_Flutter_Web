@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
+import 'package:tmdb_web/features/categories/movies_categories.dart';
 import 'package:tmdb_web/features/home/ui/home_page.dart';
 import 'package:tmdb_web/features/home/logic/home_cubit.dart';
 import 'package:tmdb_web/features/movies/movie_detail/logic/movie_details_cubit.dart';
@@ -11,9 +12,7 @@ import 'package:tmdb_web/features/movies/movie_detail/movie_details.dart';
 import 'package:tmdb_web/features/search/logic/search_cubit.dart';
 import 'package:tmdb_web/features/search/search_page.dart';
 import 'package:tmdb_web/features/shows/show_detail/logic/show_details_cubit.dart';
-import 'package:tmdb_web/features/shows/shows_categories/shows_categories.dart';
 import 'package:tmdb_web/features/shows/show_detail/show_detail.dart';
-import 'package:tmdb_web/features/movies/movies_categories/movies_categories.dart';
 import 'package:tmdb_web/features/shows/shows_list/logic/shows_list_cubit.dart';
 import 'package:tmdb_web/features/shows/shows_list/shows_list.dart';
 
@@ -29,9 +28,11 @@ class AppRouter {
         ),
         routes: <RouteBase>[
           GoRoute(
-            path: "movies",
-            builder: (BuildContext context, GoRouterState state) =>
-                const MainMovies(),
+            path: ":type",
+            builder: (BuildContext context, GoRouterState state) => Categories(
+              key: ValueKey(state.pathParameters['type']!),
+              pageType: state.pathParameters['type']!,
+            ),
             routes: <RouteBase>[
               GoRoute(
                 path: "search",
@@ -67,9 +68,11 @@ class AppRouter {
             ],
           ),
           GoRoute(
-            path: "tv",
-            builder: (BuildContext context, GoRouterState state) =>
-                const MainTv(),
+            path: ":type",
+            builder: (BuildContext context, GoRouterState state) => Categories(
+              key: ValueKey(state.pathParameters['type']!),
+              pageType: state.pathParameters['type']!,
+            ),
             routes: <RouteBase>[
               GoRoute(
                 path: "search",
