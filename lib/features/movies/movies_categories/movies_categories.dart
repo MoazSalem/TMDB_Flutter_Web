@@ -13,13 +13,6 @@ class MainMovies extends StatefulWidget {
 
 class _MainMoviesState extends State<MainMovies> {
   late double width;
-  List<String> list = ["Popular", "Top Rated", "Now Playing", "Upcoming"];
-  List<String> movieCategories = [
-    "popular",
-    "top_rated",
-    "now_playing",
-    "upcoming",
-  ];
 
   @override
   void didChangeDependencies() {
@@ -68,7 +61,7 @@ class _MainMoviesState extends State<MainMovies> {
                 padding: EdgeInsets.symmetric(horizontal: 5.w),
                 physics: const NeverScrollableScrollPhysics(),
                 shrinkWrap: true,
-                itemCount: list.length,
+                itemCount: Constants.movieCategories.length,
                 cacheExtent: 20,
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                   childAspectRatio: 2,
@@ -78,7 +71,9 @@ class _MainMoviesState extends State<MainMovies> {
                 ),
                 itemBuilder: (BuildContext context, index) => InkWell(
                   onTap: () {
-                    context.go('/movies/${movieCategories[index]}/1');
+                    context.go(
+                      '/movies/${Constants.movieCategories[index].apiKey}/1',
+                    );
                   },
                   borderRadius: BorderRadius.circular(10),
                   child: Container(
@@ -92,7 +87,7 @@ class _MainMoviesState extends State<MainMovies> {
                         padding: const EdgeInsets.all(8.0),
                         child: FittedBox(
                           child: Text(
-                            list[index],
+                            Constants.movieCategories[index].label,
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 4.w > 30
@@ -135,7 +130,7 @@ class _MainMoviesState extends State<MainMovies> {
               padding: EdgeInsets.symmetric(horizontal: 5.w),
               physics: const NeverScrollableScrollPhysics(),
               shrinkWrap: true,
-              itemCount: Constants.categoriesNamesMovies.length,
+              itemCount: Constants.moviesGenres.length,
               cacheExtent: 20,
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                 childAspectRatio: 2,
@@ -146,7 +141,7 @@ class _MainMoviesState extends State<MainMovies> {
               itemBuilder: (BuildContext context, index) => InkWell(
                 onTap: () {
                   context.go(
-                    '/movies/${Constants.categoriesNamesMovies[index].toLowerCase()}/1',
+                    '/movies/${Constants.moviesGenres[index].name.toLowerCase()}/1',
                   );
                 },
                 borderRadius: BorderRadius.circular(10),
@@ -161,7 +156,7 @@ class _MainMoviesState extends State<MainMovies> {
                       padding: const EdgeInsets.all(8.0),
                       child: FittedBox(
                         child: Text(
-                          Constants.categoriesNamesMovies[index],
+                          Constants.moviesGenres[index].name,
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 3.w > 25 ? 25 : 3.w,

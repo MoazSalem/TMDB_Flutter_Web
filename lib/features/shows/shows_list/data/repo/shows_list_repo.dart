@@ -22,9 +22,7 @@ class ShowsListRepo {
       url: EndpointHelper.getEndPoint(
         category: uniqueGenres ? 'tv' : category,
         discover: uniqueGenres ? true : null,
-        genre: uniqueGenres
-            ? Constants.categoriesTv[category].toString()
-            : null,
+        genre: uniqueGenres ? Constants.tvGenreMap[category] : null,
         typeIndex: uniqueGenres ? null : 1,
         page: currentPage,
       ),

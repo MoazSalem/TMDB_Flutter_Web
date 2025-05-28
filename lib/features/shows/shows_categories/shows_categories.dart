@@ -13,13 +13,6 @@ class MainTv extends StatefulWidget {
 
 class _MainTvState extends State<MainTv> {
   late double width;
-  List<String> list = ["Popular", "Top Rated", "Airing Today", "On The Air"];
-  List<String> tvCategories = [
-    "popular",
-    "top_rated",
-    "airing_today",
-    "on_the_air",
-  ];
 
   @override
   void didChangeDependencies() {
@@ -68,7 +61,7 @@ class _MainTvState extends State<MainTv> {
                 padding: EdgeInsets.symmetric(horizontal: 5.w),
                 physics: const NeverScrollableScrollPhysics(),
                 shrinkWrap: true,
-                itemCount: list.length,
+                itemCount: Constants.tvCategories.length,
                 cacheExtent: 20,
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                   childAspectRatio: 2,
@@ -79,7 +72,7 @@ class _MainTvState extends State<MainTv> {
                 itemBuilder: (BuildContext context, index) => InkWell(
                   borderRadius: BorderRadius.circular(10),
                   onTap: () {
-                    context.go('/tv/${tvCategories[index]}/1');
+                    context.go('/tv/${Constants.tvCategories[index].apiKey}/1');
                   },
                   child: Container(
                     decoration: BoxDecoration(
@@ -92,7 +85,7 @@ class _MainTvState extends State<MainTv> {
                         padding: const EdgeInsets.all(8.0),
                         child: FittedBox(
                           child: Text(
-                            list[index],
+                            Constants.tvCategories[index].label,
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 4.w > 30
@@ -135,7 +128,7 @@ class _MainTvState extends State<MainTv> {
               padding: EdgeInsets.symmetric(horizontal: 5.w),
               physics: const NeverScrollableScrollPhysics(),
               shrinkWrap: true,
-              itemCount: Constants.categoriesNamesTv.length,
+              itemCount: Constants.tvGenres.length,
               cacheExtent: 20,
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                 childAspectRatio: 2,
@@ -153,7 +146,7 @@ class _MainTvState extends State<MainTv> {
                   borderRadius: BorderRadius.circular(10),
                   onTap: () {
                     context.go(
-                      '/tv/${Constants.categoriesNamesTv[index].toLowerCase()}/1',
+                      '/tv/${Constants.tvGenres[index].name.toLowerCase()}/1',
                     );
                   },
                   child: Center(
@@ -161,7 +154,7 @@ class _MainTvState extends State<MainTv> {
                       padding: const EdgeInsets.all(8.0),
                       child: FittedBox(
                         child: Text(
-                          Constants.categoriesNamesTv[index],
+                          Constants.tvGenres[index].name,
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 3.w > 25 ? 25 : 3.w,

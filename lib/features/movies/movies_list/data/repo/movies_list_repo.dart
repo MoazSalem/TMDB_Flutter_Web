@@ -22,9 +22,7 @@ class MoviesListRepo {
       url: EndpointHelper.getEndPoint(
         category: uniqueGenres ? 'movie' : category,
         discover: uniqueGenres ? true : null,
-        genre: uniqueGenres
-            ? Constants.categoriesMovies[category].toString()
-            : null,
+        genre: uniqueGenres ? Constants.moviesGenreMap[category] : null,
         typeIndex: uniqueGenres ? null : 0,
         page: currentPage,
       ),
