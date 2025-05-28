@@ -27,6 +27,14 @@ class _SearchPageState extends State<SearchPage> {
   }
 
   @override
+  void dispose() {
+    scrollController.dispose();
+    moviesSearch.dispose();
+    tvSearch.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return BlocBuilder<SearchCubit, SearchState>(
       builder: (context, state) {

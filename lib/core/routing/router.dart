@@ -2,17 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
-import 'package:tmdb_web/features/categories/movies_categories.dart';
+import 'package:tmdb_web/features/categories/ui/movies_categories.dart';
 import 'package:tmdb_web/features/home/ui/home_page.dart';
 import 'package:tmdb_web/features/home/logic/home_cubit.dart';
 import 'package:tmdb_web/features/movies/movie_detail/logic/movie_details_cubit.dart';
-import 'package:tmdb_web/features/movies/movie_detail/movie_details.dart';
+import 'package:tmdb_web/features/movies/movie_detail/ui/movie_details.dart';
 import 'package:tmdb_web/features/movies_tv_list/logic/movies_tv_list_cubit.dart';
-import 'package:tmdb_web/features/movies_tv_list/movies_tv_list.dart';
+import 'package:tmdb_web/features/movies_tv_list/ui/movies_tv_list.dart';
 import 'package:tmdb_web/features/search/logic/search_cubit.dart';
-import 'package:tmdb_web/features/search/search_page.dart';
+import 'package:tmdb_web/features/search/ui/search_page.dart';
 import 'package:tmdb_web/features/shows/show_detail/logic/show_details_cubit.dart';
-import 'package:tmdb_web/features/shows/show_detail/show_detail.dart';
+import 'package:tmdb_web/features/shows/show_detail/ui/show_detail.dart';
 
 class AppRouter {
   static final GoRouter _router = GoRouter(

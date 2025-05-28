@@ -36,6 +36,12 @@ class _MovieInfoState extends State<MovieInfo> {
   }
 
   @override
+  void dispose() {
+    scrollController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return BlocBuilder<MovieDetailsCubit, MovieDetailsState>(
       builder: (context, state) {
