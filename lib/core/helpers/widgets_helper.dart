@@ -19,4 +19,20 @@ class WidgetsHelper {
         ? Colors.yellow
         : Colors.greenAccent;
   }
+
+  static int crossAxisCount({required currentWidth}) {
+    int count = currentWidth ~/ 250;
+    switch (count) {
+      case 1:
+        return count = 2;
+      case 3:
+        return count = 4;
+      case > 5:
+        return count = 5;
+      case 0:
+        return count = 1;
+      default:
+        return count;
+    }
+  }
 }
