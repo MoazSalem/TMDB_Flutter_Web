@@ -40,7 +40,6 @@ dependencies:
   go_router: ^15.1.2
   url_strategy: ^0.3.0
   responsive_sizer: ^3.3.1
-  carousel_slider: ^5.0.0
   expandable_text: ^2.3.0
   youtube_player_iframe: ^5.2.1
   auto_animated: ^3.2.0
