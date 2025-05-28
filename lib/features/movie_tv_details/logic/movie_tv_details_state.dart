@@ -1,22 +1,22 @@
-part of 'show_details_cubit.dart';
+part of 'movie_tv_details_cubit.dart';
 
 @immutable
-sealed class ShowDetailsState {}
+sealed class MovieTvDetailsState {}
 
-final class ShowDetailsInitial extends ShowDetailsState {}
+final class MovieTvDetailsInitial extends MovieTvDetailsState {}
 
-final class ShowDetailsLoading extends ShowDetailsState {}
+final class MovieTvDetailsLoading extends MovieTvDetailsState {}
 
-final class ShowDetailsLoaded extends ShowDetailsState {
-  final Show show;
+final class MovieTvDetailsLoaded extends MovieTvDetailsState {
+  final dynamic item;
   final Video trailer;
   final YoutubePlayerController videoController;
   final List<Cast> cast;
   final List<PopularItem> suggestions;
   final List<PopularItem> similar;
   final List<Review> reviews;
-  ShowDetailsLoaded({
-    required this.show,
+  MovieTvDetailsLoaded({
+    required this.item,
     required this.trailer,
     required this.videoController,
     required this.cast,

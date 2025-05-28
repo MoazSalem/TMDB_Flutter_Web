@@ -5,22 +5,23 @@ import 'package:auto_animated/auto_animated.dart';
 import 'package:pointer_interceptor/pointer_interceptor.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:tmdb_web/core/helpers/widgets_helper.dart';
-import 'package:tmdb_web/features/movies/movie_detail/logic/movie_details_cubit.dart';
+import 'package:tmdb_web/features/movie_tv_details/logic/movie_tv_details_cubit.dart';
 import 'package:youtube_player_iframe/youtube_player_iframe.dart';
 import 'package:tmdb_web/core/shared_widgets/suggestion_widget.dart';
 import 'package:tmdb_web/core/shared_widgets/actor_widget.dart';
 import 'package:tmdb_web/core/shared_widgets/categories_widget.dart';
 import 'package:tmdb_web/core/shared_widgets/review_widget.dart';
 
-// This page is opened when you press on a movie
-class MovieInfo extends StatefulWidget {
-  const MovieInfo({super.key});
+// This page is opened when you press on a item
+class MovieTvDetails extends StatefulWidget {
+  const MovieTvDetails({super.key, required this.pageType});
+  final String pageType;
 
   @override
-  State<MovieInfo> createState() => _MovieInfoState();
+  State<MovieTvDetails> createState() => _MovieTvDetailsState();
 }
 
-class _MovieInfoState extends State<MovieInfo> {
+class _MovieTvDetailsState extends State<MovieTvDetails> {
   late double width;
   final ScrollController scrollController = ScrollController();
   final Color grey = Colors.grey.shade400;
@@ -43,24 +44,24 @@ class _MovieInfoState extends State<MovieInfo> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<MovieDetailsCubit, MovieDetailsState>(
+    return BlocBuilder<MovieTvDetailsCubit, MovieTvDetailsState>(
       builder: (context, state) {
         return Scaffold(
           backgroundColor: Theme.of(context).canvasColor,
-          body: state is MovieDetailsLoading
+          body: state is MovieTvDetailsLoading
               ? const Center(
                   child: CircularProgressIndicator(color: Color(0xff8fcea2)),
                 )
-              : state is MovieDetailsLoaded
+              : state is MovieTvDetailsLoaded
               ? ListView(
                   children: [
                     SizedBox(
                       width: double.infinity,
                       height: 50.h,
-                      child: state.movie.posterPath != ""
+                      child: state.item.posterPath != ""
                           ? Image.network(
                               fit: BoxFit.cover,
-                              "https://image.tmdb.org/t/p/original${state.movie.backdropPath ?? state.movie.posterPath}",
+                              "https://image.tmdb.org/t/p/original${state.item.backdropPath ?? state.item.posterPath}",
                               errorBuilder: (context, error, stackTrace) {
                                 return const SizedBox(
                                   width: 300,
@@ -88,7 +89,7 @@ class _MovieInfoState extends State<MovieInfo> {
                                 top: 20,
                               ),
                               child: Text(
-                                state.movie.title,
+                                state.item.title ?? state.item.name!,
                                 style: TextStyle(
                                   fontSize: 6.w > 30 ? 30 : 6.w,
                                   fontWeight: FontWeight.bold,
@@ -102,15 +103,86 @@ class _MovieInfoState extends State<MovieInfo> {
                               child: Row(
                                 children: [
                                   Text(
-                                    state.movie.status!,
+                                    state.item.status!,
                                     style: TextStyle(
-                                      color: state.movie.status == "Released"
+                                      color:
+                                          state.item.status == "Released" ||
+                                              state.item.status ==
+                                                  "Returning Series"
                                           ? const Color(0xff8fcea2)
                                           : Colors.red,
                                       fontWeight: FontWeight.bold,
                                       fontSize: 4.w > 18 ? 18 : 4.w,
                                     ),
                                   ),
+                                  widget.pageType != "movies"
+                                      ? Row(
+                                          children: [
+                                            const Padding(
+                                              padding: EdgeInsets.symmetric(
+                                                horizontal: 5.0,
+                                              ),
+                                              child: Text("-"),
+                                            ),
+                                            Text(
+                                              "${state.item.numberOfSeasons} Season${state.item.numberOfSeasons! > 1 ? "s" : ""}",
+                                              style: TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 4.w > 18 ? 18 : 4.w,
+                                                color: const Color(0xff8fcea2),
+                                              ),
+                                            ),
+                                            const Padding(
+                                              padding: EdgeInsets.symmetric(
+                                                horizontal: 5.0,
+                                              ),
+                                              child: Text("-"),
+                                            ),
+                                            Text(
+                                              "${state.item.numberOfEpisodes} Episodes",
+                                              style: TextStyle(
+                                                fontSize: 4.w > 18 ? 18 : 4.w,
+                                                color: grey,
+                                              ),
+                                            ),
+                                            if (state.item.episodeRunTime != 0)
+                                              const Padding(
+                                                padding: EdgeInsets.symmetric(
+                                                  horizontal: 5.0,
+                                                ),
+                                                child: Text("-"),
+                                              ),
+                                            if (state.item.episodeRunTime != 0)
+                                              Text(
+                                                WidgetsHelper.runtimeToHours(
+                                                  state.item.episodeRunTime!,
+                                                ),
+                                                style: TextStyle(
+                                                  fontSize: 4.w > 18 ? 18 : 4.w,
+                                                  color: grey,
+                                                ),
+                                              ),
+                                          ],
+                                        )
+                                      : Row(
+                                          children: [
+                                            const Padding(
+                                              padding: EdgeInsets.symmetric(
+                                                horizontal: 5.0,
+                                              ),
+                                              child: Text("-"),
+                                            ),
+                                            Text(
+                                              WidgetsHelper.runtimeToHours(
+                                                state.item.runtime ?? 0,
+                                              ),
+                                              style: TextStyle(
+                                                fontSize: 4.w > 18 ? 18 : 4.w,
+                                                color: grey,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
                                   const Padding(
                                     padding: EdgeInsets.symmetric(
                                       horizontal: 5.0,
@@ -118,22 +190,9 @@ class _MovieInfoState extends State<MovieInfo> {
                                     child: Text("-"),
                                   ),
                                   Text(
-                                    WidgetsHelper.runtimeToHours(
-                                      state.movie.runtime!,
-                                    ),
-                                    style: TextStyle(
-                                      fontSize: 4.w > 18 ? 18 : 4.w,
-                                      color: grey,
-                                    ),
-                                  ),
-                                  const Padding(
-                                    padding: EdgeInsets.symmetric(
-                                      horizontal: 5.0,
-                                    ),
-                                    child: Text("-"),
-                                  ),
-                                  Text(
-                                    state.movie.releaseDate.split('-')[0],
+                                    widget.pageType == "movies"
+                                        ? state.item.releaseDate.split('-')[0]
+                                        : state.item.firstAirDate.split('-')[0],
                                     style: TextStyle(
                                       fontSize: 4.w > 18 ? 18 : 4.w,
                                       color: grey,
@@ -142,11 +201,11 @@ class _MovieInfoState extends State<MovieInfo> {
                                 ],
                               ),
                             ),
-                            state.movie.genres!.isNotEmpty
+                            state.item.genres!.isNotEmpty
                                 ? SizedBox(
                                     width:
-                                        90.w > 120 * state.movie.genres!.length
-                                        ? (120 * state.movie.genres!.length)
+                                        90.w > 120 * state.item.genres!.length
+                                        ? (120 * state.item.genres!.length)
                                               .toDouble()
                                         : 90.w,
                                     child: FittedBox(
@@ -159,7 +218,7 @@ class _MovieInfoState extends State<MovieInfo> {
                                           height: 44,
                                           child: ListView.builder(
                                             itemCount:
-                                                state.movie.genres!.length,
+                                                state.item.genres!.length,
                                             shrinkWrap: true,
                                             scrollDirection: Axis.horizontal,
                                             itemBuilder:
@@ -168,7 +227,7 @@ class _MovieInfoState extends State<MovieInfo> {
                                                   int index,
                                                 ) => categoriesWidget(
                                                   index: index,
-                                                  movie: state.movie,
+                                                  item: state.item,
                                                   context: context,
                                                 ),
                                           ),
@@ -181,7 +240,7 @@ class _MovieInfoState extends State<MovieInfo> {
                             Padding(
                               padding: const EdgeInsets.all(10.0),
                               child: Text(
-                                state.movie.overview,
+                                state.item.overview,
                                 style: TextStyle(
                                   fontSize: 4.w > 18
                                       ? 100.w > 1200
@@ -207,7 +266,7 @@ class _MovieInfoState extends State<MovieInfo> {
                                   ),
                                   const SizedBox(width: 10),
                                   Text(
-                                    state.movie.voteAverage
+                                    state.item.voteAverage
                                         .toStringAsFixed(1)
                                         .replaceFirst(RegExp(r'\.?'), ''),
                                     style: TextStyle(
@@ -217,9 +276,9 @@ class _MovieInfoState extends State<MovieInfo> {
                                     ),
                                   ),
                                   Text(
-                                    state.movie.voteCount > 1000
-                                        ? "/10 (${(state.movie.voteCount / 1000).toStringAsFixed(2)}K)"
-                                        : "/10 (${state.movie.voteCount})",
+                                    state.item.voteCount > 1000
+                                        ? "/10 (${(state.item.voteCount / 1000).toStringAsFixed(2)}K)"
+                                        : "/10 (${state.item.voteCount})",
                                     style: TextStyle(
                                       fontSize: 4.w > 18 ? 18 : 4.w,
                                       color: grey,
@@ -299,7 +358,7 @@ class _MovieInfoState extends State<MovieInfo> {
                                           vertical: 15,
                                         ),
                                         child: Text(
-                                          "Movies Cast :",
+                                          "Cast :",
                                           style: TextStyle(
                                             fontSize: 5.w > 24 ? 24 : 5.w,
                                             fontWeight: FontWeight.bold,
@@ -358,7 +417,7 @@ class _MovieInfoState extends State<MovieInfo> {
                                                   int index,
                                                 ) => GestureDetector(
                                                   onTap: () => context.go(
-                                                    '/movies/${state.suggestions[index].id}',
+                                                    '/${widget.pageType}/${state.suggestions[index].id}',
                                                   ),
                                                   child: FittedBox(
                                                     child: suggestionWidget(
@@ -405,7 +464,7 @@ class _MovieInfoState extends State<MovieInfo> {
                                                   int index,
                                                 ) => GestureDetector(
                                                   onTap: () => context.go(
-                                                    '/movies/${state.similar[index].id}',
+                                                    '/${widget.pageType}/${state.similar[index].id}',
                                                   ),
                                                   child: FittedBox(
                                                     child: suggestionWidget(

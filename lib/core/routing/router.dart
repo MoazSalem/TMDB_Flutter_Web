@@ -5,14 +5,12 @@ import 'package:go_router/go_router.dart';
 import 'package:tmdb_web/features/categories/ui/movies_categories.dart';
 import 'package:tmdb_web/features/home/ui/home_page.dart';
 import 'package:tmdb_web/features/home/logic/home_cubit.dart';
-import 'package:tmdb_web/features/movies/movie_detail/logic/movie_details_cubit.dart';
-import 'package:tmdb_web/features/movies/movie_detail/ui/movie_details.dart';
+import 'package:tmdb_web/features/movie_tv_details/logic/movie_tv_details_cubit.dart';
+import 'package:tmdb_web/features/movie_tv_details/ui/movie_tv_details.dart';
 import 'package:tmdb_web/features/movies_tv_list/logic/movies_tv_list_cubit.dart';
 import 'package:tmdb_web/features/movies_tv_list/ui/movies_tv_list.dart';
 import 'package:tmdb_web/features/search/logic/search_cubit.dart';
 import 'package:tmdb_web/features/search/ui/search_page.dart';
-import 'package:tmdb_web/features/shows/show_detail/logic/show_details_cubit.dart';
-import 'package:tmdb_web/features/shows/show_detail/ui/show_detail.dart';
 
 class AppRouter {
   static final GoRouter _router = GoRouter(
@@ -60,10 +58,16 @@ class AppRouter {
                 path: ":id",
                 builder: (BuildContext context, GoRouterState state) =>
                     BlocProvider(
-                      create: (context) => MovieDetailsCubit()
-                        ..getMovie(id: int.parse(state.pathParameters['id']!)),
+                      create: (context) => MovieTvDetailsCubit()
+                        ..getItem(
+                          id: int.parse(state.pathParameters['id']!),
+                          type: state.pathParameters['type']!,
+                        ),
                       key: ValueKey(state.pathParameters['id']!),
-                      child: MovieInfo(),
+                      child: MovieTvDetails(
+                        key: ValueKey(state.pathParameters['id']!),
+                        pageType: state.pathParameters['type']!,
+                      ),
                     ),
               ),
             ],
@@ -103,10 +107,16 @@ class AppRouter {
                 path: ":id",
                 builder: (BuildContext context, GoRouterState state) =>
                     BlocProvider(
-                      create: (context) => ShowDetailsCubit()
-                        ..getShow(id: int.parse(state.pathParameters['id']!)),
+                      create: (context) => MovieTvDetailsCubit()
+                        ..getItem(
+                          id: int.parse(state.pathParameters['id']!),
+                          type: state.pathParameters['type']!,
+                        ),
                       key: ValueKey(state.pathParameters['id']!),
-                      child: ShowDetails(),
+                      child: MovieTvDetails(
+                        key: ValueKey(state.pathParameters['id']!),
+                        pageType: state.pathParameters['type']!,
+                      ),
                     ),
               ),
             ],
