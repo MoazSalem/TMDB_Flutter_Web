@@ -1,7 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:tmdb_web/core/helpers/widgets_helper.dart';
+import 'package:tmdb_web/core/shared_widgets/rating_widget.dart';
 
 class PosterWidget extends StatelessWidget {
   const PosterWidget({super.key, this.item});
@@ -9,7 +9,6 @@ class PosterWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final color = WidgetsHelper.progressColor(rating: (item.voteAverage * 10));
     return InkWell(
       onTap: () => item.title != null
           ? context.go('/movies/${item.id}')
@@ -42,46 +41,8 @@ class PosterWidget extends StatelessWidget {
               ),
             ),
           ),
-          RatingWidget(item: item, color: color),
+          RatingWidget(item: item),
         ],
-      ),
-    );
-  }
-}
-
-class RatingWidget extends StatelessWidget {
-  const RatingWidget({
-    super.key,
-    required this.item,
-    this.color = Colors.white,
-  });
-  final dynamic item;
-  final Color color;
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(12.0),
-      child: Container(
-        alignment: Alignment.center,
-        width: 56,
-        height: 56,
-        decoration: BoxDecoration(
-          color: Colors.black38,
-          border: Border.all(color: color, width: 2),
-          borderRadius: BorderRadius.circular(200),
-        ),
-        // backgroundColor: WidgetsHelper.progressColor(
-        //   rating: (item.voteAverage * 10),
-        // ).withAlpha(100),
-        child: Text(
-          (item.voteAverage).toStringAsFixed(1),
-          style: TextStyle(
-            fontSize: 20,
-            fontWeight: FontWeight.w900,
-            color: color,
-          ),
-        ),
       ),
     );
   }

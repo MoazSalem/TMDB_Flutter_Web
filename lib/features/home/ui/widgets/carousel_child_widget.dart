@@ -1,6 +1,7 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:tmdb_web/core/shared_widgets/rating_widget.dart';
 
 class CarouselChildWidget extends StatelessWidget {
   const CarouselChildWidget({super.key, required this.item});
@@ -16,6 +17,7 @@ class CarouselChildWidget extends StatelessWidget {
           imageUrl:
               "https://image.tmdb.org/t/p/w1280/${item.backdropPath ?? item.posterPath ?? ""}",
         ),
+        Positioned(top: 8, left: 8, child: RatingWidget(item: item)),
         Align(
           alignment: Alignment.bottomLeft,
           child: Container(
