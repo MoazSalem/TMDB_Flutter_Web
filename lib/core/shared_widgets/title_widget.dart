@@ -22,19 +22,13 @@ class TitleWidget extends StatelessWidget {
             Text(
               "$title ",
               style: TextStyle(
-                fontSize: isClickable
-                    ? 16.sp < 24
-                          ? 24
-                          : 16.sp
-                    : 14.sp < 20
-                    ? 20
-                    : 14.sp,
+                fontSize: 14.sp < 20 ? 20 : 14.sp,
                 fontWeight: FontWeight.bold,
               ),
             ),
             if (isClickable)
               Padding(
-                padding: EdgeInsets.only(top: 7.sp),
+                padding: EdgeInsets.only(top: 6.sp),
                 child: Icon(Icons.keyboard_double_arrow_right, size: 15.sp),
               ),
           ],
