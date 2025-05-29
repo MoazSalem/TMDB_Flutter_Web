@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:tmdb_web/core/networking/constants.dart';
-import 'package:tmdb_web/core/shared_widgets/app_bar.dart';
+import 'package:tmdb_web/core/shared_widgets/custom_app_bar.dart';
 
 class Categories extends StatefulWidget {
   const Categories({super.key, required this.pageType});
@@ -37,13 +37,7 @@ class _CategoriesState extends State<Categories> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        centerTitle: true,
-        toolbarHeight: 90,
-        automaticallyImplyLeading: false,
-        title: CustomAppBar(),
-        backgroundColor: Theme.of(context).canvasColor,
-      ),
+      appBar: CustomAppBar(),
       backgroundColor: Colors.black,
       body: Padding(
         padding: const EdgeInsets.all(10.0),

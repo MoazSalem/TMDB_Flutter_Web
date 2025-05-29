@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
-import 'package:tmdb_web/core/shared_widgets/app_bar.dart';
+import 'package:tmdb_web/core/shared_widgets/custom_app_bar.dart';
 import 'package:tmdb_web/core/shared_widgets/poster_list_widget.dart';
 import 'package:tmdb_web/features/search/logic/search_cubit.dart';
 
@@ -40,13 +40,7 @@ class _SearchPageState extends State<SearchPage> {
       builder: (context, state) {
         return Scaffold(
           backgroundColor: Colors.black,
-          appBar: AppBar(
-            centerTitle: true,
-            toolbarHeight: 90,
-            automaticallyImplyLeading: false,
-            title: CustomAppBar(search: false),
-            backgroundColor: Theme.of(context).canvasColor,
-          ),
+          appBar: CustomAppBar(isSearch: false),
           body: ListView(
             physics: const BouncingScrollPhysics(),
             cacheExtent: 3500,
