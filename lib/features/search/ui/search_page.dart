@@ -4,11 +4,12 @@ import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:tmdb_web/core/shared_widgets/custom_app_bar.dart';
 import 'package:tmdb_web/core/shared_widgets/poster_list_widget.dart';
 import 'package:tmdb_web/features/search/logic/search_cubit.dart';
+import 'package:tmdb_web/features/search/ui/widgets/searchbar_widget.dart';
 
 class SearchPage extends StatefulWidget {
-  final bool movie;
+  final bool isMovie;
 
-  const SearchPage({super.key, required this.movie});
+  const SearchPage({super.key, required this.isMovie});
 
   @override
   State<SearchPage> createState() => _SearchPageState();
@@ -16,9 +17,7 @@ class SearchPage extends StatefulWidget {
 
 class _SearchPageState extends State<SearchPage> {
   late double width;
-  final ScrollController scrollController = ScrollController();
-  final TextEditingController moviesSearch = TextEditingController();
-  final TextEditingController tvSearch = TextEditingController();
+  final TextEditingController searchController = TextEditingController();
 
   @override
   void didChangeDependencies() {
@@ -28,9 +27,7 @@ class _SearchPageState extends State<SearchPage> {
 
   @override
   void dispose() {
-    scrollController.dispose();
-    moviesSearch.dispose();
-    tvSearch.dispose();
+    searchController.dispose();
     super.dispose();
   }
 
@@ -41,64 +38,41 @@ class _SearchPageState extends State<SearchPage> {
         return Scaffold(
           backgroundColor: Colors.black,
           appBar: CustomAppBar(isSearch: false),
-          body: ListView(
-            physics: const BouncingScrollPhysics(),
-            cacheExtent: 3500,
-            shrinkWrap: true,
-            children: [
-              Center(
-                child: Padding(
-                  padding: EdgeInsets.symmetric(vertical: 10, horizontal: 5.w),
-                  child: TextFormField(
-                    controller: widget.movie ? moviesSearch : tvSearch,
-                    onChanged: (query) {
-                      context.read<SearchCubit>().search(
-                        query: query,
-                        type: widget.movie ? 0 : 1,
-                      );
-                    },
-                    autofocus: true,
-                    maxLines: 1,
-                    decoration: InputDecoration(
-                      contentPadding: const EdgeInsets.symmetric(
-                        vertical: 5,
-                        horizontal: 20,
-                      ),
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: const BorderSide(color: Color(0xff8fcea2)),
-                        borderRadius: BorderRadius.circular(0),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: const BorderSide(color: Color(0xff09b5e1)),
-                        borderRadius: BorderRadius.circular(0),
-                      ),
-                      hintText: "Search",
-                      filled: true,
-                      fillColor: Theme.of(context).cardColor,
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(0),
-                      ),
+          body: SingleChildScrollView(
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 8.0.w, vertical: 2.h),
+              child: Column(
+                children: [
+                  SearchbarWidget(
+                    searchController: searchController,
+                    onChanged: (query) => context.read<SearchCubit>().search(
+                      query: query,
+                      type: widget.isMovie ? 0 : 1,
                     ),
                   ),
-                ),
+                  state is SearchLoading
+                      ? SizedBox(
+                          height: 40.h,
+                          child: const Center(
+                            child: CircularProgressIndicator(),
+                          ),
+                        )
+                      : state is SearchLoaded
+                      ? state.searchResult.isEmpty
+                            ? SizedBox(
+                                height: 40.h,
+                                child: Center(child: const Text("No Results")),
+                              )
+                            : PosterListWidget(list: state.searchResult)
+                      : SizedBox(
+                          height: 40.h,
+                          child: Center(
+                            child: const Text("Start typing to search"),
+                          ),
+                        ),
+                ],
               ),
-              state is SearchLoading
-                  ? SizedBox(
-                      height: 400,
-                      child: const Center(child: CircularProgressIndicator()),
-                    )
-                  : state is SearchLoaded
-                  ? state.searchResult.isEmpty
-                        ? const SizedBox(
-                            height: 400,
-                            child: Center(child: Text("No Results")),
-                          )
-                        : PosterListWidget(
-                            list: state.searchResult,
-                            scrollController: scrollController,
-                          )
-                  : const SizedBox(),
-            ],
+            ),
           ),
         );
       },

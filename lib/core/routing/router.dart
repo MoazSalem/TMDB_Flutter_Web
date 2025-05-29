@@ -56,7 +56,7 @@ class AppRouter {
             create: (context) => SearchCubit(),
             child: SearchPage(
               key: ValueKey(state.pathParameters['type']!),
-              movie: true,
+              isMovie: true,
             ),
           ),
         ),
