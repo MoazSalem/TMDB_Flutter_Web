@@ -21,7 +21,7 @@ class _MoviesTvListPageState extends State<MoviesTvListPage> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    currentWidth = MediaQuery.of(context).size.width;
+    currentWidth = MediaQuery.sizeOf(context).width;
   }
 
   @override

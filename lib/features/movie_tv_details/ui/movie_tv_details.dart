@@ -32,7 +32,7 @@ class _MovieTvDetailsState extends State<MovieTvDetails> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    width = MediaQuery.of(context).size.width;
+    width = MediaQuery.sizeOf(context).width;
   }
 
   @override
