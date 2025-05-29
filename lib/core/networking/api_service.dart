@@ -1,12 +1,21 @@
 import 'package:dio/dio.dart';
 import 'package:tmdb_web/core/networking/constants.dart';
+import 'package:tmdb_web/core/networking/error_handling.dart';
 
 class ApiService {
   final Dio _dio;
 
   ApiService(this._dio);
-  Future<Response> get({required String url, bool useBaseUrl = true}) async =>
-      await _dio.get('${useBaseUrl ? Constants.baseUrl : ''}$url');
+  Future<Response> get({required String url, bool useBaseUrl = true}) async {
+    try {
+      final fullUrl = '${useBaseUrl ? Constants.baseUrl : ''}$url';
+      return await _dio.get(fullUrl);
+    } on DioException catch (e) {
+      throw ApiException.fromDioException(e);
+    } catch (e) {
+      throw ApiException('Unknown error', details: e.toString());
+    }
+  }
 
   Future<List<T>> fetchList<T>({
     required String url,
@@ -21,8 +30,10 @@ class ApiService {
       } else {
         throw Exception('Failed with status: ${response.statusCode}');
       }
+    } on DioException catch (e) {
+      throw ApiException.fromDioException(e);
     } catch (e) {
-      throw Exception('Network error: $e');
+      throw ApiException('Unknown error', details: e.toString());
     }
   }
 }
