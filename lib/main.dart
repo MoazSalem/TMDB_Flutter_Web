@@ -28,6 +28,7 @@ class MyApp extends StatelessWidget {
         },
       ),
       scrollBehavior: const MaterialScrollBehavior().copyWith(
+        scrollbars: false,
         dragDevices: {
           PointerDeviceKind.mouse,
           PointerDeviceKind.touch,
