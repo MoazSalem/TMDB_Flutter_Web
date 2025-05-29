@@ -2,8 +2,8 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:tmdb_web/core/networking/constants.dart';
 
-class SuggestionWidget extends StatelessWidget {
-  const SuggestionWidget({super.key, required this.index, this.suggestions});
+class SmallPosterWidget extends StatelessWidget {
+  const SmallPosterWidget({super.key, required this.index, this.suggestions});
   final int index;
   final dynamic suggestions;
 

@@ -7,7 +7,7 @@ import 'package:tmdb_web/core/helpers/widgets_helper.dart';
 import 'package:tmdb_web/core/networking/constants.dart';
 import 'package:tmdb_web/features/movie_tv_details/logic/movie_tv_details_cubit.dart';
 import 'package:youtube_player_iframe/youtube_player_iframe.dart';
-import 'package:tmdb_web/core/shared_widgets/suggestion_widget.dart';
+import 'package:tmdb_web/core/shared_widgets/small_poster_widget.dart';
 import 'package:tmdb_web/core/shared_widgets/actor_widget.dart';
 import 'package:tmdb_web/features/movie_tv_details/ui/widgets/categories_widget.dart';
 import 'package:tmdb_web/core/shared_widgets/review_widget.dart';
@@ -418,7 +418,7 @@ class _MovieTvDetailsState extends State<MovieTvDetails> {
                                                     '/${widget.pageType}/${state.suggestions[index].id}',
                                                   ),
                                                   child: FittedBox(
-                                                    child: SuggestionWidget(
+                                                    child: SmallPosterWidget(
                                                       index: index,
                                                       suggestions:
                                                           state.suggestions,
@@ -465,7 +465,7 @@ class _MovieTvDetailsState extends State<MovieTvDetails> {
                                                     '/${widget.pageType}/${state.similar[index].id}',
                                                   ),
                                                   child: FittedBox(
-                                                    child: SuggestionWidget(
+                                                    child: SmallPosterWidget(
                                                       index: index,
                                                       suggestions:
                                                           state.similar,
