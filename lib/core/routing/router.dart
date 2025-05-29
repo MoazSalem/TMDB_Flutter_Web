@@ -12,62 +12,87 @@ import 'package:tmdb_web/features/movies_tv_list/ui/movies_tv_list.dart';
 import 'package:tmdb_web/features/search/logic/search_cubit.dart';
 import 'package:tmdb_web/features/search/ui/search_page.dart';
 
+CustomTransitionPage<T> buildFadeTransitionPage<T>({
+  required Widget child,
+  required GoRouterState state,
+}) {
+  return CustomTransitionPage<T>(
+    key: state.pageKey,
+    child: child,
+    transitionsBuilder: (context, animation, secondaryAnimation, child) =>
+        FadeTransition(opacity: animation, child: child),
+  );
+}
+
 class AppRouter {
   static final GoRouter _router = GoRouter(
-    debugLogDiagnostics: true,
     initialLocation: '/',
     routes: <RouteBase>[
       GoRoute(
         path: "/",
-        builder: (BuildContext context, GoRouterState state) => BlocProvider(
-          create: (context) => GetIt.I.get<HomeCubit>()..load(),
-          child: const HomePage(),
+        pageBuilder: (context, state) => buildFadeTransitionPage(
+          state: state,
+          child: BlocProvider(
+            create: (context) => GetIt.I.get<HomeCubit>()..load(),
+            child: const HomePage(),
+          ),
         ),
       ),
       GoRoute(
         path: "/:type",
-        builder: (BuildContext context, GoRouterState state) => Categories(
-          key: ValueKey(state.pathParameters['type']!),
-          pageType: state.pathParameters['type']!,
+        pageBuilder: (context, state) => buildFadeTransitionPage(
+          state: state,
+          child: Categories(
+            key: ValueKey(state.pathParameters['type']!),
+            pageType: state.pathParameters['type']!,
+          ),
         ),
       ),
       GoRoute(
         path: "/:type/search",
-        builder: (BuildContext context, GoRouterState state) => BlocProvider(
-          create: (context) => SearchCubit(),
-          child: SearchPage(
-            key: ValueKey(state.pathParameters['type']!),
-            movie: true,
+        pageBuilder: (context, state) => buildFadeTransitionPage(
+          state: state,
+          child: BlocProvider(
+            create: (context) => SearchCubit(),
+            child: SearchPage(
+              key: ValueKey(state.pathParameters['type']!),
+              movie: true,
+            ),
           ),
         ),
       ),
       GoRoute(
         path: "/:type/:genre/:page",
-        builder: (BuildContext context, GoRouterState state) => BlocProvider(
-          create: (context) => GetIt.I.get<MoviesTvListCubit>()
-            ..getMoviesOrTv(
-              type: state.pathParameters['type']!,
-              category: state.pathParameters['genre']!,
-              currentPage: int.parse(state.pathParameters['page']!),
-            ),
-          key: ValueKey(state.pathParameters['page']!),
-          child: MoviesTvListPage(pageType: state.pathParameters['type']!),
+        pageBuilder: (context, state) => buildFadeTransitionPage(
+          state: state,
+          child: BlocProvider(
+            create: (context) =>
+                GetIt.I.get<MoviesTvListCubit>()..getMoviesOrTv(
+                  type: state.pathParameters['type']!,
+                  category: state.pathParameters['genre']!,
+                  currentPage: int.parse(state.pathParameters['page']!),
+                ),
+            key: ValueKey(state.pathParameters['page']!),
+            child: MoviesTvListPage(pageType: state.pathParameters['type']!),
+          ),
         ),
       ),
       GoRoute(
         path: "/:type/:id",
-        builder: (BuildContext context, GoRouterState state) => BlocProvider(
-          create: (context) => MovieTvDetailsCubit()
-            ..getItem(
-              id: int.parse(state.pathParameters['id']!),
-              type: state.pathParameters['type']!,
-            ),
-          key: ValueKey(state.pathParameters['id']!),
-          child: MovieTvDetails(pageType: state.pathParameters['type']!),
+        pageBuilder: (context, state) => buildFadeTransitionPage(
+          state: state,
+          child: BlocProvider(
+            create: (context) => MovieTvDetailsCubit()
+              ..getItem(
+                id: int.parse(state.pathParameters['id']!),
+                type: state.pathParameters['type']!,
+              ),
+            key: ValueKey(state.pathParameters['id']!),
+            child: MovieTvDetails(pageType: state.pathParameters['type']!),
+          ),
         ),
       ),
     ],
-    // Optional: Add an errorBuilder for unmatched routes
     errorBuilder: (BuildContext context, GoRouterState state) => Scaffold(
       appBar: AppBar(title: const Text('Error')),
       body: Center(child: Text('Page not found: ${state.uri.path}')),
