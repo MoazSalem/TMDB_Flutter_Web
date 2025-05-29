@@ -1,7 +1,6 @@
 import 'dart:ui';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:tmdb_web/core/routing/router.dart';
 import 'package:flutter_web_plugins/flutter_web_plugins.dart';
@@ -38,20 +37,12 @@ class MyApp extends StatelessWidget {
       ),
       debugShowCheckedModeBanner: false,
       title: 'TMDB Web',
-      darkTheme: ThemeData(
+      theme: ThemeData(
         useMaterial3: true,
-        primaryColor: const Color(0xff039ac3),
         brightness: Brightness.dark,
-        indicatorColor: Colors.white,
-        canvasColor: Colors.black,
-        appBarTheme: const AppBarTheme(
-          systemOverlayStyle: SystemUiOverlayStyle.light,
-        ),
-        scrollbarTheme: const ScrollbarThemeData().copyWith(
-          thumbVisibility: MaterialStateProperty.all(true),
-          thumbColor: MaterialStateProperty.all(
-            const Color(0xff039ac3).withOpacity(0.5),
-          ),
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: const Color(0xff55c3bd),
+          brightness: Brightness.dark,
         ),
       ),
       themeMode: ThemeMode.dark,
