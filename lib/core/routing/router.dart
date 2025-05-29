@@ -35,7 +35,10 @@ class AppRouter {
                 builder: (BuildContext context, GoRouterState state) =>
                     BlocProvider(
                       create: (context) => SearchCubit(),
-                      child: SearchPage(movie: true),
+                      child: SearchPage(
+                        key: ValueKey(state.pathParameters['type']!),
+                        movie: true,
+                      ),
                     ),
               ),
               GoRoute(
@@ -48,9 +51,9 @@ class AppRouter {
                           category: state.pathParameters['genre']!,
                           currentPage: int.parse(state.pathParameters['page']!),
                         ),
+                      key: ValueKey(state.pathParameters['page']!),
                       child: MoviesTvListPage(
-                        key: ValueKey(state.pathParameters['genre']!),
-                        pageType: state.pathParameters['page']!,
+                        pageType: state.pathParameters['type']!,
                       ),
                     ),
               ),
@@ -65,7 +68,6 @@ class AppRouter {
                         ),
                       key: ValueKey(state.pathParameters['id']!),
                       child: MovieTvDetails(
-                        key: ValueKey(state.pathParameters['id']!),
                         pageType: state.pathParameters['type']!,
                       ),
                     ),
