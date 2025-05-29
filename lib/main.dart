@@ -1,14 +1,17 @@
 import 'dart:ui';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:tmdb_web/core/routing/router.dart';
-import 'package:url_strategy/url_strategy.dart';
+import 'package:flutter_web_plugins/flutter_web_plugins.dart';
 import 'core/di/dependency_injection.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  setPathUrlStrategy();
+  if (kIsWeb) {
+    setUrlStrategy(PathUrlStrategy());
+  }
   await setupGetIt();
   runApp(const MyApp());
 }

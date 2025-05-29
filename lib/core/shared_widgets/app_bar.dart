@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
-import 'package:simple_gradient_text/simple_gradient_text.dart';
 
 class CustomAppBar extends StatelessWidget {
   const CustomAppBar({
@@ -41,17 +40,31 @@ class CustomAppBar extends StatelessWidget {
                         ),
                         child: Row(
                           children: [
-                            GradientText(
-                              "TMDB",
-                              style: const TextStyle(
-                                fontSize: 34,
-                                letterSpacing: 3,
-                                fontWeight: FontWeight.w900,
+                            ShaderMask(
+                              shaderCallback: (bounds) =>
+                                  const LinearGradient(
+                                    colors: [
+                                      Color(0xff8fcea2),
+                                      Color(0xff2dbbcf),
+                                    ],
+                                    begin: Alignment.topLeft,
+                                    end: Alignment.bottomRight,
+                                  ).createShader(
+                                    Rect.fromLTWH(
+                                      0,
+                                      0,
+                                      bounds.width,
+                                      bounds.height,
+                                    ),
+                                  ),
+                              child: const Text(
+                                "TMDB",
+                                style: TextStyle(
+                                  fontSize: 34,
+                                  letterSpacing: 3,
+                                  fontWeight: FontWeight.w900,
+                                ),
                               ),
-                              colors: const [
-                                Color(0xff8fcea2),
-                                Color(0xff2dbbcf),
-                              ],
                             ),
                             Padding(
                               padding: const EdgeInsets.only(left: 6.0),

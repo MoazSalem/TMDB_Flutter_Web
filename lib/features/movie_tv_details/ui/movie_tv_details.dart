@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:auto_animated/auto_animated.dart';
 import 'package:pointer_interceptor/pointer_interceptor.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:tmdb_web/core/helpers/widgets_helper.dart';
@@ -493,44 +492,20 @@ class _MovieTvDetailsState extends State<MovieTvDetails> {
                                           ),
                                         ),
                                       ),
-                                      LiveList.options(
-                                        options: const LiveOptions(
-                                          showItemInterval: Duration(
-                                            milliseconds: 50,
-                                          ),
-                                          showItemDuration: Duration(
-                                            milliseconds: 200,
-                                          ),
-                                          reAnimateOnVisibility: false,
-                                        ),
+                                      ListView.builder(
+                                        itemCount: state.reviews.length,
                                         physics:
                                             const NeverScrollableScrollPhysics(),
                                         shrinkWrap: true,
                                         itemBuilder:
-                                            (
-                                              BuildContext context,
-                                              int index,
-                                              Animation<double> animation,
-                                            ) => FadeTransition(
-                                              opacity: Tween<double>(
-                                                begin: 0,
-                                                end: 1,
-                                              ).animate(animation),
-                                              child: SlideTransition(
-                                                position: Tween<Offset>(
-                                                  begin: const Offset(0, -0.1),
-                                                  end: Offset.zero,
-                                                ).animate(animation),
-                                                child: GestureDetector(
+                                            (BuildContext context, int index) =>
+                                                GestureDetector(
                                                   onTap: () {},
                                                   child: ReviewWidget(
                                                     review:
                                                         state.reviews[index],
                                                   ),
                                                 ),
-                                              ),
-                                            ),
-                                        itemCount: state.reviews.length,
                                       ),
                                     ],
                                   )
