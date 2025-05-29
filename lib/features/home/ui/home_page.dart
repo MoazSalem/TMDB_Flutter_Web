@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:go_router/go_router.dart';
 import 'package:tmdb_web/core/shared_widgets/horizontal_list_widget.dart';
-import 'package:tmdb_web/core/shared_widgets/small_poster_widget.dart';
 import 'package:tmdb_web/core/shared_widgets/custom_app_bar.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:tmdb_web/features/home/logic/home_cubit.dart';

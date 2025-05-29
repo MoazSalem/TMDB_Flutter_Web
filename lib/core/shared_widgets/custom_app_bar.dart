@@ -21,8 +21,9 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     return AppBar(
       backgroundColor: Colors.black,
       automaticallyImplyLeading: false,
+      leadingWidth: 0,
       title: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 8.w),
+        padding: EdgeInsets.symmetric(horizontal: 7.w < 100 ? 20 : 7.w),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -105,11 +106,11 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
           : context.pop(),
       child: CircleAvatar(
         backgroundColor: Colors.transparent,
-        radius: 30,
+        radius: 24,
         child: Icon(
           isSearch ? Icons.search : Icons.close,
-          size: 30,
-          color: const Color(0xff01b4e4),
+          size: 24,
+          color: const Color(0xff3fbfc7),
         ),
       ),
     );

@@ -55,16 +55,16 @@ class Constants {
   };
 
   static const List<Category> movieCategories = [
-    Category(apiKey: "popular", label: "Popular"),
-    Category(apiKey: "top_rated", label: "Top Rated"),
-    Category(apiKey: "now_playing", label: "Now Playing"),
-    Category(apiKey: "upcoming", label: "Upcoming"),
+    Category(apiKey: "popular", name: "Popular"),
+    Category(apiKey: "top_rated", name: "Top Rated"),
+    Category(apiKey: "now_playing", name: "Now Playing"),
+    Category(apiKey: "upcoming", name: "Upcoming"),
   ];
   static const List<Category> tvCategories = [
-    Category(apiKey: "popular", label: "Popular"),
-    Category(apiKey: "top_rated", label: "Top Rated"),
-    Category(apiKey: "airing_today", label: "Airing Today"),
-    Category(apiKey: "on_the_air", label: "On The Air"),
+    Category(apiKey: "popular", name: "Popular"),
+    Category(apiKey: "top_rated", name: "Top Rated"),
+    Category(apiKey: "airing_today", name: "Airing Today"),
+    Category(apiKey: "on_the_air", name: "On The Air"),
   ];
 
   static const List<String> backdropSizes = [
@@ -98,9 +98,9 @@ class Constants {
 
 class Category {
   final String apiKey;
-  final String label;
+  final String name;
 
-  const Category({required this.apiKey, required this.label});
+  const Category({required this.apiKey, required this.name});
 }
 
 class Genre {

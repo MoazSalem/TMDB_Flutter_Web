@@ -14,7 +14,7 @@ class ReviewWidget extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(10.0),
       child: Card(
-        color: Colors.grey.withOpacity(0.2),
+        color: Colors.grey.withAlpha(60),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
