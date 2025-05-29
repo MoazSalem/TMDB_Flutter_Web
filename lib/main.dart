@@ -39,6 +39,7 @@ class MyApp extends StatelessWidget {
       title: 'TMDB Web',
       theme: ThemeData(
         useMaterial3: true,
+        fontFamily: 'quicksand',
         brightness: Brightness.dark,
         colorScheme: ColorScheme.fromSeed(
           seedColor: const Color(0xff55c3bd),

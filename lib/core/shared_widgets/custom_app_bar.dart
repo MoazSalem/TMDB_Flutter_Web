@@ -60,8 +60,8 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                 "TMDB",
                 style: TextStyle(
                   fontSize: 26,
-                  letterSpacing: 3,
-                  fontWeight: FontWeight.bold,
+                  letterSpacing: 2,
+                  fontWeight: FontWeight.w800,
                 ),
               ),
               Padding(
@@ -90,7 +90,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
         style: const TextStyle(
           color: Colors.white,
           fontSize: 16,
-          fontWeight: FontWeight.w400,
+          fontWeight: FontWeight.w600,
         ),
       ),
     );

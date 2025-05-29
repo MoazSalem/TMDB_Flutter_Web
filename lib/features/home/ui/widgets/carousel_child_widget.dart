@@ -44,7 +44,7 @@ class CarouselChildWidget extends StatelessWidget {
               style: TextStyle(
                 color: Colors.white,
                 fontSize: 3.w > 24 ? 24 : 3.w,
-                fontWeight: FontWeight.w600,
+                fontWeight: FontWeight.w700,
               ),
             ),
           ),

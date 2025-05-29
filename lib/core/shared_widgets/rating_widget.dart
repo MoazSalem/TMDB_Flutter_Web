@@ -34,7 +34,7 @@ class RatingWidget extends StatelessWidget {
           (item.voteAverage).toStringAsFixed(1),
           style: TextStyle(
             fontSize: 15.sp > 20 ? 20 : 15.sp,
-            fontWeight: FontWeight.w900,
+            fontWeight: FontWeight.w700,
             color: color,
           ),
         ),

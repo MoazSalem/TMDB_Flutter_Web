@@ -92,7 +92,7 @@ class SuggestionWidget extends StatelessWidget {
                         "${suggestions[index].title ?? suggestions[index].name} (${(suggestions[index].releaseDate ?? suggestions[index].firstAirDate).split("-")[0]})",
                         style: const TextStyle(
                           fontSize: 16,
-                          fontWeight: FontWeight.w500,
+                          fontWeight: FontWeight.w600,
                         ),
                         maxLines: 3,
                         overflow: TextOverflow.ellipsis,
