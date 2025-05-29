@@ -1,5 +1,6 @@
 class Constants {
   static const String baseUrl = "https://api.themoviedb.org/3/";
+  static const String imagesBaseUrl = "https://image.tmdb.org/t/p/";
 
   static const List<String> types = ["movie/", "tv/"];
 

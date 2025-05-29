@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:tmdb_web/core/models/cast.dart';
+import 'package:tmdb_web/core/networking/constants.dart';
 
 class ActorWidget extends StatelessWidget {
   ActorWidget({super.key, required this.member});
@@ -27,7 +28,7 @@ class ActorWidget extends StatelessWidget {
                     width: 100,
                     fit: BoxFit.cover,
                     imageUrl:
-                        "https://image.tmdb.org/t/p/w200${member.profilePath}",
+                        "${Constants.imagesBaseUrl}${Constants.profileSizes[1]}${member.profilePath}",
                     placeholder: (context, url) => const SizedBox(
                       height: 100,
                       width: 100,

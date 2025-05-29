@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:tmdb_web/core/networking/constants.dart';
 import 'package:tmdb_web/core/shared_widgets/rating_widget.dart';
 
 class PosterWidget extends StatelessWidget {
@@ -20,7 +21,7 @@ class PosterWidget extends StatelessWidget {
             child: CachedNetworkImage(
               fit: BoxFit.cover,
               imageUrl:
-                  "https://image.tmdb.org/t/p/w500${item.posterPath ?? ""}",
+                  "${Constants.imagesBaseUrl}${Constants.posterSizes[3]}${item.posterPath ?? ""}",
               placeholder: (context, url) => const SizedBox(
                 height: 600,
                 width: 300,

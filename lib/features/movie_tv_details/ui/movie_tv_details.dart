@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:pointer_interceptor/pointer_interceptor.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:tmdb_web/core/helpers/widgets_helper.dart';
+import 'package:tmdb_web/core/networking/constants.dart';
 import 'package:tmdb_web/features/movie_tv_details/logic/movie_tv_details_cubit.dart';
 import 'package:youtube_player_iframe/youtube_player_iframe.dart';
 import 'package:tmdb_web/core/shared_widgets/suggestion_widget.dart';
@@ -59,7 +60,7 @@ class _MovieTvDetailsState extends State<MovieTvDetails> {
                       child: state.item.posterPath != ""
                           ? Image.network(
                               fit: BoxFit.cover,
-                              "https://image.tmdb.org/t/p/original${state.item.backdropPath ?? state.item.posterPath}",
+                              "${Constants.imagesBaseUrl}${Constants.backdropSizes[3]}${state.item.backdropPath ?? state.item.posterPath}",
                               errorBuilder: (context, error, stackTrace) {
                                 return const SizedBox(
                                   width: 300,

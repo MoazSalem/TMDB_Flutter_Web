@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:tmdb_web/core/networking/constants.dart';
 import 'package:tmdb_web/core/shared_widgets/rating_widget.dart';
 
 class CarouselChildWidget extends StatelessWidget {
@@ -15,7 +16,7 @@ class CarouselChildWidget extends StatelessWidget {
         CachedNetworkImage(
           fit: BoxFit.cover,
           imageUrl:
-              "https://image.tmdb.org/t/p/w1280/${item.backdropPath ?? item.posterPath ?? ""}",
+              "${Constants.imagesBaseUrl}${Constants.backdropSizes[2]}/${item.backdropPath ?? item.posterPath ?? ""}",
         ),
         Positioned(top: 8, left: 8, child: RatingWidget(item: item)),
         Align(

@@ -3,6 +3,7 @@ import 'package:expandable_text/expandable_text.dart';
 import 'package:flutter/material.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:tmdb_web/core/models/reviews.dart';
+import 'package:tmdb_web/core/networking/constants.dart';
 
 class ReviewWidget extends StatelessWidget {
   const ReviewWidget({super.key, required this.review});
@@ -44,7 +45,7 @@ class ReviewWidget extends StatelessWidget {
                                               .split(":")[0] ==
                                           "https"
                                       ? review.authorDetails!.avatarPath!
-                                      : "https://image.tmdb.org/t/p/w200${review.authorDetails?.avatarPath}"
+                                      : "${Constants.imagesBaseUrl}${Constants.profileSizes[1]}${review.authorDetails?.avatarPath}"
                                 : "",
                             placeholder: (context, url) => const SizedBox(
                               height: 100,

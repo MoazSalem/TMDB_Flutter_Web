@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:tmdb_web/core/networking/constants.dart';
 
 class SuggestionWidget extends StatelessWidget {
   const SuggestionWidget({super.key, required this.index, this.suggestions});
@@ -20,7 +21,7 @@ class SuggestionWidget extends StatelessWidget {
               child: CachedNetworkImage(
                 fit: BoxFit.cover,
                 imageUrl:
-                    "https://image.tmdb.org/t/p/w400${suggestions[index].posterPath ?? ""}",
+                    "${Constants.imagesBaseUrl}${Constants.posterSizes[3]}${suggestions[index].posterPath ?? ""}",
                 placeholder: (context, url) => const SizedBox(
                   height: 260,
                   width: 160,
