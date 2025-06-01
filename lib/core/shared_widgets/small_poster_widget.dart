@@ -1,107 +1,109 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:tmdb_web/core/networking/constants.dart';
 
 class SmallPosterWidget extends StatelessWidget {
-  const SmallPosterWidget({super.key, required this.index, this.suggestions});
-  final int index;
-  final dynamic suggestions;
+  const SmallPosterWidget({super.key, this.item});
+  final dynamic item;
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(4.0),
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(10),
-        child: Column(
-          children: [
-            SizedBox(
-              height: 260,
-              width: 160,
-              child: CachedNetworkImage(
-                fit: BoxFit.cover,
-                imageUrl:
-                    "${Constants.imagesBaseUrl}${Constants.posterSizes[3]}${suggestions[index].posterPath ?? ""}",
-                placeholder: (context, url) => const SizedBox(
-                  height: 260,
-                  width: 160,
-                  child: SizedBox(
-                    height: 60,
-                    width: 60,
-                    child: Center(
-                      child: CircularProgressIndicator(
-                        color: Color(0xff55c3bd),
-                      ),
-                    ),
+    final double ratingSize = 4.w > 16 ? 16 : 4.w;
+    return Stack(
+      children: [
+        ClipRRect(
+          borderRadius: BorderRadius.circular(20),
+          child: SizedBox(
+            height: 400,
+            width: 280,
+            child: CachedNetworkImage(
+              fit: BoxFit.cover,
+              imageUrl:
+                  "${Constants.imagesBaseUrl}${Constants.posterSizes[3]}${item.posterPath ?? ""}",
+              placeholder: (context, url) => const SizedBox(
+                height: 260,
+                width: 160,
+                child: SizedBox(
+                  height: 60,
+                  width: 60,
+                  child: Center(
+                    child: CircularProgressIndicator(color: Color(0xff55c3bd)),
                   ),
                 ),
-                errorWidget: (context, url, error) => const SizedBox(
-                  width: 60,
-                  height: 100,
-                  child: Icon(Icons.question_mark_rounded, size: 100),
-                ),
+              ),
+              errorWidget: (context, url, error) => const SizedBox(
+                width: 60,
+                height: 100,
+                child: Icon(Icons.question_mark_rounded, size: 100),
               ),
             ),
-            Container(
-              decoration: const BoxDecoration(
-                borderRadius: BorderRadius.vertical(
-                  bottom: Radius.circular(10),
-                ),
-                color: Colors.white12,
+          ),
+        ),
+        Positioned(
+          bottom: 0,
+          child: Container(
+            height: 170,
+            width: 220,
+            alignment: Alignment.bottomLeft,
+            decoration: const BoxDecoration(
+              gradient: LinearGradient(
+                colors: [
+                  Color.fromARGB(140, 0, 0, 0),
+                  Color.fromARGB(0, 0, 0, 0),
+                ],
+                begin: Alignment.bottomCenter,
+                end: Alignment.topCenter,
               ),
-              height: 120,
-              width: 160,
+            ),
+            child: Padding(
+              padding: const EdgeInsets.all(12.0),
               child: Column(
+                mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.only(top: 8.0, left: 8.0),
+                  Text(
+                    "${item.title ?? item.name}",
+                    style: TextStyle(
+                      fontSize: 10.sp < 18 ? 18 : 10.sp,
+                      fontWeight: FontWeight.w600,
+                    ),
+                    maxLines: 4,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                  FittedBox(
                     child: Row(
                       children: [
-                        const Icon(Icons.star, color: Colors.amber, size: 16),
-                        const SizedBox(width: 4),
+                        Icon(Icons.star, size: ratingSize, color: Colors.amber),
+                        const SizedBox(width: 6),
                         Text(
-                          suggestions[index].voteAverage!
+                          item.voteAverage
                               .toStringAsFixed(1)
                               .replaceFirst(RegExp(r'\.?'), ''),
-                          style: const TextStyle(
+                          style: TextStyle(
                             color: Colors.white,
-                            fontSize: 14,
-                            fontWeight: FontWeight.w500,
+                            fontSize: ratingSize,
+                            fontWeight: FontWeight.bold,
                           ),
                         ),
                         Text(
-                          suggestions[index].voteCount! > 1000
-                              ? "/10 (${(suggestions[index].voteCount! / 1000).toStringAsFixed(2)}K)"
-                              : "/10 (${suggestions[index].voteCount})",
+                          item.voteCount > 1000
+                              ? "/10 (${(item.voteCount / 1000).toStringAsFixed(2)}K)"
+                              : "/10 (${item.voteCount})",
                           style: TextStyle(
-                            fontSize: 14,
+                            fontSize: ratingSize,
                             color: Colors.grey.shade400,
                           ),
                         ),
                       ],
                     ),
                   ),
-                  Flexible(
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Text(
-                        "${suggestions[index].title ?? suggestions[index].name} (${(suggestions[index].releaseDate ?? suggestions[index].firstAirDate).split("-")[0]})",
-                        style: const TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w600,
-                        ),
-                        maxLines: 3,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                    ),
-                  ),
                 ],
               ),
             ),
-          ],
+          ),
         ),
-      ),
+      ],
     );
   }
 }

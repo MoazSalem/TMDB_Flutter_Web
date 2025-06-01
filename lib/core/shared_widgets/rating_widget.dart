@@ -20,8 +20,8 @@ class RatingWidget extends StatelessWidget {
       padding: const EdgeInsets.all(12.0),
       child: Container(
         alignment: Alignment.center,
-        width: 8.w > 56 ? 56 : 8.w,
-        height: 8.w > 56 ? 56 : 8.w,
+        width: 7.w > 56 ? 56 : 7.w,
+        height: 7.w > 56 ? 56 : 7.w,
         decoration: BoxDecoration(
           color: Colors.black38,
           border: Border.all(color: color, width: 2),
@@ -33,9 +33,9 @@ class RatingWidget extends StatelessWidget {
         child: Text(
           (item.voteAverage).toStringAsFixed(1),
           style: TextStyle(
-            fontSize: 15.sp > 20 ? 20 : 15.sp,
-            fontWeight: FontWeight.w700,
-            color: color,
+            fontSize: 15.5.sp > 20 ? 20 : 15.5.sp,
+            fontWeight: FontWeight.w600,
+            color: Colors.white,
           ),
         ),
       ),

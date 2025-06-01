@@ -15,16 +15,17 @@ class HorizontalListWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 70.w > 400 ? 400 : 70.w,
-      child: ListView.builder(
+      height: 330,
+      child: CarouselView(
+        itemExtent: 220,
+        shrinkExtent: 1,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
         scrollDirection: Axis.horizontal,
-        itemCount: list.length,
-        itemBuilder: (BuildContext context, int index) => InkWell(
-          borderRadius: const BorderRadius.all(Radius.circular(30)),
-          onTap: () => context.go('/$pageType/${list[index].id}'),
-          child: FittedBox(
-            child: SmallPosterWidget(index: index, suggestions: list),
-          ),
+        controller: CarouselController(),
+        onTap: (index) => context.go('/$pageType/${list[index].id}'),
+        children: List<Widget>.generate(
+          list.length,
+          (index) => SmallPosterWidget(item: list[index]),
         ),
       ),
     );

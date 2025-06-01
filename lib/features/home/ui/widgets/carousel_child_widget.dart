@@ -18,7 +18,7 @@ class CarouselChildWidget extends StatelessWidget {
           imageUrl:
               "${Constants.imagesBaseUrl}${Constants.backdropSizes[2]}/${item.backdropPath ?? item.posterPath ?? ""}",
         ),
-        Positioned(top: 8, left: 8, child: RatingWidget(item: item)),
+        Positioned(top: 8, right: 8, child: RatingWidget(item: item)),
         Align(
           alignment: Alignment.bottomLeft,
           child: Container(
