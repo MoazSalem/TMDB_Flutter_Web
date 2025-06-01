@@ -31,7 +31,7 @@ class _MovieTvDetailsState extends State<MovieTvDetails> {
     return BlocBuilder<MovieTvDetailsCubit, MovieTvDetailsState>(
       builder: (context, state) {
         return Scaffold(
-          appBar: CustomAppBar(),
+          appBar: CustomAppBar(isMovie: widget.pageType == "movies"),
           body: state is MovieTvDetailsLoading
               ? const Center(
                   child: CircularProgressIndicator(color: Color(0xff8fcea2)),

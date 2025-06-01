@@ -45,7 +45,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   Widget _buildLogo(BuildContext context) {
     return InkWell(
-      borderRadius: BorderRadius.circular(30),
+      borderRadius: BorderRadius.circular(5),
       onTap: () => context.go('/'),
       child: ShaderMask(
         shaderCallback: (bounds) => const LinearGradient(
