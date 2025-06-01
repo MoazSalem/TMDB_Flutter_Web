@@ -11,7 +11,7 @@ class CarouselWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 100.w > 800 ? 50.h : 30.h,
+      height: 70.h * Device.aspectRatio > 500 ? 500 : 70.h * Device.aspectRatio,
       child: CarouselView.weighted(
         scrollDirection: Axis.horizontal,
         controller: controller,
