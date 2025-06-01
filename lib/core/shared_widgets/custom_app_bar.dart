@@ -20,6 +20,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) {
     return AppBar(
       backgroundColor: Colors.black,
+      surfaceTintColor: Colors.black,
       automaticallyImplyLeading: false,
       leadingWidth: 0,
       title: Padding(

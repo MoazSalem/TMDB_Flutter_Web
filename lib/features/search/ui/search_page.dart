@@ -16,13 +16,12 @@ class SearchPage extends StatefulWidget {
 }
 
 class _SearchPageState extends State<SearchPage> {
-  late double width;
   final TextEditingController searchController = TextEditingController();
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    width = MediaQuery.sizeOf(context).width;
+    MediaQuery.sizeOf(context);
   }
 
   @override
@@ -36,7 +35,6 @@ class _SearchPageState extends State<SearchPage> {
     return BlocBuilder<SearchCubit, SearchState>(
       builder: (context, state) {
         return Scaffold(
-          backgroundColor: Colors.black,
           appBar: CustomAppBar(isSearch: false),
           body: SingleChildScrollView(
             child: Padding(

@@ -15,20 +15,10 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  late double width;
-  final CarouselController _carouselController = CarouselController();
-
-  // This is left to update the ui when the size changes
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    width = MediaQuery.sizeOf(context).width;
-  }
-
-  @override
-  void dispose() {
-    _carouselController.dispose();
-    super.dispose();
+    MediaQuery.sizeOf(context);
   }
 
   @override
@@ -36,7 +26,6 @@ class _HomePageState extends State<HomePage> {
     return BlocBuilder<HomeCubit, HomeState>(
       builder: (context, state) {
         return Scaffold(
-          backgroundColor: Colors.black,
           appBar: CustomAppBar(showSearchIcon: false),
           body: state is HomeLoading
               ? const Center(child: CircularProgressIndicator())
@@ -49,10 +38,7 @@ class _HomePageState extends State<HomePage> {
                     ),
                     child: Column(
                       children: [
-                        CarouselWidget(
-                          controller: _carouselController,
-                          popular: state.popular,
-                        ),
+                        CarouselWidget(popular: state.popular),
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [

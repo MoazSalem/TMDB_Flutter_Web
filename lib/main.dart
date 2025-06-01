@@ -42,12 +42,12 @@ class MyApp extends StatelessWidget {
         fontFamily: 'quicksand',
         brightness: Brightness.dark,
         colorScheme: ColorScheme.fromSeed(
+          surface: Colors.black,
           seedColor: const Color(0xff76b792),
           primary: const Color(0xff76b792),
           brightness: Brightness.dark,
         ),
       ),
-      themeMode: ThemeMode.dark,
       routerConfig: AppRouter.router,
     );
   }

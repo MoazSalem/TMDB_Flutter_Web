@@ -14,7 +14,6 @@ class Categories extends StatefulWidget {
 }
 
 class _CategoriesState extends State<Categories> {
-  late double width;
   late final List<Category> categories;
   late final List<Genre> genres;
 
@@ -32,14 +31,13 @@ class _CategoriesState extends State<Categories> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    width = MediaQuery.sizeOf(context).width;
+    MediaQuery.sizeOf(context);
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(),
-      backgroundColor: Colors.black,
       body: SingleChildScrollView(
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 8.w),
@@ -50,13 +48,11 @@ class _CategoriesState extends State<Categories> {
               CategoriesListWidget(
                 pageType: widget.pageType,
                 categories: categories,
-                width: width,
               ),
               TitleWidget(title: "Genres", isClickable: false),
               CategoriesListWidget(
                 pageType: widget.pageType,
                 categories: genres,
-                width: width,
               ),
             ],
           ),

@@ -16,19 +16,10 @@ class MoviesTvListPage extends StatefulWidget {
 }
 
 class _MoviesTvListPageState extends State<MoviesTvListPage> {
-  late double currentWidth;
-  final ScrollController scrollController = ScrollController();
-
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    currentWidth = MediaQuery.sizeOf(context).width;
-  }
-
-  @override
-  void dispose() {
-    scrollController.dispose();
-    super.dispose();
+    MediaQuery.sizeOf(context);
   }
 
   @override
@@ -36,7 +27,6 @@ class _MoviesTvListPageState extends State<MoviesTvListPage> {
     return BlocBuilder<MoviesTvListCubit, MoviesTvListState>(
       builder: (context, state) {
         return Scaffold(
-          backgroundColor: Theme.of(context).canvasColor,
           appBar: CustomAppBar(),
           body: state is MoviesTvListLoading
               ? const Center(child: CircularProgressIndicator())
@@ -56,7 +46,7 @@ class _MoviesTvListPageState extends State<MoviesTvListPage> {
                     ),
                   ),
                 )
-              : const Center(child: CircularProgressIndicator()),
+              : null,
         );
       },
     );

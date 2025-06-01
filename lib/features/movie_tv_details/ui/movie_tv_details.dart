@@ -22,23 +22,13 @@ class MovieTvDetails extends StatefulWidget {
 }
 
 class _MovieTvDetailsState extends State<MovieTvDetails> {
-  late double width;
-  final ScrollController scrollController = ScrollController();
   final Color grey = Colors.grey.shade400;
   bool videoPressed = false;
-  bool loading = true;
-  int parsedId = 0;
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    width = MediaQuery.sizeOf(context).width;
-  }
-
-  @override
-  void dispose() {
-    scrollController.dispose();
-    super.dispose();
+    MediaQuery.sizeOf(context);
   }
 
   @override
@@ -46,7 +36,6 @@ class _MovieTvDetailsState extends State<MovieTvDetails> {
     return BlocBuilder<MovieTvDetailsCubit, MovieTvDetailsState>(
       builder: (context, state) {
         return Scaffold(
-          backgroundColor: Theme.of(context).canvasColor,
           body: state is MovieTvDetailsLoading
               ? const Center(
                   child: CircularProgressIndicator(color: Color(0xff8fcea2)),
@@ -517,7 +506,7 @@ class _MovieTvDetailsState extends State<MovieTvDetails> {
                     ),
                   ],
                 )
-              : Center(child: CircularProgressIndicator()),
+              : null,
         );
       },
     );

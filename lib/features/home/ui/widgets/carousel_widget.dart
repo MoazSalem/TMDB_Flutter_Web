@@ -4,13 +4,9 @@ import 'package:responsive_sizer/responsive_sizer.dart';
 import 'carousel_child_widget.dart';
 
 class CarouselWidget extends StatelessWidget {
-  final CarouselController controller;
+  final CarouselController? controller;
   final List<dynamic> popular;
-  const CarouselWidget({
-    super.key,
-    required this.controller,
-    required this.popular,
-  });
+  const CarouselWidget({super.key, this.controller, required this.popular});
 
   @override
   Widget build(BuildContext context) {

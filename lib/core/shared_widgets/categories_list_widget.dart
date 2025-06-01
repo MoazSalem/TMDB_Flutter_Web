@@ -7,11 +7,9 @@ class CategoriesListWidget extends StatelessWidget {
     super.key,
     required,
     required this.categories,
-    required this.width,
     required this.pageType,
   });
   final List categories;
-  final double width;
   final String pageType;
   @override
   Widget build(BuildContext context) {
@@ -24,7 +22,7 @@ class CategoriesListWidget extends StatelessWidget {
         childAspectRatio: 4,
         mainAxisSpacing: 20,
         crossAxisSpacing: 20,
-        crossAxisCount: width <= 1400 ? 2 : 4,
+        crossAxisCount: Device.orientation == Orientation.portrait ? 2 : 4,
       ),
       itemBuilder: (BuildContext context, index) => InkWell(
         onTap: () {
