@@ -58,11 +58,7 @@ class SmallPosterWidget extends StatelessWidget {
                     padding: const EdgeInsets.only(top: 8.0, left: 8.0),
                     child: Row(
                       children: [
-                        const Icon(
-                          Icons.star,
-                          color: Color(0xff8fcea2),
-                          size: 16,
-                        ),
+                        const Icon(Icons.star, color: Colors.amber, size: 16),
                         const SizedBox(width: 4),
                         Text(
                           suggestions[index].voteAverage!

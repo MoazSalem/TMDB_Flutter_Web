@@ -43,9 +43,15 @@ class _HomePageState extends State<HomePage> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             TitleWidget(title: "Movies"),
-                            HorizontalListWidget(list: state.movies),
+                            HorizontalListWidget(
+                              list: state.movies,
+                              pageType: 'movies',
+                            ),
                             TitleWidget(title: "Tv Shows"),
-                            HorizontalListWidget(list: state.tvShows),
+                            HorizontalListWidget(
+                              list: state.tvShows,
+                              pageType: 'tv',
+                            ),
                           ],
                         ),
                       ],

@@ -3,9 +3,15 @@ import 'package:go_router/go_router.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
 class TitleWidget extends StatelessWidget {
-  const TitleWidget({super.key, required this.title, this.isClickable = true});
+  const TitleWidget({
+    super.key,
+    required this.title,
+    this.isClickable = true,
+    this.reducePadding = false,
+  });
   final String title;
   final bool isClickable;
+  final bool reducePadding;
 
   @override
   Widget build(BuildContext context) {
@@ -15,14 +21,17 @@ class TitleWidget extends StatelessWidget {
           ? () => context.go('/${title == "Movies" ? "movies" : "tv"}')
           : null,
       child: Padding(
-        padding: EdgeInsets.symmetric(vertical: 2.0.h, horizontal: 1.0.w),
+        padding: EdgeInsets.symmetric(
+          vertical: 2.0.h,
+          horizontal: reducePadding ? 0 : 1.0.w,
+        ),
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
             Text(
               "$title ",
               style: TextStyle(
-                fontSize: 14.sp < 20 ? 20 : 14.sp,
+                fontSize: 16.sp < 20 ? 20 : 16.sp,
                 fontWeight: FontWeight.bold,
               ),
             ),
