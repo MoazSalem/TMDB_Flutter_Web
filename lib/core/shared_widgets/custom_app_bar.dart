@@ -22,16 +22,14 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       backgroundColor: Colors.black,
       surfaceTintColor: Colors.black,
       automaticallyImplyLeading: false,
-      leadingWidth: 0,
+      titleSpacing: 0,
       title: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 7.w < 100 ? 20 : 7.w),
+        padding: EdgeInsets.symmetric(horizontal: 8.w),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Row(
               mainAxisSize: MainAxisSize.max,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 _buildLogo(context),
                 _buildNavLink(context, "Movies", '/movies'),
@@ -49,37 +47,34 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     return InkWell(
       borderRadius: BorderRadius.circular(30),
       onTap: () => context.go('/'),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 6.0, horizontal: 12.0),
-        child: ShaderMask(
-          shaderCallback: (bounds) => const LinearGradient(
-            colors: [Color(0xff8fcea2), Color(0xff2dbbcf)],
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-          ).createShader(Rect.fromLTWH(0, 0, bounds.width, bounds.height)),
-          child: Row(
-            children: [
-              const Text(
-                "TMDB",
-                style: TextStyle(
-                  fontSize: 26,
-                  letterSpacing: 2,
-                  fontWeight: FontWeight.w800,
+      child: ShaderMask(
+        shaderCallback: (bounds) => const LinearGradient(
+          colors: [Color(0xff8fcea2), Color(0xff2dbbcf)],
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+        ).createShader(Rect.fromLTWH(0, 0, bounds.width, bounds.height)),
+        child: Row(
+          children: [
+            const Text(
+              "TMDB",
+              style: TextStyle(
+                fontSize: 26,
+                letterSpacing: 2,
+                fontWeight: FontWeight.w800,
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 6.0),
+              child: Container(
+                height: 20,
+                width: 60,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(30),
+                  color: Colors.white,
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.only(left: 6.0),
-                child: Container(
-                  height: 20,
-                  width: 60,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(30),
-                    color: Colors.white,
-                  ),
-                ),
-              ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
