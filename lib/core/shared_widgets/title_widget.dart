@@ -15,23 +15,23 @@ class TitleWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      borderRadius: const BorderRadius.all(Radius.circular(30)),
-      onTap: isClickable
-          ? () => context.go('/${title == "Movies" ? "movies" : "tv"}')
-          : null,
-      child: Padding(
-        padding: EdgeInsets.symmetric(
-          vertical: 2.0.h,
-          horizontal: reducePadding ? 0 : 1.0.w,
-        ),
+    return Padding(
+      padding: EdgeInsets.symmetric(
+        vertical: 2.0.h,
+        horizontal: reducePadding ? 0 : 1.0.w,
+      ),
+      child: InkWell(
+        borderRadius: const BorderRadius.all(Radius.circular(5)),
+        onTap: isClickable
+            ? () => context.go('/${title == "Movies" ? "movies" : "tv"}')
+            : null,
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
             Text(
               "$title ",
               style: TextStyle(
-                fontSize: 16.sp < 20 ? 20 : 16.sp,
+                fontSize: 16.sp < 30 ? 30 : 16.sp,
                 fontWeight: FontWeight.bold,
               ),
             ),
