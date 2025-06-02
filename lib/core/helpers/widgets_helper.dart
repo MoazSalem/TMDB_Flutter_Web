@@ -35,4 +35,14 @@ class WidgetsHelper {
         return count;
     }
   }
+
+  static String parseRating({required num rating}) {
+    return rating.toStringAsFixed(1).replaceFirst(RegExp(r'\.?'), '');
+  }
+
+  static String parseVoteCount({required num count}) {
+    return count > 1000
+        ? "/10 (${(count / 1000).toStringAsFixed(2)}K)"
+        : "/10 (${count})";
+  }
 }

@@ -32,10 +32,7 @@ class _HomePageState extends State<HomePage> {
               : state is HomeLoaded
               ? SingleChildScrollView(
                   child: Padding(
-                    padding: EdgeInsets.symmetric(
-                      vertical: 2.0.h,
-                      horizontal: 8.0.w,
-                    ),
+                    padding: EdgeInsets.symmetric(horizontal: 8.0.w),
                     child: Column(
                       children: [
                         CarouselWidget(popular: state.popular),
@@ -54,6 +51,7 @@ class _HomePageState extends State<HomePage> {
                             ),
                           ],
                         ),
+                        const SizedBox(height: 20),
                       ],
                     ),
                   ),

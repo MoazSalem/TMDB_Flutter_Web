@@ -19,7 +19,7 @@ class _TrailerWidgetState extends State<TrailerWidget> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        TitleWidget(title: "Trailer", reducePadding: true),
+        TitleWidget(title: "Trailer"),
         Center(
           child: ConstrainedBox(
             constraints: BoxConstraints(maxWidth: 92.w),

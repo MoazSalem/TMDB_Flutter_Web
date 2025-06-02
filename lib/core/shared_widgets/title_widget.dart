@@ -3,23 +3,14 @@ import 'package:go_router/go_router.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
 class TitleWidget extends StatelessWidget {
-  const TitleWidget({
-    super.key,
-    required this.title,
-    this.reducePadding = false,
-    this.url,
-  });
+  const TitleWidget({super.key, required this.title, this.url});
   final String title;
   final String? url;
-  final bool reducePadding;
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(
-        vertical: 2.0.h,
-        horizontal: reducePadding ? 0 : 1.0.w,
-      ),
+      padding: EdgeInsets.symmetric(vertical: 2.0.h),
       child: InkWell(
         borderRadius: const BorderRadius.all(Radius.circular(5)),
         onTap: url == null ? null : () => context.go(url!),
@@ -29,7 +20,7 @@ class TitleWidget extends StatelessWidget {
             Text(
               "$title ",
               style: TextStyle(
-                fontSize: 16.sp < 30 ? 30 : 16.sp,
+                fontSize: 15.sp < 26 ? 26 : 15.sp,
                 fontWeight: FontWeight.bold,
               ),
             ),

@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:tmdb_web/core/shared_widgets/custom_app_bar.dart';
+import 'package:tmdb_web/core/shared_widgets/rating_widget.dart';
 import 'package:tmdb_web/features/movie_tv_details/logic/movie_tv_details_cubit.dart';
+import 'package:tmdb_web/features/movie_tv_details/ui/widgets/cast_list_widget.dart';
+import 'package:tmdb_web/features/movie_tv_details/ui/widgets/review_list_widget.dart';
 import 'package:tmdb_web/features/movie_tv_details/ui/widgets/suggestions_list_widget.dart';
+import 'package:tmdb_web/features/movie_tv_details/ui/widgets/top_cover_widget.dart';
 import 'package:tmdb_web/features/movie_tv_details/ui/widgets/trailer_widget.dart';
-import 'widgets/cast_list_widget.dart';
-import 'widgets/movie_rating_widget.dart';
-import 'widgets/review_list_widget.dart';
-import 'widgets/top_cover_widget.dart';
 
 // This page is opened when you press on a item
 class MovieTvDetails extends StatefulWidget {
@@ -57,7 +57,11 @@ class _MovieTvDetailsState extends State<MovieTvDetails> {
                           ),
                         ),
                         const SizedBox(height: 20),
-                        MovieRatingWidget(item: state.item),
+                        RatingWidget(
+                          voteCount: state.item.voteCount,
+                          voteAverage: state.item.voteAverage,
+                          ratingSize: 4.w > 18 ? 18 : 4.w,
+                        ),
                         if (state.trailer.key != "")
                           TrailerWidget(videoController: state.videoController),
                         if (state.cast.isNotEmpty)

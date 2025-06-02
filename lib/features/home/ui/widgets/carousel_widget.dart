@@ -10,20 +10,25 @@ class CarouselWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: 70.h * Device.aspectRatio > 500 ? 500 : 70.h * Device.aspectRatio,
-      child: CarouselView.weighted(
-        scrollDirection: Axis.horizontal,
-        controller: controller,
-        shrinkExtent: 800,
-        onTap: (index) => popular[index].name == null
-            ? context.go('/movies/${popular[index].id}')
-            : context.go('/tv/${popular[index].id}'),
-        itemSnapping: true,
-        flexWeights: 92.w > 1200 ? [3, 2, 1] : [2, 1],
-        children: List<Widget>.generate(
-          popular.length,
-          (index) => CarouselChildWidget(item: popular[index]),
+    return Padding(
+      padding: const EdgeInsets.only(top: 8.0),
+      child: SizedBox(
+        height: 70.h * Device.aspectRatio > 500
+            ? 500
+            : 70.h * Device.aspectRatio,
+        child: CarouselView.weighted(
+          scrollDirection: Axis.horizontal,
+          controller: controller,
+          shrinkExtent: 800,
+          onTap: (index) => popular[index].name == null
+              ? context.go('/movies/${popular[index].id}')
+              : context.go('/tv/${popular[index].id}'),
+          itemSnapping: true,
+          flexWeights: 92.w > 900 ? [3, 2, 1] : [2, 1],
+          children: List<Widget>.generate(
+            popular.length,
+            (index) => CarouselChildWidget(item: popular[index]),
+          ),
         ),
       ),
     );

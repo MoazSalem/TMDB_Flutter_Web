@@ -34,7 +34,7 @@ class CarouselChildWidget extends StatelessWidget {
                 ),
               ),
             ),
-            if (constraints.maxWidth >= (25.w < 250 ? 250 : 25.w))
+            if (constraints.maxWidth >= 30.w)
               Positioned(
                 bottom: 20,
                 left: 20,
@@ -51,7 +51,11 @@ class CarouselChildWidget extends StatelessWidget {
                         fontWeight: FontWeight.w700,
                       ),
                     ),
-                    RatingWidget(item: item, ratingSize: 3.w > 16 ? 16 : 3.w),
+                    RatingWidget(
+                      voteAverage: item.voteAverage,
+                      voteCount: item.voteCount,
+                      ratingSize: 3.w > 16 ? 16 : 3.w,
+                    ),
                   ],
                 ),
               ),
