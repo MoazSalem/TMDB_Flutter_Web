@@ -6,6 +6,7 @@ import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:tmdb_web/features/home/logic/home_cubit.dart';
 import 'package:tmdb_web/features/home/ui/widgets/carousel_widget.dart';
 import 'package:tmdb_web/core/shared_widgets/title_widget.dart';
+import 'package:tmdb_web/features/home/ui/widgets/loading_skeleton_home.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -28,7 +29,7 @@ class _HomePageState extends State<HomePage> {
         return Scaffold(
           appBar: CustomAppBar(showSearchIcon: false),
           body: state is HomeLoading
-              ? const Center(child: CircularProgressIndicator())
+              ? LoadingSkeletonHome()
               : state is HomeLoaded
               ? SingleChildScrollView(
                   child: Padding(

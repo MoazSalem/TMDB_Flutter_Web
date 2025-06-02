@@ -34,7 +34,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
               _buildNavLink(context, "Tv Shows", '/tv'),
               if (showSearchIcon)
                 Padding(
-                  padding: EdgeInsets.only(left: 60.w < 400 ? 0 : 60.w),
+                  padding: EdgeInsets.only(left: 60.w < 800 ? 0 : 65.w),
                   child: _buildSearchIcon(context),
                 ),
             ],

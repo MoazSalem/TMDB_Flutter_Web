@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
+import 'package:shimmer_animation/shimmer_animation.dart';
 import 'package:tmdb_web/core/models/cast.dart';
 import 'package:tmdb_web/core/networking/constants.dart';
 
@@ -27,17 +28,11 @@ class ActorWidget extends StatelessWidget {
                   fit: BoxFit.cover,
                   imageUrl:
                       "${Constants.imagesBaseUrl}${Constants.profileSizes[1]}${member.profilePath}",
-                  placeholder: (context, url) => const SizedBox(
-                    height: 100,
-                    width: 100,
-                    child: SizedBox(
-                      height: 60,
-                      width: 60,
-                      child: Center(
-                        child: CircularProgressIndicator(color: Colors.white),
+                  progressIndicatorBuilder: (context, url, downloadProgress) =>
+                      Shimmer(
+                        duration: Duration(seconds: 2),
+                        child: SizedBox(),
                       ),
-                    ),
-                  ),
                   errorWidget: (context, url, error) =>
                       const Icon(Icons.person, color: Colors.white, size: 40),
                 ),
