@@ -18,9 +18,10 @@ class ImageWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return CachedNetworkImage(
       fit: BoxFit.cover,
+      placeholderFadeInDuration: const Duration(seconds: 2),
       imageUrl:
           "${Constants.imagesBaseUrl}${isBackdrop ? Constants.backdropSizes[hd ? 3 : 2] : Constants.posterSizes[hd ? 6 : 4]}${isBackdrop ? item.backdropPath ?? item.posterPath ?? "" : item.posterPath ?? ""}",
-      progressIndicatorBuilder: (context, url, downloadProgress) =>
+      placeholder: (context, url) =>
           Shimmer(duration: Duration(seconds: 2), child: SizedBox()),
       errorWidget: (context, url, error) => const SizedBox(
         child: Center(child: Icon(Icons.question_mark_rounded, size: 100)),
