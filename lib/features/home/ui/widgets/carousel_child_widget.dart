@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
-import 'package:cached_network_image/cached_network_image.dart';
-import 'package:tmdb_web/core/networking/constants.dart';
-import 'package:tmdb_web/core/shared_widgets/rating_widget.dart';
+import 'package:tmdb_web/core/shared_widgets/poster_details_widget.dart';
+import 'package:tmdb_web/core/shared_widgets/image_widget.dart';
 
 class CarouselChildWidget extends StatelessWidget {
   const CarouselChildWidget({super.key, required this.item});
@@ -14,15 +13,10 @@ class CarouselChildWidget extends StatelessWidget {
       builder: (BuildContext context, BoxConstraints constraints) {
         return Stack(
           fit: StackFit.expand,
-          alignment: Alignment.bottomLeft,
           children: [
-            CachedNetworkImage(
-              fit: BoxFit.cover,
-              imageUrl:
-                  "${Constants.imagesBaseUrl}${Constants.backdropSizes[2]}/${item.backdropPath ?? item.posterPath ?? ""}",
-            ),
+            ImageWidget(item: item, isBackdrop: true),
             Container(
-              width: double.infinity,
+              alignment: Alignment.bottomLeft,
               decoration: const BoxDecoration(
                 gradient: LinearGradient(
                   colors: [
@@ -33,32 +27,17 @@ class CarouselChildWidget extends StatelessWidget {
                   end: Alignment.topCenter,
                 ),
               ),
-            ),
-            if (constraints.maxWidth >= 30.w)
-              Positioned(
-                bottom: 20,
-                left: 20,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      '${item.name ?? item.title}',
-                      maxLines: 3,
-                      overflow: TextOverflow.ellipsis,
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 4.w > 24 ? 24 : 4.w,
-                        fontWeight: FontWeight.w700,
+              child: constraints.maxWidth >= 30.w
+                  ? Padding(
+                      padding: const EdgeInsets.all(20.0),
+                      child: PosterDetailsWidget(
+                        item: item,
+                        titleSize: 4.w > 24 ? 24 : 4.w,
+                        ratingSize: 3.w > 16 ? 16 : 3.w,
                       ),
-                    ),
-                    RatingWidget(
-                      voteAverage: item.voteAverage,
-                      voteCount: item.voteCount,
-                      ratingSize: 3.w > 16 ? 16 : 3.w,
-                    ),
-                  ],
-                ),
-              ),
+                    )
+                  : const SizedBox(),
+            ),
           ],
         );
       },

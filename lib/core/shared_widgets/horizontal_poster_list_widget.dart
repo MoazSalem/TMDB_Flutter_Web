@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:tmdb_web/core/shared_widgets/poster_details_widget.dart';
-import 'package:tmdb_web/core/shared_widgets/poster_image_widget.dart';
+import 'package:tmdb_web/core/shared_widgets/image_widget.dart';
 
 class HorizontalPosterListWidget extends StatelessWidget {
   const HorizontalPosterListWidget({
@@ -32,7 +33,7 @@ class HorizontalPosterListWidget extends StatelessWidget {
                 children: [
                   ClipRRect(
                     borderRadius: BorderRadius.circular(20),
-                    child: PosterImageWidget(item: list[index]),
+                    child: ImageWidget(item: list[index]),
                   ),
                   Container(
                     alignment: Alignment.bottomLeft,
@@ -48,7 +49,14 @@ class HorizontalPosterListWidget extends StatelessWidget {
                       ),
                     ),
                     child: constraints.maxWidth >= 160
-                        ? PosterDetailsWidget(item: list[index])
+                        ? Padding(
+                            padding: const EdgeInsets.all(12.0),
+                            child: PosterDetailsWidget(
+                              item: list[index],
+                              titleSize: 10.sp < 18 ? 18 : 10.sp,
+                              ratingSize: 4.w > 16 ? 16 : 4.w,
+                            ),
+                          )
                         : Container(),
                   ),
                 ],
