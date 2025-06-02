@@ -32,8 +32,8 @@ class CarouselChildWidget extends StatelessWidget {
                       padding: const EdgeInsets.all(20.0),
                       child: PosterDetailsWidget(
                         item: item,
-                        titleSize: 4.w > 24 ? 24 : 4.w,
-                        ratingSize: 3.w > 16 ? 16 : 3.w,
+                        titleSize: 5.w > 30 ? 30 : 5.w,
+                        ratingSize: 4.w > 20 ? 20 : 4.w,
                       ),
                     )
                   : const SizedBox(),
