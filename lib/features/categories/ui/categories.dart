@@ -7,6 +7,7 @@ import 'package:tmdb_web/features/categories/logic/categories_cubit.dart';
 import 'package:tmdb_web/features/categories/ui/widgets/categories_list_widget.dart';
 import 'package:tmdb_web/core/shared_widgets/custom_app_bar.dart';
 import 'package:tmdb_web/core/shared_widgets/title_widget.dart';
+import 'package:tmdb_web/features/categories/ui/widgets/loading_skeleton_categories.dart';
 
 class Categories extends StatefulWidget {
   const Categories({super.key, required this.pageType});
@@ -48,7 +49,11 @@ class _CategoriesState extends State<Categories> {
             child: Padding(
               padding: EdgeInsets.symmetric(horizontal: 8.w),
               child: state is CategoriesLoading
-                  ? const Center(child: CircularProgressIndicator())
+                  ? LoadingSkeletonCategories(
+                      pageType: widget.pageType,
+                      categories: categories,
+                      genres: genres,
+                    )
                   : state is CategoriesLoaded
                   ? Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
