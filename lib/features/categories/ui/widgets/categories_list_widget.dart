@@ -26,7 +26,7 @@ class CategoriesListWidget extends StatelessWidget {
       ),
       itemBuilder: (BuildContext context, index) => InkWell(
         onTap: () {
-          context.go('/$pageType/${categories[index].name.toLowerCase()}/1');
+          context.go('/$pageType/${categories[index].name.toLowerCase()}/1-2');
         },
         borderRadius: BorderRadius.circular(20),
         child: Container(

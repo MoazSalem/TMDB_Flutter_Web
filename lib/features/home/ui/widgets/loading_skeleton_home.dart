@@ -44,7 +44,6 @@ class LoadingSkeletonHome extends StatelessWidget {
                 SkeletonHorizontalPosterListWidget(),
               ],
             ),
-            const SizedBox(height: 20),
           ],
         ),
       ),
