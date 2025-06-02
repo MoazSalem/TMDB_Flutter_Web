@@ -3,13 +3,14 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:tmdb_web/core/routing/router.dart';
-import 'package:flutter_web_plugins/flutter_web_plugins.dart';
+import 'package:tmdb_web/core/networking/web_setup_stub.dart'
+    if (dart.library.html) 'package:tmdb_web/core/networking/web_setup.dart';
 import 'core/di/dependency_injection.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   if (kIsWeb) {
-    setUrlStrategy(PathUrlStrategy());
+    setupWeb();
   }
   await setupGetIt();
   runApp(const MyApp());
