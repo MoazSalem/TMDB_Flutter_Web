@@ -13,7 +13,7 @@ class CastListWidget extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        TitleWidget(title: "Cast", isClickable: false, reducePadding: true),
+        TitleWidget(title: "Cast", reducePadding: true),
         SizedBox(
           height: 30.w > 185 ? 185 : 30.w,
           child: ListView.builder(

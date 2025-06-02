@@ -6,11 +6,11 @@ class TitleWidget extends StatelessWidget {
   const TitleWidget({
     super.key,
     required this.title,
-    this.isClickable = true,
     this.reducePadding = false,
+    this.url,
   });
   final String title;
-  final bool isClickable;
+  final String? url;
   final bool reducePadding;
 
   @override
@@ -22,9 +22,7 @@ class TitleWidget extends StatelessWidget {
       ),
       child: InkWell(
         borderRadius: const BorderRadius.all(Radius.circular(5)),
-        onTap: isClickable
-            ? () => context.go('/${title == "Movies" ? "movies" : "tv"}')
-            : null,
+        onTap: url == null ? null : () => context.go(url!),
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -35,7 +33,7 @@ class TitleWidget extends StatelessWidget {
                 fontWeight: FontWeight.bold,
               ),
             ),
-            if (isClickable)
+            if (url != null)
               Padding(
                 padding: EdgeInsets.only(top: 6.sp),
                 child: Icon(Icons.keyboard_double_arrow_right, size: 15.sp),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
+import 'package:tmdb_web/core/networking/constants.dart';
 
 class CategoriesListWidget extends StatelessWidget {
   const CategoriesListWidget({
@@ -9,32 +10,30 @@ class CategoriesListWidget extends StatelessWidget {
     required this.categories,
     required this.pageType,
   });
-  final List categories;
+  final List<Genre> categories;
   final String pageType;
   @override
   Widget build(BuildContext context) {
     return GridView.builder(
-      padding: EdgeInsets.symmetric(horizontal: 5.w),
       physics: const NeverScrollableScrollPhysics(),
       shrinkWrap: true,
       itemCount: categories.length,
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-        childAspectRatio: 4,
+        childAspectRatio: 3,
         mainAxisSpacing: 20,
         crossAxisSpacing: 20,
-        crossAxisCount: Device.orientation == Orientation.portrait ? 2 : 4,
+        crossAxisCount: (Device.width / 200).floor().clamp(1, 8),
       ),
       itemBuilder: (BuildContext context, index) => InkWell(
         onTap: () {
-          context.go(
-            '/${pageType.toLowerCase()}/${categories[index].apiKey}/1',
-          );
+          context.go('/$pageType/${categories[index].name.toLowerCase()}/1');
         },
         borderRadius: BorderRadius.circular(20),
         child: Container(
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(20),
-            color: Colors.blueGrey,
+            border: Border.all(color: Colors.blueGrey, width: 2),
+            color: Colors.transparent,
           ),
           width: 60,
           child: Center(

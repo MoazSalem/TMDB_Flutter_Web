@@ -42,12 +42,12 @@ class _HomePageState extends State<HomePage> {
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            TitleWidget(title: "Movies"),
+                            TitleWidget(title: "Movies", url: '/movies'),
                             HorizontalListWidget(
                               list: state.movies,
                               pageType: 'movies',
                             ),
-                            TitleWidget(title: "Tv Shows"),
+                            TitleWidget(title: "Tv Shows", url: '/tv'),
                             HorizontalListWidget(
                               list: state.tvShows,
                               pageType: 'tv',

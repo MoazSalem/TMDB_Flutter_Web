@@ -18,7 +18,7 @@ class SuggestionsListWidget extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        TitleWidget(title: title, isClickable: false, reducePadding: true),
+        TitleWidget(title: title, reducePadding: true),
         HorizontalListWidget(list: suggestions, pageType: pageType),
       ],
     );

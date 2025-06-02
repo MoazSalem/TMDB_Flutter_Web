@@ -12,7 +12,7 @@ class ReviewListWidget extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        TitleWidget(title: "Reviews", isClickable: false, reducePadding: true),
+        TitleWidget(title: "Reviews", reducePadding: true),
         ListView.builder(
           itemCount: reviews.length,
           physics: const NeverScrollableScrollPhysics(),

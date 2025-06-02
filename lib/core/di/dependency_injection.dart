@@ -1,6 +1,8 @@
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 import 'package:tmdb_web/core/networking/api_service.dart';
+import 'package:tmdb_web/features/categories/data/repo/categories_repo.dart';
+import 'package:tmdb_web/features/categories/logic/categories_cubit.dart';
 import 'package:tmdb_web/features/home/data/repo/home_repo.dart';
 import 'package:tmdb_web/features/home/logic/home_cubit.dart';
 import 'package:tmdb_web/features/movie_tv_details/data/repo/movie_tv_details_repo.dart';
@@ -19,6 +21,12 @@ Future<void> setupGetIt() async {
 
   getIt.registerLazySingleton<HomeRepo>(
     () => HomeRepo(getIt.get<ApiService>()),
+  );
+
+  getIt.registerFactory<CategoriesCubit>(() => CategoriesCubit());
+
+  getIt.registerLazySingleton<CategoriesRepo>(
+    () => CategoriesRepo(getIt.get<ApiService>()),
   );
 
   getIt.registerFactory<HomeCubit>(() => HomeCubit());

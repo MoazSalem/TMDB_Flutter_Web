@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
+import 'package:tmdb_web/core/networking/constants.dart';
+import 'package:tmdb_web/features/categories/logic/categories_cubit.dart';
 import 'package:tmdb_web/features/categories/ui/categories.dart';
 import 'package:tmdb_web/features/home/ui/home_page.dart';
 import 'package:tmdb_web/features/home/logic/home_cubit.dart';
@@ -42,9 +44,19 @@ class AppRouter {
         path: "/:type",
         pageBuilder: (context, state) => buildFadeTransitionPage(
           state: state,
-          child: Categories(
+          child: BlocProvider(
+            create: (context) => CategoriesCubit()
+              ..getCategories(
+                type: state.pathParameters['type']!,
+                categories: state.pathParameters['type']! == 'movies'
+                    ? Constants.movieCategories
+                    : Constants.tvCategories,
+              ),
             key: ValueKey(state.pathParameters['type']!),
-            pageType: state.pathParameters['type']!,
+            child: Categories(
+              key: ValueKey(state.pathParameters['type']!),
+              pageType: state.pathParameters['type']!,
+            ),
           ),
         ),
       ),
