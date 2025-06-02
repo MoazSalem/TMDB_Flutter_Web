@@ -4,6 +4,7 @@ import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:tmdb_web/core/shared_widgets/poster_list_widget.dart';
 import 'package:tmdb_web/core/shared_widgets/custom_app_bar.dart';
 import 'package:tmdb_web/features/movies_tv_list/logic/movies_tv_list_cubit.dart';
+import 'package:tmdb_web/features/movies_tv_list/ui/widgets/loading_skeleton_movie_tv_list.dart';
 import 'package:tmdb_web/features/movies_tv_list/ui/widgets/nav_bar.dart';
 
 class MoviesTvListPage extends StatefulWidget {
@@ -29,7 +30,7 @@ class _MoviesTvListPageState extends State<MoviesTvListPage> {
         return Scaffold(
           appBar: CustomAppBar(),
           body: state is MoviesTvListLoading
-              ? const Center(child: CircularProgressIndicator())
+              ? LoadingSkeletonMovieTvList()
               : state is MoviesTvListLoaded
               ? SingleChildScrollView(
                   child: Padding(
