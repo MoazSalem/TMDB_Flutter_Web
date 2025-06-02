@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:tmdb_web/core/networking/constants.dart';
+import 'package:tmdb_web/core/shared_widgets/rating_widget.dart';
 
 class SmallPosterWidget extends StatelessWidget {
   const SmallPosterWidget({super.key, this.item});
@@ -71,33 +72,7 @@ class SmallPosterWidget extends StatelessWidget {
                     maxLines: 4,
                     overflow: TextOverflow.ellipsis,
                   ),
-                  FittedBox(
-                    child: Row(
-                      children: [
-                        Icon(Icons.star, size: ratingSize, color: Colors.amber),
-                        const SizedBox(width: 6),
-                        Text(
-                          item.voteAverage
-                              .toStringAsFixed(1)
-                              .replaceFirst(RegExp(r'\.?'), ''),
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: ratingSize,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        Text(
-                          item.voteCount > 1000
-                              ? "/10 (${(item.voteCount / 1000).toStringAsFixed(2)}K)"
-                              : "/10 (${item.voteCount})",
-                          style: TextStyle(
-                            fontSize: ratingSize,
-                            color: Colors.grey.shade400,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
+                  RatingWidget(item: item, ratingSize: ratingSize),
                 ],
               ),
             ),

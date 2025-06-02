@@ -1,44 +1,31 @@
 import 'package:flutter/material.dart';
-import 'package:responsive_sizer/responsive_sizer.dart';
-import 'package:tmdb_web/core/helpers/widgets_helper.dart';
 
 class RatingWidget extends StatelessWidget {
-  const RatingWidget({
-    super.key,
-    required this.item,
-    this.color = Colors.white,
-  });
+  const RatingWidget({super.key, required this.item, required this.ratingSize});
   final dynamic item;
-  final Color color;
+  final double ratingSize;
 
   @override
   Widget build(BuildContext context) {
-    final color = item.voteAverage == 0.0
-        ? Colors.white
-        : WidgetsHelper.progressColor(rating: (item.voteAverage * 10));
-    return Padding(
-      padding: const EdgeInsets.all(12.0),
-      child: Container(
-        alignment: Alignment.center,
-        width: 7.w > 56 ? 56 : 7.w,
-        height: 7.w > 56 ? 56 : 7.w,
-        decoration: BoxDecoration(
-          color: Colors.black38,
-          border: Border.all(color: color, width: 2),
-          borderRadius: BorderRadius.circular(200),
-        ),
-        // backgroundColor: WidgetsHelper.progressColor(
-        //   rating: (item.voteAverage * 10),
-        // ).withAlpha(100),
-        child: Text(
-          (item.voteAverage).toStringAsFixed(1),
+    return Row(
+      children: [
+        Icon(Icons.star, size: ratingSize, color: Colors.amber),
+        const SizedBox(width: 6),
+        Text(
+          item.voteAverage.toStringAsFixed(1).replaceFirst(RegExp(r'\.?'), ''),
           style: TextStyle(
-            fontSize: 15.5.sp > 20 ? 20 : 15.5.sp,
-            fontWeight: FontWeight.w600,
             color: Colors.white,
+            fontSize: ratingSize,
+            fontWeight: FontWeight.bold,
           ),
         ),
-      ),
+        Text(
+          item.voteCount > 1000
+              ? "/10 (${(item.voteCount / 1000).toStringAsFixed(2)}K)"
+              : "/10 (${item.voteCount})",
+          style: TextStyle(fontSize: ratingSize, color: Colors.grey.shade400),
+        ),
+      ],
     );
   }
 }

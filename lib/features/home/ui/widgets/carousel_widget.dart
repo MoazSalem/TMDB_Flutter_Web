@@ -20,7 +20,7 @@ class CarouselWidget extends StatelessWidget {
             ? context.go('/movies/${popular[index].id}')
             : context.go('/tv/${popular[index].id}'),
         itemSnapping: true,
-        flexWeights: [3, 2, 1],
+        flexWeights: 92.w > 1200 ? [3, 2, 1] : [2, 1],
         children: List<Widget>.generate(
           popular.length,
           (index) => CarouselChildWidget(item: popular[index]),

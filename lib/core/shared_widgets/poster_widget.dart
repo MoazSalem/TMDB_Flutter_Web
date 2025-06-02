@@ -2,7 +2,6 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:tmdb_web/core/networking/constants.dart';
-import 'package:tmdb_web/core/shared_widgets/rating_widget.dart';
 
 class PosterWidget extends StatelessWidget {
   const PosterWidget({super.key, this.item});
@@ -42,7 +41,6 @@ class PosterWidget extends StatelessWidget {
               ),
             ),
           ),
-          RatingWidget(item: item),
         ],
       ),
     );
