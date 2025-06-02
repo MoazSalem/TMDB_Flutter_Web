@@ -78,7 +78,7 @@ class AuthorDetails {
   final String? name;
   final String? username;
   final String? avatarPath;
-  final int? rating;
+  final double? rating;
 
   AuthorDetails({this.name, this.username, this.avatarPath, this.rating});
 
@@ -86,7 +86,11 @@ class AuthorDetails {
     : name = json['name'] as String?,
       username = json['username'] as String?,
       avatarPath = json['avatar_path'] as String?,
-      rating = json['rating'] as int?;
+      rating = json['rating'] == null
+          ? null
+          : (json['rating'] is int
+                ? (json['rating'] as int).toDouble()
+                : json['rating'] as double);
 
   Map<String, dynamic> toJson() => {
     'name': name,
