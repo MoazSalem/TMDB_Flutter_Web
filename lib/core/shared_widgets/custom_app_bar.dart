@@ -25,19 +25,20 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       titleSpacing: 0,
       title: Padding(
         padding: EdgeInsets.symmetric(horizontal: 8.w),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Row(
-              mainAxisSize: MainAxisSize.max,
-              children: [
-                _buildLogo(context),
-                _buildNavLink(context, "Movies", '/movies'),
-                _buildNavLink(context, "Tv Shows", '/tv'),
-              ],
-            ),
-            if (showSearchIcon) _buildSearchIcon(context),
-          ],
+        child: FittedBox(
+          child: Row(
+            mainAxisSize: MainAxisSize.max,
+            children: [
+              _buildLogo(context),
+              _buildNavLink(context, "Movies", '/movies'),
+              _buildNavLink(context, "Tv Shows", '/tv'),
+              if (showSearchIcon)
+                Padding(
+                  padding: EdgeInsets.only(left: 60.w < 400 ? 0 : 60.w),
+                  child: _buildSearchIcon(context),
+                ),
+            ],
+          ),
         ),
       ),
     );
