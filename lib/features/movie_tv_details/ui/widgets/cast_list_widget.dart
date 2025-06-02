@@ -15,7 +15,7 @@ class CastListWidget extends StatelessWidget {
       children: [
         TitleWidget(title: "Cast"),
         SizedBox(
-          height: 30.w > 185 ? 185 : 30.w,
+          height: 55.w > 280 ? 280 : 55.w,
           child: ListView.builder(
             scrollDirection: Axis.horizontal,
             itemCount: cast.length,

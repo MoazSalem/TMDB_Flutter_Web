@@ -7,19 +7,22 @@ class LoadingSkeletonDetails extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 8.w),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          SizedBox(
-            width: double.infinity,
-            height: 70.h > 500 ? 500 : 70.h,
-            child: Shimmer(duration: Duration(seconds: 2), child: SizedBox()),
-          ),
-          const SizedBox(height: 200),
-          Center(child: CircularProgressIndicator(color: Color(0xff8fcea2))),
-        ],
+    return SingleChildScrollView(
+      child: Padding(
+        padding: EdgeInsets.symmetric(horizontal: 8.w),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SizedBox(
+              width: double.infinity,
+              height: 70.h > 500 ? 500 : 70.h,
+              child: Shimmer(duration: Duration(seconds: 2), child: SizedBox()),
+            ),
+            SizedBox(height: 10.h),
+            Center(child: CircularProgressIndicator(color: Color(0xff8fcea2))),
+          ],
+        ),
       ),
     );
   }

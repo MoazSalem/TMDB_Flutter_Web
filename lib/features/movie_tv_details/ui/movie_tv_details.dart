@@ -34,7 +34,7 @@ class _MovieTvDetailsState extends State<MovieTvDetails> {
         return Scaffold(
           appBar: CustomAppBar(isMovie: widget.pageType == "movies"),
           body: state is MovieTvDetailsLoading
-              ? const Center(child: LoadingSkeletonDetails())
+              ? LoadingSkeletonDetails()
               : state is MovieTvDetailsLoaded
               ? SingleChildScrollView(
                   child: Padding(

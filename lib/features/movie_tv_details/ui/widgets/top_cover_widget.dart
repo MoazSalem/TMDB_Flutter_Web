@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
-import 'package:tmdb_web/core/networking/constants.dart';
 import 'package:tmdb_web/core/shared_widgets/image_widget.dart';
 import 'package:tmdb_web/features/movie_tv_details/ui/widgets/movie_title_info_widget.dart';
 

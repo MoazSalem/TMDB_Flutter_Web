@@ -1,9 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
-import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:shimmer_animation/shimmer_animation.dart';
-import 'package:tmdb_web/core/shared_widgets/poster_details_widget.dart';
-import 'package:tmdb_web/core/shared_widgets/image_widget.dart';
 
 class SkeletonHorizontalPosterListWidget extends StatelessWidget {
   const SkeletonHorizontalPosterListWidget({super.key});

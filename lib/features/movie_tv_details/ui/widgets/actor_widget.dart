@@ -14,17 +14,18 @@ class ActorWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 10),
-      child: FittedBox(
+      child: SizedBox(
+        width: 180,
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
             CircleAvatar(
-              backgroundColor: Colors.blueGrey,
-              radius: 50,
+              backgroundColor: Colors.blueGrey.shade700,
+              radius: 70,
               child: ClipOval(
                 child: CachedNetworkImage(
-                  height: 100,
-                  width: 100,
+                  height: 140,
+                  width: 140,
                   fit: BoxFit.cover,
                   imageUrl:
                       "${Constants.imagesBaseUrl}${Constants.profileSizes[1]}${member.profilePath}",
@@ -34,35 +35,25 @@ class ActorWidget extends StatelessWidget {
                         child: SizedBox(),
                       ),
                   errorWidget: (context, url, error) =>
-                      const Icon(Icons.person, color: Colors.white, size: 40),
+                      const Icon(Icons.person, color: Colors.white, size: 60),
                 ),
               ),
             ),
-            SizedBox(height: 0.5.h > 5 ? 5 : 0.5.h),
-            SizedBox(
-              width: 100,
-              child: Center(
-                child: Text(
-                  overflow: TextOverflow.ellipsis,
-                  softWrap: false,
-                  "${member.name}",
-                  style: const TextStyle(
-                    fontWeight: FontWeight.w500,
-                    fontSize: 14,
-                  ),
-                ),
+            const SizedBox(height: 10),
+            Text(
+              overflow: TextOverflow.ellipsis,
+              softWrap: false,
+              "${member.name}",
+              style: TextStyle(
+                fontWeight: FontWeight.w500,
+                fontSize: 16.sp > 24 ? 24 : 16.sp,
               ),
             ),
-            SizedBox(
-              width: 100,
-              child: Center(
-                child: Text(
-                  overflow: TextOverflow.ellipsis,
-                  softWrap: false,
-                  "${member.character}",
-                  style: TextStyle(fontSize: 10, color: grey),
-                ),
-              ),
+            Text(
+              overflow: TextOverflow.ellipsis,
+              softWrap: false,
+              "${member.character}",
+              style: TextStyle(fontSize: 18, color: grey),
             ),
           ],
         ),
