@@ -8,12 +8,12 @@ final class MoviesTvListInitial extends MoviesTvListState {}
 final class MoviesTvListLoading extends MoviesTvListState {}
 
 final class MoviesTvListLoaded extends MoviesTvListState {
-  final int currentPage;
+  final String currentPages;
   final String category;
   final dynamic list;
   MoviesTvListLoaded({
     required this.list,
     required this.category,
-    required this.currentPage,
+    required this.currentPages,
   });
 }

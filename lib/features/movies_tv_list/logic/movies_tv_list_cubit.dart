@@ -11,21 +11,27 @@ class MoviesTvListCubit extends Cubit<MoviesTvListState> {
 
   getMoviesOrTv({
     required String category,
-    required int currentPage,
+    required String currentPages,
     required String type,
   }) async {
+    List<dynamic>? list = [];
     emit(MoviesTvListLoading());
     try {
-      final list = await GetIt.I.get<MoviesTvListRepo>().getMoviesOrTv(
+      list = await GetIt.I.get<MoviesTvListRepo>().getMoviesOrTv(
         type: type,
         category: category,
-        currentPage: currentPage,
+        currentPage: int.parse(currentPages.split('-').first),
+      );
+      list += await GetIt.I.get<MoviesTvListRepo>().getMoviesOrTv(
+        type: type,
+        category: category,
+        currentPage: int.parse(currentPages.split('-').last),
       );
       emit(
         MoviesTvListLoaded(
           list: list,
           category: category,
-          currentPage: currentPage,
+          currentPages: currentPages,
         ),
       );
     } catch (e) {

@@ -60,7 +60,8 @@ class _CategoriesState extends State<Categories> {
                       children: [
                         TitleWidget(
                           title: categories[0].name,
-                          url: '/${widget.pageType}/${categories[0].apiKey}/1',
+                          url:
+                              '/${widget.pageType}/${categories[0].apiKey}/1-2',
                         ),
                         HorizontalPosterListWidget(
                           list: state.firstCategoryList,
@@ -68,7 +69,8 @@ class _CategoriesState extends State<Categories> {
                         ),
                         TitleWidget(
                           title: categories[1].name,
-                          url: '/${widget.pageType}/${categories[1].apiKey}/1',
+                          url:
+                              '/${widget.pageType}/${categories[1].apiKey}/1-2',
                         ),
                         HorizontalPosterListWidget(
                           list: state.secondCategoryList,
@@ -76,7 +78,8 @@ class _CategoriesState extends State<Categories> {
                         ),
                         TitleWidget(
                           title: categories[2].name,
-                          url: '/${widget.pageType}/${categories[2].apiKey}/1',
+                          url:
+                              '/${widget.pageType}/${categories[2].apiKey}/1-2',
                         ),
                         HorizontalPosterListWidget(
                           list: state.thirdCategoryList,
@@ -84,7 +87,8 @@ class _CategoriesState extends State<Categories> {
                         ),
                         TitleWidget(
                           title: categories[3].name,
-                          url: '/${widget.pageType}/${categories[3].apiKey}/1',
+                          url:
+                              '/${widget.pageType}/${categories[3].apiKey}/1-2',
                         ),
                         HorizontalPosterListWidget(
                           list: state.fourthCategoryList,

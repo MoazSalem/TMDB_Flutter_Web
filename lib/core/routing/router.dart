@@ -82,7 +82,7 @@ class AppRouter {
                 GetIt.I.get<MoviesTvListCubit>()..getMoviesOrTv(
                   type: state.pathParameters['type']!,
                   category: state.pathParameters['genre']!,
-                  currentPage: int.parse(state.pathParameters['page']!),
+                  currentPages: state.pathParameters['page']!,
                 ),
             key: ValueKey(state.pathParameters['page']!),
             child: MoviesTvListPage(pageType: state.pathParameters['type']!),

@@ -18,6 +18,7 @@ class ImageWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return CachedNetworkImage(
       fit: BoxFit.cover,
+      alignment: Alignment.topCenter,
       placeholderFadeInDuration: const Duration(seconds: 2),
       imageUrl:
           "${Constants.imagesBaseUrl}${isBackdrop ? Constants.backdropSizes[hd ? 3 : 2] : Constants.posterSizes[hd ? 6 : 4]}${isBackdrop ? item.backdropPath ?? item.posterPath ?? "" : item.posterPath ?? ""}",

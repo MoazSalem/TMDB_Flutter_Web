@@ -5,11 +5,11 @@ import 'package:responsive_sizer/responsive_sizer.dart';
 class NavBar extends StatelessWidget {
   const NavBar({
     super.key,
-    required this.currentPage,
+    required this.currentPages,
     required this.category,
     required this.pageType,
   });
-  final int currentPage;
+  final String currentPages;
   final String category;
   final String pageType;
 
@@ -22,18 +22,18 @@ class NavBar extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            Center(child: Text("Page $currentPage")),
+            Center(child: Text("Pages $currentPages")),
             ElevatedButton(
               style: ElevatedButton.styleFrom(minimumSize: Size(20.w, 10)),
-              onPressed: currentPage == 1
+              onPressed: currentPages == "1-2"
                   ? null
                   : () {
-                      context.go("/$pageType/$category/1");
+                      context.go("/$pageType/$category/1-2");
                     },
               child: Center(
                 child: Icon(
                   Icons.home_filled,
-                  color: currentPage == 1
+                  color: currentPages == "1-2"
                       ? Colors.grey
                       : const Color(0xff8fcea2),
                 ),
@@ -41,15 +41,17 @@ class NavBar extends StatelessWidget {
             ),
             ElevatedButton(
               style: ElevatedButton.styleFrom(minimumSize: Size(20.w, 10)),
-              onPressed: currentPage == 1
+              onPressed: currentPages == "1-2"
                   ? null
                   : () {
-                      context.go("/$pageType/$category/${currentPage - 1}");
+                      context.go(
+                        "/$pageType/$category/${"${int.parse(currentPages.split('-').first) - 2}-${int.parse(currentPages.split('-').last) - 2}"}",
+                      );
                     },
               child: Center(
                 child: Icon(
                   Icons.arrow_back,
-                  color: currentPage == 1
+                  color: currentPages == "1-2"
                       ? Colors.grey
                       : const Color(0xff8fcea2),
                 ),
@@ -61,7 +63,9 @@ class NavBar extends StatelessWidget {
                 minimumSize: Size(20.w, 10),
               ),
               onPressed: () {
-                context.go("/$pageType/$category/${currentPage + 1}");
+                context.go(
+                  "/$pageType/$category/${"${int.parse(currentPages.split('-').first) + 2}-${int.parse(currentPages.split('-').last) + 2}"}",
+                );
               },
               child: const Center(child: Icon(Icons.arrow_forward)),
             ),

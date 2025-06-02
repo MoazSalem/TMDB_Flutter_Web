@@ -41,7 +41,7 @@ class _MoviesTvListPageState extends State<MoviesTvListPage> {
                         NavBar(
                           pageType: widget.pageType,
                           category: state.category,
-                          currentPage: state.currentPage,
+                          currentPages: state.currentPages,
                         ),
                       ],
                     ),
