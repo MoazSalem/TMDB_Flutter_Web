@@ -18,7 +18,7 @@ class SkeletonHorizontalPosterListWidget extends StatelessWidget {
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
         scrollDirection: Axis.horizontal,
         children: List<Widget>.generate(
-          20,
+          8,
           (index) => Shimmer(duration: Duration(seconds: 2), child: SizedBox()),
         ),
       ),

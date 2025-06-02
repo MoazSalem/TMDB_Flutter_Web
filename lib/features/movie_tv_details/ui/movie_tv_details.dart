@@ -5,6 +5,7 @@ import 'package:tmdb_web/core/shared_widgets/custom_app_bar.dart';
 import 'package:tmdb_web/core/shared_widgets/rating_widget.dart';
 import 'package:tmdb_web/features/movie_tv_details/logic/movie_tv_details_cubit.dart';
 import 'package:tmdb_web/features/movie_tv_details/ui/widgets/cast_list_widget.dart';
+import 'package:tmdb_web/features/movie_tv_details/ui/widgets/loading_skeleton_details.dart';
 import 'package:tmdb_web/features/movie_tv_details/ui/widgets/review_list_widget.dart';
 import 'package:tmdb_web/features/movie_tv_details/ui/widgets/suggestions_list_widget.dart';
 import 'package:tmdb_web/features/movie_tv_details/ui/widgets/top_cover_widget.dart';
@@ -33,9 +34,7 @@ class _MovieTvDetailsState extends State<MovieTvDetails> {
         return Scaffold(
           appBar: CustomAppBar(isMovie: widget.pageType == "movies"),
           body: state is MovieTvDetailsLoading
-              ? const Center(
-                  child: CircularProgressIndicator(color: Color(0xff8fcea2)),
-                )
+              ? const Center(child: LoadingSkeletonDetails())
               : state is MovieTvDetailsLoaded
               ? SingleChildScrollView(
                   child: Padding(

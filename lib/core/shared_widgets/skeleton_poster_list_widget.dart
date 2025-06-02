@@ -21,7 +21,7 @@ class SkeletonPosterListWidget extends StatelessWidget {
         mainAxisSpacing: 1,
         crossAxisCount: WidgetsHelper.crossAxisCount(currentWidth: 100.w),
       ),
-      itemCount: 20,
+      itemCount: 10,
       itemBuilder: (BuildContext context, index) {
         return Shimmer(duration: Duration(seconds: 2), child: SizedBox());
       },
