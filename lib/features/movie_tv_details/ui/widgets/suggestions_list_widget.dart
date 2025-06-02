@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:tmdb_web/core/shared_widgets/horizontal_list_widget.dart';
+import 'package:tmdb_web/core/shared_widgets/horizontal_poster_list_widget.dart';
 import 'package:tmdb_web/core/shared_widgets/title_widget.dart';
 
 class SuggestionsListWidget extends StatelessWidget {
@@ -19,7 +19,7 @@ class SuggestionsListWidget extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         TitleWidget(title: title),
-        HorizontalListWidget(list: suggestions, pageType: pageType),
+        HorizontalPosterListWidget(list: suggestions, pageType: pageType),
       ],
     );
   }

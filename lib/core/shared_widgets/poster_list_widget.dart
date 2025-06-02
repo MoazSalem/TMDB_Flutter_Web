@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:tmdb_web/core/helpers/widgets_helper.dart';
-import 'package:tmdb_web/core/shared_widgets/poster_widget.dart';
+import 'package:tmdb_web/core/shared_widgets/poster_details_widget.dart';
+import 'package:tmdb_web/core/shared_widgets/poster_image_widget.dart';
 
 class PosterListWidget extends StatelessWidget {
   const PosterListWidget({super.key, required this.list});
@@ -21,7 +23,32 @@ class PosterListWidget extends StatelessWidget {
       ),
       itemCount: list.length,
       itemBuilder: (BuildContext context, index) {
-        return PosterWidget(item: list[index]);
+        return InkWell(
+          onTap: () => context.go(
+            '/${list[index].title != null ? "movies" : "tv"}/${list[index].id}',
+          ),
+          child: Stack(
+            fit: StackFit.expand,
+            children: [
+              SizedBox(child: PosterImageWidget(item: list[index])),
+              Container(
+                alignment: Alignment.bottomLeft,
+                decoration: const BoxDecoration(
+                  gradient: LinearGradient(
+                    colors: [
+                      Color.fromARGB(160, 0, 0, 0),
+                      Color.fromARGB(0, 0, 0, 0),
+                      Color.fromARGB(0, 0, 0, 0),
+                    ],
+                    begin: Alignment.bottomCenter,
+                    end: Alignment.topCenter,
+                  ),
+                ),
+                child: PosterDetailsWidget(item: list[index]),
+              ),
+            ],
+          ),
+        );
       },
     );
   }

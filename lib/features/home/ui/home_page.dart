@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:tmdb_web/core/shared_widgets/horizontal_list_widget.dart';
+import 'package:tmdb_web/core/shared_widgets/horizontal_poster_list_widget.dart';
 import 'package:tmdb_web/core/shared_widgets/custom_app_bar.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:tmdb_web/features/home/logic/home_cubit.dart';
@@ -40,12 +40,12 @@ class _HomePageState extends State<HomePage> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             TitleWidget(title: "Movies", url: '/movies'),
-                            HorizontalListWidget(
+                            HorizontalPosterListWidget(
                               list: state.movies,
                               pageType: 'movies',
                             ),
                             TitleWidget(title: "Tv Shows", url: '/tv'),
-                            HorizontalListWidget(
+                            HorizontalPosterListWidget(
                               list: state.tvShows,
                               pageType: 'tv',
                             ),
