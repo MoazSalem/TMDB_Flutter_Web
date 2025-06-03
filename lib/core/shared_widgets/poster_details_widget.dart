@@ -18,11 +18,14 @@ class PosterDetailsWidget extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          "${item.title ?? item.name}",
-          style: TextStyle(fontSize: titleSize, fontWeight: FontWeight.w600),
-          maxLines: 4,
-          overflow: TextOverflow.ellipsis,
+        Flexible(
+          child: Text(
+            "${item.title ?? item.name}",
+            style: TextStyle(fontSize: titleSize, fontWeight: FontWeight.w600),
+            maxLines: 4,
+            overflow: TextOverflow.fade,
+            softWrap: false,
+          ),
         ),
         RatingWidget(
           voteAverage: item.voteAverage,

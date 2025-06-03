@@ -14,26 +14,38 @@ class RatingWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return FittedBox(
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Icon(Icons.star, size: ratingSize, color: Colors.amber),
-          const SizedBox(width: 6),
-          Text(
-            WidgetsHelper.parseRating(rating: voteAverage),
-            style: TextStyle(
-              color: Colors.white,
-              fontSize: ratingSize,
-              fontWeight: FontWeight.bold,
+    return Row(
+      children: [
+        Icon(Icons.star, size: ratingSize, color: Colors.amber),
+        const SizedBox(width: 6),
+        Expanded(
+          child: RichText(
+            overflow: TextOverflow.fade,
+            softWrap: false,
+            text: TextSpan(
+              children: [
+                TextSpan(
+                  text: WidgetsHelper.parseRating(rating: voteAverage),
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: ratingSize,
+                    fontWeight: FontWeight.bold,
+                    fontFamily: 'quicksand',
+                  ),
+                ),
+                TextSpan(
+                  text: WidgetsHelper.parseVoteCount(count: voteCount),
+                  style: TextStyle(
+                    fontSize: ratingSize,
+                    color: Colors.grey.shade400,
+                    fontFamily: 'quicksand',
+                  ),
+                ),
+              ],
             ),
           ),
-          Text(
-            WidgetsHelper.parseVoteCount(count: voteCount),
-            style: TextStyle(fontSize: ratingSize, color: Colors.grey.shade400),
-          ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }

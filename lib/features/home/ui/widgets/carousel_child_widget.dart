@@ -9,38 +9,32 @@ class CarouselChildWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return LayoutBuilder(
-      builder: (BuildContext context, BoxConstraints constraints) {
-        return Stack(
-          fit: StackFit.expand,
-          children: [
-            ImageWidget(item: item, isBackdrop: true),
-            Container(
-              alignment: Alignment.bottomLeft,
-              decoration: const BoxDecoration(
-                gradient: LinearGradient(
-                  colors: [
-                    Color.fromARGB(150, 0, 0, 0),
-                    Color.fromARGB(0, 0, 0, 0),
-                  ],
-                  begin: Alignment.bottomCenter,
-                  end: Alignment.topCenter,
-                ),
-              ),
-              child: constraints.maxWidth >= 30.w
-                  ? Padding(
-                      padding: const EdgeInsets.all(20.0),
-                      child: PosterDetailsWidget(
-                        item: item,
-                        titleSize: 5.w > 30 ? 30 : 5.w,
-                        ratingSize: 4.w > 20 ? 20 : 4.w,
-                      ),
-                    )
-                  : const SizedBox(),
+    return Stack(
+      fit: StackFit.expand,
+      children: [
+        ImageWidget(item: item, isBackdrop: true),
+        Container(
+          alignment: Alignment.bottomLeft,
+          decoration: const BoxDecoration(
+            gradient: LinearGradient(
+              colors: [
+                Color.fromARGB(150, 0, 0, 0),
+                Color.fromARGB(0, 0, 0, 0),
+              ],
+              begin: Alignment.bottomCenter,
+              end: Alignment.topCenter,
             ),
-          ],
-        );
-      },
+          ),
+          child: Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: PosterDetailsWidget(
+              item: item,
+              titleSize: 5.w > 30 ? 30 : 5.w,
+              ratingSize: 4.w > 20 ? 20 : 4.w,
+            ),
+          ),
+        ),
+      ],
     );
   }
 }
