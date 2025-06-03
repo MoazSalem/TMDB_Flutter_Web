@@ -15,7 +15,6 @@ class PosterListWidget extends StatelessWidget {
       shrinkWrap: true,
       cacheExtent: 3500,
       physics: const NeverScrollableScrollPhysics(),
-      padding: EdgeInsets.symmetric(vertical: 2.h),
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
         childAspectRatio: 0.6685,
         mainAxisSpacing: 1,

@@ -15,32 +15,24 @@ class NavBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 20.0),
-      child: SizedBox(
-        height: 6.h,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            Center(child: Text("Pages $currentPages")),
-            ElevatedButton(
-              style: ElevatedButton.styleFrom(minimumSize: Size(20.w, 10)),
-              onPressed: currentPages == "1-2"
-                  ? null
-                  : () {
-                      context.go("/$pageType/$category/1-2");
-                    },
+    return SizedBox(
+      height: 6.h < 50 ? 50 : 6.h,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          Expanded(
+            child: ElevatedButton(
+              style: ElevatedButton.styleFrom(shape: RoundedRectangleBorder()),
+              onPressed: () => context.go("/"),
               child: Center(
-                child: Icon(
-                  Icons.home_filled,
-                  color: currentPages == "1-2"
-                      ? Colors.grey
-                      : const Color(0xff8fcea2),
-                ),
+                child: Icon(Icons.home_filled, color: const Color(0xff8fcea2)),
               ),
             ),
-            ElevatedButton(
-              style: ElevatedButton.styleFrom(minimumSize: Size(20.w, 10)),
+          ),
+
+          Expanded(
+            child: ElevatedButton(
+              style: ElevatedButton.styleFrom(shape: RoundedRectangleBorder()),
               onPressed: currentPages == "1-2"
                   ? null
                   : () {
@@ -57,11 +49,10 @@ class NavBar extends StatelessWidget {
                 ),
               ),
             ),
-            FilledButton(
-              style: FilledButton.styleFrom(
-                foregroundColor: Colors.white,
-                minimumSize: Size(20.w, 10),
-              ),
+          ),
+          Expanded(
+            child: FilledButton(
+              style: ElevatedButton.styleFrom(shape: RoundedRectangleBorder()),
               onPressed: () {
                 context.go(
                   "/$pageType/$category/${"${int.parse(currentPages.split('-').first) + 2}-${int.parse(currentPages.split('-').last) + 2}"}",
@@ -69,8 +60,8 @@ class NavBar extends StatelessWidget {
               },
               child: const Center(child: Icon(Icons.arrow_forward)),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

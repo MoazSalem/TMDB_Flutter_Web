@@ -38,10 +38,13 @@ class _MoviesTvListPageState extends State<MoviesTvListPage> {
                     child: Column(
                       children: [
                         PosterListWidget(list: state.list),
-                        NavBar(
-                          pageType: widget.pageType,
-                          category: state.category,
-                          currentPages: state.currentPages,
+                        Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 20.0),
+                          child: NavBar(
+                            pageType: widget.pageType,
+                            category: state.category,
+                            currentPages: state.currentPages,
+                          ),
                         ),
                       ],
                     ),
