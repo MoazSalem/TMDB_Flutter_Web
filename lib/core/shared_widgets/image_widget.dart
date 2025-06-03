@@ -22,8 +22,7 @@ class ImageWidget extends StatelessWidget {
       placeholderFadeInDuration: const Duration(seconds: 2),
       imageUrl:
           "${Constants.imagesBaseUrl}${isBackdrop ? Constants.backdropSizes[hd ? 3 : 2] : Constants.posterSizes[hd ? 6 : 4]}${isBackdrop ? item.backdropPath ?? item.posterPath ?? "" : item.posterPath ?? ""}",
-      placeholder: (context, url) =>
-          Shimmer(duration: Duration(seconds: 2), child: SizedBox()),
+      placeholder: (context, url) => Container(color: const Color(0xFF212121)),
       errorWidget: (context, url, error) => const SizedBox(
         child: Center(child: Icon(Icons.question_mark_rounded, size: 100)),
       ),

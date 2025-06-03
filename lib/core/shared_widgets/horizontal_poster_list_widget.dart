@@ -19,7 +19,7 @@ class HorizontalPosterListWidget extends StatelessWidget {
       height: 330,
       child: CarouselView(
         itemExtent: 220,
-        shrinkExtent: 0,
+        shrinkExtent: 140,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
         scrollDirection: Axis.horizontal,
         onTap: (index) => context.go('/$pageType/${list[index].id}'),

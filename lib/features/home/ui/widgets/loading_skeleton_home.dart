@@ -22,9 +22,13 @@ class LoadingSkeletonHome extends StatelessWidget {
                     : 70.h * Device.aspectRatio,
                 child: CarouselView.weighted(
                   scrollDirection: Axis.horizontal,
-                  shrinkExtent: 800,
+                  shrinkExtent: 200,
                   itemSnapping: true,
-                  flexWeights: 92.w > 900 ? [3, 2, 1] : [2, 1],
+                  flexWeights: 92.w > 1400
+                      ? [3, 2, 1]
+                      : 92.w > 900
+                      ? [2, 1]
+                      : [1],
                   children: List<Widget>.generate(
                     3,
                     (index) => Shimmer(

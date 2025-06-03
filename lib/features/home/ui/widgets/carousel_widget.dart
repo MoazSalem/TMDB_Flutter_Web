@@ -19,7 +19,7 @@ class CarouselWidget extends StatelessWidget {
         child: CarouselView.weighted(
           scrollDirection: Axis.horizontal,
           controller: controller,
-          shrinkExtent: 800,
+          shrinkExtent: 200,
           onTap: (index) => popular[index].name == null
               ? context.go('/movies/${popular[index].id}')
               : context.go('/tv/${popular[index].id}'),
