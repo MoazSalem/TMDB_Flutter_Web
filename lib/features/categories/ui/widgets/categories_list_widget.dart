@@ -22,7 +22,7 @@ class CategoriesListWidget extends StatelessWidget {
         childAspectRatio: 3,
         mainAxisSpacing: 20,
         crossAxisSpacing: 20,
-        crossAxisCount: (Device.width / 200).floor().clamp(1, 8),
+        crossAxisCount: (92.w / 180).floor().clamp(1, 8),
       ),
       itemBuilder: (BuildContext context, index) => InkWell(
         onTap: () {
