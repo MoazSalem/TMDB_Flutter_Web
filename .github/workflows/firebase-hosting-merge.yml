@@ -39,11 +39,11 @@ jobs:
 
       # Build JavaScript version
       - name: Build JS version
-        run: flutter build web -o build/js
+        run: flutter build web -o build/js --base-href "/js/"
 
       # Build WASM version
       - name: Build WASM version
-        run: flutter build web --wasm -o build/wasm
+        run: flutter build web --wasm -o build/wasm --base-href "/wasm/"
 
       # Create firebase.json with path-based rewrites
       - name: Create firebase.json
