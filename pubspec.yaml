@@ -43,7 +43,8 @@ dependencies:
   expandable_text: ^2.3.0
   youtube_player_iframe: ^5.2.1
   pointer_interceptor: ^0.10.1+2
-  cached_network_image: ^3.4.1
+  cached_network_image:
+    path: ./packages/cached_network_image
   shimmer_animation: ^2.2.2
 
 dev_dependencies:
