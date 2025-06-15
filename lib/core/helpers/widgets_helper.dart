@@ -43,6 +43,6 @@ class WidgetsHelper {
   static String parseVoteCount({required num count}) {
     return count > 1000
         ? "/10 (${(count / 1000).toStringAsFixed(2)}K)"
-        : "/10 (${count})";
+        : "/10 ($count)";
   }
 }

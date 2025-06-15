@@ -1,6 +1,5 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:shimmer_animation/shimmer_animation.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:tmdb_web/core/networking/constants.dart';
 
 class ImageWidget extends StatelessWidget {
