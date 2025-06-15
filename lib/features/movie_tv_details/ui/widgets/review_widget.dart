@@ -41,16 +41,12 @@ class ReviewWidget extends StatelessWidget {
                                     : "${Constants.imagesBaseUrl}${Constants.profileSizes[1]}${review.authorDetails?.avatarPath}"
                               : "",
                           placeholder: (context, url) => const SizedBox(
-                            height: 100,
-                            width: 100,
-                            child: SizedBox(
-                              height: 60,
-                              width: 60,
-                              child: Center(
-                                child: CircularProgressIndicator(
-                                  color: Colors.white,
-                                ),
-                              ),
+                            width: 30,
+                            height: 60,
+                            child: Icon(
+                              Icons.person,
+                              size: 36,
+                              color: Colors.white,
                             ),
                           ),
                           errorWidget: (context, url, error) => const SizedBox(
