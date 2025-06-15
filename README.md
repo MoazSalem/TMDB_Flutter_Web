@@ -7,7 +7,9 @@
 ### - Useful for Finding Quick TV Shows & Movies to Watch
 
 ## Check it Out Here
-###  [Go to Web App](https://tmdb55.web.app/#/)
+###  [Go to JavaScript Version Web App](https://tmdb55.web.app/js/#/)
+
+###  [Go to WebAssembly Version Web App](https://tmdb55.web.app/wasm/#/)
 
 ## Screenshots
 ### - Homepage

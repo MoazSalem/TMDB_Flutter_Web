@@ -1,4 +1,4 @@
-name: Deploy to Firebase Hosting on merge
+name: Deploy Flutter Web (WASM & JS) on Firebase Hosting
 
 on:
   push:
@@ -36,11 +36,32 @@ jobs:
           SECRETS_FILE_CONTENTS: ${{ secrets.Private_Dart_File }}
 
       - run: flutter pub get
-      - run: flutter build web
+
+      # Build JavaScript version
+      - name: Build JS version
+        run: flutter build web -o build/js
+
+      # Build WASM version
+      - name: Build WASM version
+        run: flutter build web --wasm -o build/wasm
+
+      # Create firebase.json with path-based rewrites
+      - name: Create firebase.json
+        run: |
+          echo '{
+            "hosting": {
+              "public": "build",
+              "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
+              "rewrites": [
+                { "source": "/wasm/**", "destination": "/wasm/index.html" },
+                { "source": "/js/**", "destination": "/js/index.html" }
+              ]
+            }
+          }' > firebase.json
 
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: '${{ secrets.GITHUB_TOKEN }}'
           firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_TMDB55 }}'
-          channelId: live
           projectId: tmdb55
+          channelId: live

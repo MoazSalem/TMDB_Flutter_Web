@@ -1,15 +1,15 @@
 {
   "hosting": {
-    "public": "build/web",
-    "ignore": [
-      "firebase.json",
-      "**/.*",
-      "**/node_modules/**"
-    ],
+    "public": "build",
+    "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
     "rewrites": [
       {
-        "source": "**",
-        "destination": "/index.html"
+        "source": "/wasm/**",
+        "destination": "/wasm/index.html"
+      },
+      {
+        "source": "/js/**",
+        "destination": "/js/index.html"
       }
     ]
   }
