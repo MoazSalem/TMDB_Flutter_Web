@@ -25,12 +25,13 @@ class _CategoriesState extends State<Categories> {
   @override
   void initState() {
     super.initState();
-    widget.pageType == 'movies'
-        ? {
-            categories = Constants.movieCategories,
-            genres = Constants.moviesGenres,
-          }
-        : {categories = Constants.tvCategories, genres = Constants.tvGenres};
+    if (widget.pageType == 'movies') {
+      categories = Constants.movieCategories;
+      genres = Constants.moviesGenres;
+    } else {
+      categories = Constants.tvCategories;
+      genres = Constants.tvGenres;
+    }
   }
 
   @override
@@ -58,42 +59,19 @@ class _CategoriesState extends State<Categories> {
                   ? Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        TitleWidget(
-                          title: categories[0].name,
-                          url:
-                              '/${widget.pageType}/${categories[0].apiKey}/1-2',
-                        ),
-                        HorizontalPosterListWidget(
-                          list: state.firstCategoryList,
-                          pageType: widget.pageType,
-                        ),
-                        TitleWidget(
-                          title: categories[1].name,
-                          url:
-                              '/${widget.pageType}/${categories[1].apiKey}/1-2',
-                        ),
-                        HorizontalPosterListWidget(
-                          list: state.secondCategoryList,
-                          pageType: widget.pageType,
-                        ),
-                        TitleWidget(
-                          title: categories[2].name,
-                          url:
-                              '/${widget.pageType}/${categories[2].apiKey}/1-2',
-                        ),
-                        HorizontalPosterListWidget(
-                          list: state.thirdCategoryList,
-                          pageType: widget.pageType,
-                        ),
-                        TitleWidget(
-                          title: categories[3].name,
-                          url:
-                              '/${widget.pageType}/${categories[3].apiKey}/1-2',
-                        ),
-                        HorizontalPosterListWidget(
-                          list: state.fourthCategoryList,
-                          pageType: widget.pageType,
-                        ),
+                        for (var entry in state.categoryData.entries)
+                          // Only build the section if the list for that category is not empty.
+                          if (entry.value.isNotEmpty) ...[
+                            TitleWidget(
+                              title: entry.key.name,
+                              url:
+                                  '/${widget.pageType}/${entry.key.apiKey}/1-2',
+                            ),
+                            HorizontalPosterListWidget(
+                              list: entry.value,
+                              pageType: widget.pageType,
+                            ),
+                          ],
                         TitleWidget(title: "Genres"),
                         CategoriesListWidget(
                           pageType: widget.pageType,

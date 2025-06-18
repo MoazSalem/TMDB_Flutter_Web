@@ -14,19 +14,13 @@ class CategoriesCubit extends Cubit<CategoriesState> {
     required List<Category> categories,
   }) async {
     emit(CategoriesLoading());
-    List<List<dynamic>> result = [];
+    final Map<Category, List<dynamic>> categoryData = {};
     for (Category category in categories) {
-      result.add(
-        await GetIt.I.get<CategoriesRepo>().getCategory(type, category),
+      categoryData[category] = await GetIt.I.get<CategoriesRepo>().getCategory(
+        type,
+        category,
       );
     }
-    emit(
-      CategoriesLoaded(
-        firstCategoryList: result[0],
-        secondCategoryList: result[1],
-        thirdCategoryList: result[2],
-        fourthCategoryList: result[3],
-      ),
-    );
+    emit(CategoriesLoaded(categoryData: categoryData));
   }
 }
