@@ -32,24 +32,28 @@ class _MoviesTvListPageState extends State<MoviesTvListPage> {
           body: state is MoviesTvListLoading
               ? LoadingSkeletonMovieTvList()
               : state is MoviesTvListLoaded
-              ? SingleChildScrollView(
-                  child: Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 8.0.w),
-                    child: Column(
-                      children: [
-                        PosterListWidget(list: state.list),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 20.0),
-                          child: NavBar(
-                            pageType: widget.pageType,
-                            category: state.category,
-                            currentPages: state.currentPages,
+              ? state.list.isNotEmpty
+                    ? SingleChildScrollView(
+                        child: Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 8.0.w),
+                          child: Column(
+                            children: [
+                              PosterListWidget(list: state.list),
+                              Padding(
+                                padding: const EdgeInsets.symmetric(
+                                  vertical: 20.0,
+                                ),
+                                child: NavBar(
+                                  pageType: widget.pageType,
+                                  category: state.category,
+                                  currentPages: state.currentPages,
+                                ),
+                              ),
+                            ],
                           ),
                         ),
-                      ],
-                    ),
-                  ),
-                )
+                      )
+                    : const Center(child: Text("No results"))
               : null,
         );
       },
