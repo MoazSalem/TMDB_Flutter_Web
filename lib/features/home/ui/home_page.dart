@@ -35,22 +35,18 @@ class _HomePageState extends State<HomePage> {
                   child: Padding(
                     padding: EdgeInsets.symmetric(horizontal: 8.0.w),
                     child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         CarouselWidget(popular: state.popular),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            TitleWidget(title: "Movies", url: '/movies'),
-                            HorizontalPosterListWidget(
-                              list: state.movies,
-                              pageType: 'movies',
-                            ),
-                            TitleWidget(title: "Tv Shows", url: '/tv'),
-                            HorizontalPosterListWidget(
-                              list: state.tvShows,
-                              pageType: 'tv',
-                            ),
-                          ],
+                        TitleWidget(title: "Movies", url: '/movies'),
+                        HorizontalPosterListWidget(
+                          list: state.movies,
+                          pageType: 'movies',
+                        ),
+                        TitleWidget(title: "Tv Shows", url: '/tv'),
+                        HorizontalPosterListWidget(
+                          list: state.tvShows,
+                          pageType: 'tv',
                         ),
                         const SizedBox(height: 20),
                       ],
