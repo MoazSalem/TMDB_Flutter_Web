@@ -15,15 +15,27 @@ class ImageWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return CachedNetworkImage(
-      fit: BoxFit.cover,
-      alignment: Alignment.topCenter,
-      placeholderFadeInDuration: const Duration(seconds: 2),
-      imageUrl: WidgetsHelper.parseImageUrl(item: item, type: type, hd: hd),
-      placeholder: (context, url) => Container(color: const Color(0xFF212121)),
-      errorWidget: (context, url, error) => const SizedBox(
-        child: Center(child: Icon(Icons.question_mark_rounded, size: 100)),
-      ),
+    final String imageUrl = WidgetsHelper.parseImageUrl(
+      item: item,
+      type: type,
+      hd: hd,
     );
+    return imageUrl.isEmpty
+        ? const SizedBox(
+            child: Center(child: Icon(Icons.question_mark_rounded, size: 100)),
+          )
+        : CachedNetworkImage(
+            fit: BoxFit.cover,
+            alignment: Alignment.topCenter,
+            placeholderFadeInDuration: const Duration(seconds: 2),
+            imageUrl: imageUrl,
+            placeholder: (context, url) =>
+                Container(color: const Color(0xFF212121)),
+            errorWidget: (context, url, error) => const SizedBox(
+              child: Center(
+                child: Icon(Icons.question_mark_rounded, size: 100),
+              ),
+            ),
+          );
   }
 }

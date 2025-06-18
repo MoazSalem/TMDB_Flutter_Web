@@ -54,9 +54,13 @@ class WidgetsHelper {
   }) {
     switch (type) {
       case "backdrop":
-        return "${Constants.imagesBaseUrl}${Constants.backdropSizes[hd ? 3 : 2]}${item.backdropPath ?? item.posterPath ?? ""}";
+        return item.backdropPath != null && item.posterPath != null
+            ? "${Constants.imagesBaseUrl}${Constants.backdropSizes[hd ? 3 : 2]}${item.backdropPath ?? item.posterPath ?? ""}"
+            : "";
       case "poster":
-        return "${Constants.imagesBaseUrl}${Constants.posterSizes[hd ? 6 : 4]}${item.posterPath ?? ""}";
+        return item.backdropPath != null && item.posterPath != null
+            ? "${Constants.imagesBaseUrl}${Constants.posterSizes[hd ? 6 : 4]}${item.posterPath ?? item.backdropPath ?? ""}"
+            : "";
       case "profile":
         return item.avatarPath != null
             ? item.avatarPath!.split("/")[1].split(":")[0] == "https"
@@ -64,7 +68,9 @@ class WidgetsHelper {
                   : "${Constants.imagesBaseUrl}${Constants.profileSizes[1]}${item.avatarPath}"
             : "";
       case "cast":
-        return "Constants.imagesBaseUrl}${Constants.profileSizes[1]}${item.profilePath}";
+        return item.profilePath != null
+            ? "Constants.imagesBaseUrl}${Constants.profileSizes[1]}${item.profilePath}"
+            : "";
       default:
         return "";
     }

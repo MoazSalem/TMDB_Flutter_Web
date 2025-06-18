@@ -15,22 +15,33 @@ class AvatarImageWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return CachedNetworkImage(
-      width: 100,
-      height: 100,
-      fit: BoxFit.cover,
-      alignment: Alignment.topCenter,
-      imageUrl: WidgetsHelper.parseImageUrl(item: item, type: type, hd: hd),
-      placeholder: (context, url) => const SizedBox(
-        width: 30,
-        height: 60,
-        child: Icon(Icons.person, size: 36, color: Colors.white),
-      ),
-      errorWidget: (context, url, error) => const SizedBox(
-        width: 30,
-        height: 60,
-        child: Icon(Icons.person, size: 36, color: Colors.white),
-      ),
+    final String imageUrl = WidgetsHelper.parseImageUrl(
+      item: item,
+      type: type,
+      hd: hd,
     );
+    return imageUrl.isEmpty
+        ? SizedBox(
+            width: 100,
+            height: 100,
+            child: Icon(Icons.person, size: 36, color: Colors.white),
+          )
+        : CachedNetworkImage(
+            width: 100,
+            height: 100,
+            fit: BoxFit.cover,
+            alignment: Alignment.topCenter,
+            imageUrl: imageUrl,
+            placeholder: (context, url) => const SizedBox(
+              width: 30,
+              height: 60,
+              child: Icon(Icons.person, size: 36, color: Colors.white),
+            ),
+            errorWidget: (context, url, error) => const SizedBox(
+              width: 30,
+              height: 60,
+              child: Icon(Icons.person, size: 36, color: Colors.white),
+            ),
+          );
   }
 }
