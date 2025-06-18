@@ -29,7 +29,9 @@ class PosterListWidget extends StatelessWidget {
           child: Stack(
             fit: StackFit.expand,
             children: [
-              SizedBox(child: ImageWidget(item: list[index])),
+              SizedBox(
+                child: ImageWidget(item: list[index], type: 'poster'),
+              ),
               Container(
                 alignment: Alignment.bottomLeft,
                 decoration: const BoxDecoration(

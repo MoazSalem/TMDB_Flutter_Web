@@ -18,7 +18,7 @@ class GenresWidget extends StatelessWidget {
           itemBuilder: (BuildContext context, int index) => InkWell(
             borderRadius: BorderRadius.circular(30),
             onTap: () => context.go(
-              "/${pageType == "movies" ? "movies" : "tv"}/${"${item.genres![index].name}".toLowerCase()}/1",
+              "/$pageType/${"${item.genres![index].name}".toLowerCase()}/1",
             ),
             child: Container(
               decoration: BoxDecoration(

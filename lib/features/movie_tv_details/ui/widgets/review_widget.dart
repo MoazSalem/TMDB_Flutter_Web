@@ -1,9 +1,8 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:expandable_text/expandable_text.dart';
 import 'package:flutter/material.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:tmdb_web/core/models/reviews.dart';
-import 'package:tmdb_web/core/networking/constants.dart';
+import 'avatar_image_widget.dart';
 
 class ReviewWidget extends StatelessWidget {
   const ReviewWidget({super.key, required this.review});
@@ -28,36 +27,9 @@ class ReviewWidget extends StatelessWidget {
                       radius: 30,
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(50),
-                        child: CachedNetworkImage(
-                          width: 100,
-                          height: 100,
-                          fit: BoxFit.cover,
-                          imageUrl: review.authorDetails?.avatarPath != null
-                              ? review.authorDetails?.avatarPath!
-                                            .split("/")[1]
-                                            .split(":")[0] ==
-                                        "https"
-                                    ? review.authorDetails!.avatarPath!
-                                    : "${Constants.imagesBaseUrl}${Constants.profileSizes[1]}${review.authorDetails?.avatarPath}"
-                              : "",
-                          placeholder: (context, url) => const SizedBox(
-                            width: 30,
-                            height: 60,
-                            child: Icon(
-                              Icons.person,
-                              size: 36,
-                              color: Colors.white,
-                            ),
-                          ),
-                          errorWidget: (context, url, error) => const SizedBox(
-                            width: 30,
-                            height: 60,
-                            child: Icon(
-                              Icons.person,
-                              size: 36,
-                              color: Colors.white,
-                            ),
-                          ),
+                        child: AvatarImageWidget(
+                          item: review.authorDetails!,
+                          type: 'profile',
                         ),
                       ),
                     ),

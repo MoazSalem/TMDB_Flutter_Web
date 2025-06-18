@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tmdb_web/core/networking/constants.dart';
 
 class WidgetsHelper {
   static String runtimeToHours(int minutes) {
@@ -44,5 +45,28 @@ class WidgetsHelper {
     return count > 1000
         ? "/10 (${(count / 1000).toStringAsFixed(2)}K)"
         : "/10 ($count)";
+  }
+
+  static String parseImageUrl({
+    required item,
+    required String type,
+    bool hd = false,
+  }) {
+    switch (type) {
+      case "backdrop":
+        return "${Constants.imagesBaseUrl}${Constants.backdropSizes[hd ? 3 : 2]}${item.backdropPath ?? item.posterPath ?? ""}";
+      case "poster":
+        return "${Constants.imagesBaseUrl}${Constants.posterSizes[hd ? 6 : 4]}${item.posterPath ?? ""}";
+      case "profile":
+        return item.avatarPath != null
+            ? item.avatarPath!.split("/")[1].split(":")[0] == "https"
+                  ? item.avatarPath!
+                  : "${Constants.imagesBaseUrl}${Constants.profileSizes[1]}${item.avatarPath}"
+            : "";
+      case "cast":
+        return "Constants.imagesBaseUrl}${Constants.profileSizes[1]}${item.profilePath}";
+      default:
+        return "";
+    }
   }
 }

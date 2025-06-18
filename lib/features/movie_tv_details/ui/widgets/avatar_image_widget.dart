@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:tmdb_web/core/helpers/widgets_helper.dart';
 
-class ImageWidget extends StatelessWidget {
-  const ImageWidget({
+class AvatarImageWidget extends StatelessWidget {
+  const AvatarImageWidget({
     super.key,
     required this.item,
-    required this.type,
     this.hd = false,
+    required this.type,
   });
   final dynamic item;
   final String type;
@@ -16,13 +16,20 @@ class ImageWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CachedNetworkImage(
+      width: 100,
+      height: 100,
       fit: BoxFit.cover,
       alignment: Alignment.topCenter,
-      placeholderFadeInDuration: const Duration(seconds: 2),
       imageUrl: WidgetsHelper.parseImageUrl(item: item, type: type, hd: hd),
-      placeholder: (context, url) => Container(color: const Color(0xFF212121)),
+      placeholder: (context, url) => const SizedBox(
+        width: 30,
+        height: 60,
+        child: Icon(Icons.person, size: 36, color: Colors.white),
+      ),
       errorWidget: (context, url, error) => const SizedBox(
-        child: Center(child: Icon(Icons.question_mark_rounded, size: 100)),
+        width: 30,
+        height: 60,
+        child: Icon(Icons.person, size: 36, color: Colors.white),
       ),
     );
   }

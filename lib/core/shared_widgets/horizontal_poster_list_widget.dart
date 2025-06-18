@@ -30,7 +30,7 @@ class HorizontalPosterListWidget extends StatelessWidget {
             children: [
               ClipRRect(
                 borderRadius: BorderRadius.circular(20),
-                child: ImageWidget(item: list[index]),
+                child: ImageWidget(item: list[index], type: "poster"),
               ),
               Container(
                 alignment: Alignment.bottomLeft,

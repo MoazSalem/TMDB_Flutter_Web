@@ -16,7 +16,7 @@ class TopCoverWidget extends StatelessWidget {
         SizedBox(
           width: double.infinity,
           height: 70.h > 500 ? 500 : 70.h,
-          child: ImageWidget(item: item, isBackdrop: true, hd: true),
+          child: ImageWidget(item: item, type: "backdrop", hd: true),
         ),
         Container(
           decoration: const BoxDecoration(

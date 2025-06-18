@@ -17,10 +17,8 @@ class ReviewListWidget extends StatelessWidget {
           itemCount: reviews.length,
           physics: const NeverScrollableScrollPhysics(),
           shrinkWrap: true,
-          itemBuilder: (BuildContext context, int index) => GestureDetector(
-            onTap: () {},
-            child: ReviewWidget(review: reviews[index]),
-          ),
+          itemBuilder: (BuildContext context, int index) =>
+              ReviewWidget(review: reviews[index]),
         ),
       ],
     );

@@ -12,7 +12,11 @@ class CarouselChildWidget extends StatelessWidget {
     return Stack(
       fit: StackFit.expand,
       children: [
-        ImageWidget(item: item, isBackdrop: true),
+        SizedBox(
+          width: 100,
+          height: 100,
+          child: ImageWidget(item: item, type: "backdrop"),
+        ),
         Container(
           alignment: Alignment.bottomLeft,
           decoration: const BoxDecoration(
