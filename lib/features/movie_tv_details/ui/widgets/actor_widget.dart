@@ -5,6 +5,8 @@ import 'package:shimmer_animation/shimmer_animation.dart';
 import 'package:tmdb_web/core/models/cast.dart';
 import 'package:tmdb_web/core/networking/constants.dart';
 
+import 'avatar_image_widget.dart';
+
 class ActorWidget extends StatelessWidget {
   ActorWidget({super.key, required this.member});
   final Cast member;
@@ -23,20 +25,7 @@ class ActorWidget extends StatelessWidget {
               backgroundColor: Colors.blueGrey.shade700,
               radius: 70,
               child: ClipOval(
-                child: CachedNetworkImage(
-                  height: 140,
-                  width: 140,
-                  fit: BoxFit.cover,
-                  imageUrl:
-                      "${Constants.imagesBaseUrl}${Constants.profileSizes[1]}${member.profilePath}",
-                  progressIndicatorBuilder: (context, url, downloadProgress) =>
-                      Shimmer(
-                        duration: Duration(seconds: 2),
-                        child: SizedBox(),
-                      ),
-                  errorWidget: (context, url, error) =>
-                      const Icon(Icons.person, color: Colors.white, size: 60),
-                ),
+                child: AvatarImageWidget(item: member, type: 'cast'),
               ),
             ),
             const SizedBox(height: 10),

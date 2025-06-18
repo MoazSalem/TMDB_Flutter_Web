@@ -69,7 +69,7 @@ class WidgetsHelper {
             : "";
       case "cast":
         return item.profilePath != null
-            ? "Constants.imagesBaseUrl}${Constants.profileSizes[1]}${item.profilePath}"
+            ? "${Constants.imagesBaseUrl}${Constants.profileSizes[1]}${item.profilePath}"
             : "";
       default:
         return "";

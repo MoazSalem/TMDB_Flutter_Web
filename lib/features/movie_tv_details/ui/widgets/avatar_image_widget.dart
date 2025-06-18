@@ -20,15 +20,16 @@ class AvatarImageWidget extends StatelessWidget {
       type: type,
       hd: hd,
     );
+    final double size = type == "profile" ? 100 : 140;
     return imageUrl.isEmpty
         ? SizedBox(
-            width: 100,
-            height: 100,
+            width: size,
+            height: size,
             child: Icon(Icons.person, size: 36, color: Colors.white),
           )
         : CachedNetworkImage(
-            width: 100,
-            height: 100,
+            width: size,
+            height: size,
             fit: BoxFit.cover,
             alignment: Alignment.topCenter,
             imageUrl: imageUrl,

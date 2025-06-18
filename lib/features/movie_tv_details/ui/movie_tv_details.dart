@@ -63,22 +63,23 @@ class _MovieTvDetailsState extends State<MovieTvDetails> {
                         ),
                         if (state.trailer.key != "")
                           TrailerWidget(videoController: state.videoController),
-                        if (state.cast.isNotEmpty)
-                          CastListWidget(cast: state.cast),
-                        if (state.suggestions.isNotEmpty)
+                        if (state.cast != null && state.cast!.isNotEmpty)
+                          CastListWidget(cast: state.cast!),
+                        if (state.suggestions != null &&
+                            state.suggestions!.isNotEmpty)
                           SuggestionsListWidget(
                             suggestions: state.suggestions,
                             pageType: widget.pageType,
                             title: "Recommendations",
                           ),
-                        if (state.similar.isNotEmpty)
+                        if (state.similar != null && state.similar!.isNotEmpty)
                           SuggestionsListWidget(
                             suggestions: state.similar,
                             pageType: widget.pageType,
                             title: "Might Also Interest You",
                           ),
-                        if (state.reviews.isNotEmpty)
-                          ReviewListWidget(reviews: state.reviews),
+                        if (state.reviews != null && state.reviews!.isNotEmpty)
+                          ReviewListWidget(reviews: state.reviews!),
                         const SizedBox(height: 20),
                       ],
                     ),
